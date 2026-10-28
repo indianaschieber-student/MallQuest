@@ -1,0 +1,71 @@
+# Mall Quest - Items.txt
+# Built from the SRS "Table of Artifacts". 50 items total.
+# One item per line, fields separated by | (pipe). Lines starting with # are comments; skip them (and blank lines) when loading.
+#
+# FORMAT:
+# itemId|category|name|description|locationFound
+#
+# - itemId: ID exactly as written in the SRS (LI = Lore, QI = Quest, CI = Consumable, W = Cosmetic)
+# - category: Lore, Quest, Consumable, or Cosmetic
+# - description: description / effect text from the SRS (blank if the SRS has none yet)
+# - locationFound: room ID(s) where it is found (comma-separated if more than one), or the SRS's note
+#
+# Room IDs match the SRS Table of Rooms (example: F1FF = Fatal Flora, F2TD = Arcade).
+#
+# --- LORE ITEMS ---
+LI001|Lore|Laura's Diary|Old notebook from Better Buy. Contains an A&M Maze Map (Directions: Left, Up, Right, Up, Left, Left) and a diary entry noting that supervisor Kevin appeared "weirdly green" with what looked like a tail, and that he always visits the 3rd stall in the men's bathroom to "think."|F2BB
+LI002|Lore|Old Cosmopolitician Magazine|Ancient magazine uncovered when shirt racks were moved. Contains two readable articles: "What Flower means what! A guide to finding the right match for any occasion" and "Where are they? An interview with the Mall's newest owner."|F2AM
+LI003|Lore|Torn Employee Manual Page|Reads: "If the reflection in the mirror is not wearing shoes, close your eyes immediately"- or- "Do not speak to the night shift clerk, because we do not have a night shift clerk." Hints player to stay silent and not expose their identity (solution clue for Coffee Shop puzzle).|Shoe Store (F2FS)
+LI004|Lore|Crinkled Receipt|Instead of a purchase amount, the receipt features a string of gibberish and bizarre return policies which conceal a hidden puzzle cipher.|Shoe Store (F2FS)
+LI005|Lore|Barbershop Keycard|Lost keycard found in Tiffany & Jo. Inspecting the back reveals a list of numbers: 5, 10, 15, 18, and 21.|Tiffany & Jo (F2JS)
+LI006|Lore|Book Club Article|Titled "Barry Botter best books ever." The book list reads: Barry Botter and the Setup Wizard, Barry Botter and the Encrypted Channel of Secrets, Barry Botter and the Order of the Sequence, Barry Botter and the Prisoner of Algorithms.|F1TU
+LI007|Lore|Old Antique Store Ad|Flyer from when Old but Gold first opened. Shows an elderly woman surrounded by vintage items with large price tags: vase $125, golden watch $300, small painting $75, tuba $575.|F1MB
+LI008|Lore|Grocery Bag of Fruits|A bag containing a receipt with specific fruit names: Midknight Valencia (SKU 3156), Cutie (tangerine), Granny Smith (apple), and Dekopon (orange).|F2DP
+LI009|Lore|Takeout Cup|Inspecting the cup (and ignoring the chewed straw) reveals the name "Beezulbulb" written right under the company logo- a demon's true name misspelled.|Coffee Shop (F1IG)
+LI010|Lore|Waiver Form|Contains fine print reading: "Management is not responsible for souls lost in the foam pit." Required to satisfy the Venus flytrap in the Flower Shop (Fatal Flora puzzle).|Trampoline Park (F2SH)
+LI011|Lore|Florist's Log|Diary complaining about the cost of using blood as fertilizer. Contains a torn feeding schedule with a specific sequence of nutrients and water temperatures- acts as the puzzle cipher to pacify the giant Venus flytrap.|Flower Shop (F1FF)
+LI012|Lore|Arcade Owner's Manual|Contains partial records of a password for the legendary arcade machine that reportedly drives players mad. A handwritten note adds: "Only the night patrol knows the final input sequence."|Arcade (F2TD)
+LI013|Lore|Mini movie night poster|Last Months Movie Night event poster. Special themed movies were shown on specific days: Monday – Romance, Wednesday – Comedy, Thursday – Horror, Friday - Family|Chublix (F1CX)
+L1014|Lore|Photo of Jewelry Store’s main display|A photo of the crowned jewels at Tiffany And Jo. Within it you can see a Red Ruby, Pink Diamond, and a Dark Jade label.|Salon of Beauty (F2SOB)
+L1015|Lore|Jigsaw Piece guide|In the guide to this jigsaw puzzle you see an outline of where each piece belongs. Highlighted are: Slot 1 – KB97, Slot 2 QR67, Slot 3 – J12, Slot 4 – BR97|Big Cutz (F2BS)
+L1016|Lore|Fabric guide: How Coarse is this?|A quick reference guide on several fabrics and their coarseness, in order from most to least coarse. Burlap, Denim, Cotton Percale, Velvet, and Mulberry Silk are the 5 listed.|F2OG
+
+# --- QUEST ITEMS ---
+QI001|Quest|Escape Room Stamp|A stamp showing the mall's main entrance (looks AI-generated). Collect 10 stamps to exchange for the grand prize. Awarded upon completing a room's puzzle or combat encounter.|Dropped per completed puzzle
+QI002|Quest|Flashlight|A bright red flashlight that illuminates dark passages. Runs on a single battery — good for approximately 3 total uses.|F2BB
+QI003|Quest|Strange Unopened Seed|Purpose not yet defined.|F1FF
+QI004|Quest|Razor-sharp Prize Ticket|Purpose not yet defined.|F2TD
+
+# --- CONSUMABLE ITEMS ---
+CI001|Consumable|Water Bottle|Restores 3 HP to the player.|F2AM,F1MB,F2DP
+CI002|Consumable|Chewing Gum|Restores 5 HP when consumed. Becomes Chewed Gum after use.|F2AM,F2BS
+CI003|Consumable|Chewed Gum|Can be thrown at an enemy during combat. 5% chance to hit; deals 45 damage on hit.|F3AS / Crafted from Chewing Gum
+CI004|Consumable|Bag of Chips|Restores 2 HP when consumed.|F2BB,F1MB,F2DP,F1CX
+CI005|Consumable|Laser Pointer|Disorients an enemy in combat, causing their next attack to miss.|F2BB
+CI006|Consumable|Pizza Slice|Restores 4 HP when consumed.|F1MFC,F2KMT
+CI007|Consumable|First Aid Kit|Fully restores player HP and removes all active debuffs.|F1CVS
+CI008|Consumable|Band-Aid|Restores 10 HP|F2AM,F1CX,F1MFC,F2SH,F2KMT,F2SOB
+CI009|Consumable|Candy|Restores 2 HP|F1TU,F2DP,F1CX,F2SOB,F2BS,F2OG
+CI010|Consumable|Special flying shoes|Single-use. Instantly escapes any room and teleports player to a safe room.|F2FS
+CI011|Consumable|Scalding Espresso|Throwable: burns target for 50hp. Player loses 30 hp|F1IG
+C1012|Consumable|Used Napkin|No defined combat effect.|F1IG
+CI013|Consumable|Static Charge Bottle|Single-use throwable. Stuns target for 1 turn.|F2SH
+CI014|Consumable|Deflated Dodgeball|Throwable. 30% hit chance; on success, target loses next turn.|F2SH
+CI015|Consumable|Rusty Garden Shears|Cuts blocking vines in Flower Shop.|F1FF
+CI016|Consumable|Allergy Pills|Removes Blindness/pollen debuff.|F1FF
+CI017|Consumable|Handful of Tokens|Activates arcade machines or bribes NPCs.|F2TD
+CI018|Consumable|Tissue pack|Ends combat with the Sneezing Customer|F1CVS
+
+# --- COSMETIC ITEMS ---
+W001|Cosmetic|Wizard Robe||F1MB
+W002|Cosmetic|Blue shirt||F2AM
+W003|Cosmetic|Purple Dress||F2AM
+W004|Cosmetic|White Belt||F2AM
+W005|Cosmetic|Neon Green Shoelaces|Equippable cosmetic. No gameplay effect. Displayed when Check Equipped Cosmetics (PFR10) is used.|F2FS
+W006|Cosmetic|Mismatched novelty socks|Equippable cosmetic. No gameplay effect. Displayed when Check Equipped Cosmetics (PFR10) is used.|F2FS
+W007|Cosmetic|Necklace||F2JS
+W008|Cosmetic|Shiny Ring||F2JS
+W009|Cosmetic|Stained Green Apron|Equippable cosmetic. No gameplay effect. Displayed when Check Equipped Cosmetics (PFR10) is used.|F1IG
+W010|Cosmetic|Wilted Rose Boutonniere|Equippable cosmetic. No gameplay effect. Displayed when Check Equipped Cosmetics (PFR10) is used.|F1FF
+W011|Cosmetic|Plastic Spider Ring|Equippable cosmetic. No gameplay effect. Displayed when Check Equipped Cosmetics (PFR10) is used.|F2TD
+W012|Cosmetic|Giant Foam Finger|Equippable cosmetic. No gameplay effect. Displayed when Check Equipped Cosmetics (PFR10) is used.|F2TD
