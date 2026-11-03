@@ -14,31 +14,25 @@ public class Monster {
     private String status;
     private boolean escapeBlocked;
 
-    public Monster(String id, String name, String description, String locationFound) {
+    public Monster(String id, String name, String description, String locationFound, int lvl, int maxHp, int attack) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.lvl = 1; // Default level
         this.locationFound = locationFound;
 
-        //for combat features
-        this.hp = 100; // Default HP
-        this.maxHp = 100; // Default max HP
-        this.attack = 10; // Default attack
-        this.status = "Healthy"; // Default status
+        //Each Monster receives its own stats
+        this.lvl = lvl;
+        this.hp = maxHp;
+        this.maxHp = maxHp;
+        this.attack = attack;
+
+        //Starting combat conditions
+        this.status = "None";
         this.escapeBlocked = false; // Default escape blocked status
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     // Set monster level
@@ -49,15 +43,57 @@ public class Monster {
     }
 
     // MFR1 - Gets monster information
+
+    /*
+     (this method does not follow the MVC model)
+
     public String inspect() {
+
         return name + " - Level " + lvl + ". " + description;
     }
+    */
+
+    public int getLvl(){
+        return lvl;
+    }
+
+    public String getLocationFound(){
+        return locationFound;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
 
     // MFR2 - Get monster's current status
+
+    /*
+
+    (this method does not follow the MVC model)
+
     public String checkStatus() {
         return name + " - HP: " + hp + " / " + maxHp
                 + " | Level: " + lvl
                 + " | Status: " + status;
+    }
+
+     */
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     // MFR3 - Monster takes damage
@@ -107,8 +143,19 @@ public class Monster {
         escapeBlocked = blocked;
     }
 
+    public int getAttack() {
+        return attack;
+    }
+
+    /*
+
+    (this method does not follow the MVC model and
+    this Monster function does not go here it goes to GameView)
+
     // MFR8 - Monster encounter warning
     public String getEncounterWarning() {
         return "Warning: " + name + " is here and appears hostile.";
     }
+
+     */
 }
