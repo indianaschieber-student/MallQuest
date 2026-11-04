@@ -1,0 +1,34 @@
+F2AM|Abercrombie And Mitch|Abercrombie and Mitch, a place that reeks of Axe Body Spray and is usually dimly lit. It looks like the teenagers who typically run the store put in just as much effort in decorating for today as they would with any other task: absolute bare minimum. The store is decorated only with some balloons, and a broken mannequin. You can hear the ghostly wails of recently dumped highschoolers, which you decide adds to an attempt of a creepy vibe. You see that they have created a “maze” using their clothing racks, with a sign barely hanging from the broken centerpiece mannequin. The sign only reads “Make it to the end. Get a stamp. Get a coupon. Boo.” The maze has two separate paths: A hallway of shirt racks leading to the left, or a chasm of skinny jeans tables going into the center of the store.|F01H,B02H|W002,W003,W004,CI001,CI008,CI002,LI002|MST006|PZ2
+F2FS|Foot Stalker|This shoe store is surprisingly dim, with towering shelves of shoeboxes arranged like a labyrinth. It clearly operates on a fully self-serve model. There is no deafening music here, only the sound of your own footsteps. Soon, you will notice a creepy phenomenon: the sole sales clerk here is following you. He never initiates conversation and always maintains a precise distance. When you turn around or think you've lost him, he might be standing quietly in the shadows ahead, just watching you. It's hard to tell if he is friend or foe—whenever you pass by the full-length mirrors in the store, you inexplicably take damage; but sometimes, when you are lost among the rows of shoe racks, he quietly leaves health recovery items or crucial clues on the floor for you. By the way, absolutely do not trust the illuminated red "EXIT" door at the end of the hall. The real exit to this store is actually hidden underneath an ordinary-looking ottoman used for trying on shoes. elves of shoeboxes arranged like a labyrinth. It clearly operates on a fully self-serve model. There is no deafening music here, only the sound of your own footsteps. Soon, you will notice a creepy phenomenon: the sole sales clerk here is following you. He never initiates conversation and always maintains a precise distance. When you turn around or think you've lost him, he might be standing quietly in the shadows ahead, just watching you. It's hard to tell if he is friend or foe—whenever you pass by the full-length mirrors in the store, you inexplicably take damage; but sometimes, when you are lost among the rows of shoe racks, he quietly leaves health recovery items or crucial clues on the floor for you. By the way, absolutely do not trust the illuminated red "EXIT" door at the end of the hall. The real exit to this store is actually hidden underneath an ordinary-looking ottoman used for trying on shoes.|F01H,B04H|W005,W006,CI010,QI001,LI003,LI004|MST012|PZ14
+F2JS|Tiffany & Jo|Room Desc.|F01H,B02H|W007,W008,QI001,LI005|MST006,MST015,MST004|PZ3
+F2BB|Buy Better|Room Desc.|F01H,B01H|CI004,CI005,QI001,QI002,LI001|MST006,MST007,MST004|PZ5
+F1MB|A Million Books|
+F2DP|Daisy Penny||Room Desc.|F01H,BO3H,
+F1CX|Chublix|
+F1MFC|Kavris Food Court|
+F1IG|Infinite Grind|
+F2SH|Sky-High Doom|
+F1FF|Fatal Flora|
+F2KMT|Kavris Movie Theater|
+F2TD|Token of Despair|
+F2SOB|Salon of Beauty|Room Desc.|F01H,
+F2BS|Big Cutz|Room Desc.|F01H,
+F2OG|Old But Gold|Room Desc.|F01H,
+F1CVS|C-Vous-Say Pharmacy|
+F1TU|Toys B US|
+F3AS|All Sportz|
+F1CSI|Informational Service Room|Room Desc.|F01H,
+F01H|Floor 1 Hallway|
+F02H|Floor 2 Hallway|
+F03H|Ground Floor Hallway|
+B01H|Buy Better Back Hallway|
+B02H|Old But Gold Back Hallway|
+B03H|Kavris Food Court Back Hallway|
+B04H|Foot Stalker Back Hallway|
+B05H|Chublix Back Hallway|
+BO6H|Infinite Grind Back Hallway|
+B07H|Sky-High Doom Back Hallway|
+B08H|All Sportz Back Hallway|
+B09H|Toys B Us Back Hallway|
+B10H|Big Cutz Back Hallway|
+EX01|The Exit|The exit of the mall is blocked by a man cloaked in shadows. He guards the door, his hand extended to take the 10 tickets required for you to pass.|
