@@ -5,26 +5,50 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class GameWorldBuilder {
 
-    /*public Map <String, Item> createGameItems() {
+    //These methods will each return a HashMap of their respective objects, with the key being the respective ID,
+    // and the value being the object. This will allow the createGameMap method to easily populate the Room objects
+    // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
+    // I think it may also make sense to still store these objects in an ArrayList as well, just in case
+    public Map <String, Item> createGameItems() {
+        Map<String, Item> itemsByID = new HashMap<>();
+        //read the Items.txt file and create Item objects, storing the objects in the HashMap with the itemID as the key
+        List<Item> gameItems = new ArrayList<>();
+        // Optionally, the Item objects can also be stored in an ArrayList for easy iteration,
+        // but the HashMap will allow for quick retrieval by ID
+        return itemsByID;
+    }
 
-    }*/
-    /*public Map <String, Puzzle> createGamePuzzles() {
+    public Map <String, Puzzle> createGamePuzzles() {
+        Map<String, Puzzle> puzzlesByID = new HashMap<>();
+        //read the Puzzles.txt file and create Puzzle objects, storing the objects in the HashMap with the puzzleID as the key
+        List<Puzzle> gamePuzzles = new ArrayList<>();
+        // Optionally, the Puzzle objects can also be stored in an ArrayList for easy iteration,
+        // but the HashMap will allow for quick retrieval by ID
+        return puzzlesByID;
+    }
 
-    }*/
-    /*public Map <String, Monster> createGameMonsters(){
-    According to the SRS, each room has a list of potential Monster encounters. Upon creating the world,
-    Each room should generate one monster from the list of potential encounters for a room,
-    barring 2 or 3 exceptions mentioned in the SRS
-    }*/
+    public Map <String, Monster> createGameMonsters(){
+        Map<String, Monster> monstersByID = new HashMap<>();
+        //read the Monsters.txt file and create Monster objects, storing the objects in the HashMap with the monsterID as the key
+        List<Monster> gameMonsters = new ArrayList<>();
+        // Optionally, the Monster objects can also be stored in an ArrayList for easy iteration,
+        // but the HashMap will allow for quick retrieval by ID
+        return monstersByID;
+    }
+
     //The method to create the Rooms should be last; the Items, Puzzles, and Monsters should
     // be created first, so that the Rooms can then be populated with Items, Puzzles, and Monsters
     //The format for the text file for the Rooms is:
     // RoomID|RoomName|RoomDescription|Adjacent Room RoomIDs|ItemIDs|MonsterIDs|PuzzleID
     //Adjacent RoomIDS, ItemIDs, and MonsterIDs are all comma separated
-    public Map <String, Room> createGameMap(String roomFile)
+    public Map <String, Room> createGameMap(String roomFile, Map<String, Item> itemsByID,
+                                            Map<String, Puzzle> puzzlesByID, Map<String, Monster> monstersByID)
         throws FileNotFoundException {
         Map<String, Room> gameMap = new HashMap<>();
 
@@ -55,9 +79,57 @@ public class GameWorldBuilder {
             String roomName = data[1].trim();
             String roomDescription = data[2].trim();
 
-            //String
-        }
+            //pulls the Room IDs from the text file into an ArrayList, then creates a list that references
+            // their corresponding room objects, using the HashMap gameMap as a reference
+            ArrayList<String> adjacentRoomIDs = new ArrayList<>();
+            for (String id : data[3].trim().split(",")) {
+                adjacentRoomIDs.add(id.trim());
+            }
+            ArrayList<Room> adjacentRooms = new ArrayList<>();
+            for (String id: adjacentRoomIDs) {
+                Room adjacentRoom = gameMap.get(id);
+                adjacentRooms.add(adjacentRoom);
+            }
 
+            //Pulls the Item IDs from the text file into an ArrayList, then creates a list of corresponding Item
+            // objects, using the HashMap itemsByID as a reference
+            ArrayList<String> roomItemIDs = new ArrayList<>();
+            for (String id : data[4].trim().split(",")) {
+                roomItemIDs.add(id.trim());
+            }
+            ArrayList<Item> roomItems = new ArrayList<>();
+            for (String id : roomItemIDs) {
+                Item item = itemsByID.get(id);
+            }
+
+            //The room object is instantiated with an ID, name, description, inventory, and adjacent Room exits
+            //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the corresponding
+            //object and add it to the appropriate room
+            Room room = new Room(roomID, roomName, roomDescription, roomItems, adjacentRooms);
+
+            List<String> roomMonsterIDs = new ArrayList<>();
+            if(data[5] != null){
+                for (String id : data[5].trim().split(",")) {
+                    roomMonsterIDs.add(id.trim());
+                }
+                Random rand = new Random();
+                int randomIndex = rand.nextInt(roomMonsterIDs.size());
+
+                Monster roomMonster = monstersByID.get(roomMonsterIDs);
+
+                room.addMonster(roomMonster);
+            }
+
+            if(data[6] != null){
+                String puzzleID = data[6].trim();
+
+                Puzzle roomPuzzle = puzzlesByID.get(puzzleID);
+
+                room.setRoomPuzzle(roomPuzzle);
+            }
+
+        }
+        fileScanner2.close();
 
         return gameMap;
     }

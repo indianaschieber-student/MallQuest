@@ -2,33 +2,33 @@ F2AM|Abercrombie And Mitch|Abercrombie and Mitch, a place that reeks of Axe Body
 F2FS|Foot Stalker|This shoe store is surprisingly dim, with towering shelves of shoeboxes arranged like a labyrinth. It clearly operates on a fully self-serve model. There is no deafening music here, only the sound of your own footsteps. Soon, you will notice a creepy phenomenon: the sole sales clerk here is following you. He never initiates conversation and always maintains a precise distance. When you turn around or think you've lost him, he might be standing quietly in the shadows ahead, just watching you. It's hard to tell if he is friend or foe—whenever you pass by the full-length mirrors in the store, you inexplicably take damage; but sometimes, when you are lost among the rows of shoe racks, he quietly leaves health recovery items or crucial clues on the floor for you. By the way, absolutely do not trust the illuminated red "EXIT" door at the end of the hall. The real exit to this store is actually hidden underneath an ordinary-looking ottoman used for trying on shoes. elves of shoeboxes arranged like a labyrinth. It clearly operates on a fully self-serve model. There is no deafening music here, only the sound of your own footsteps. Soon, you will notice a creepy phenomenon: the sole sales clerk here is following you. He never initiates conversation and always maintains a precise distance. When you turn around or think you've lost him, he might be standing quietly in the shadows ahead, just watching you. It's hard to tell if he is friend or foe—whenever you pass by the full-length mirrors in the store, you inexplicably take damage; but sometimes, when you are lost among the rows of shoe racks, he quietly leaves health recovery items or crucial clues on the floor for you. By the way, absolutely do not trust the illuminated red "EXIT" door at the end of the hall. The real exit to this store is actually hidden underneath an ordinary-looking ottoman used for trying on shoes.|F01H,B04H|W005,W006,CI010,QI001,LI003,LI004|MST012|PZ14
 F2JS|Tiffany & Jo|Room Desc.|F01H,B02H|W007,W008,QI001,LI005|MST006,MST015,MST004|PZ3
 F2BB|Buy Better|Room Desc.|F01H,B01H|CI004,CI005,QI001,QI002,LI001|MST006,MST007,MST004|PZ5
-F1MB|A Million Books|
-F2DP|Daisy Penny||Room Desc.|F01H,BO3H,
-F1CX|Chublix|
+F1MB|A Million Books|Room Desc.|
+F2DP|Daisy Penny||Room Desc.|F01H,BO3H|
+F1CX|Chublix|Room Desc.|
 F1MFC|Kavris Food Court|
-F1IG|Infinite Grind|
-F2SH|Sky-High Doom|
-F1FF|Fatal Flora|
-F2KMT|Kavris Movie Theater|
-F2TD|Token of Despair|
+F1IG|Infinite Grind|Room Desc.|
+F2SH|Sky-High Doom|Room Desc.|F02H,B07H|CI008,CI013,CI014,QI001,LI010|MST023|
+F1FF|Fatal Flora|Room Desc.|
+F2KMT|Kavris Movie Theater|Room Desc.|
+F2TD|Token of Despair|Room Desc.|
 F2SOB|Salon of Beauty|Room Desc.|F01H,
 F2BS|Big Cutz|Room Desc.|F01H,
 F2OG|Old But Gold|Room Desc.|F01H,
-F1CVS|C-Vous-Say Pharmacy|
-F1TU|Toys B US|
-F3AS|All Sportz|
+F1CVS|C-Vous-Say Pharmacy|Room Desc.|
+F1TU|Toys B US|Room Desc.|
+F3AS|All Sportz|Room Desc.|
 F1CSI|Informational Service Room|Room Desc.|F01H,
-F01H|Floor 1 Hallway|
-F02H|Floor 2 Hallway|
-F03H|Ground Floor Hallway|
-B01H|Buy Better Back Hallway|
-B02H|Old But Gold Back Hallway|
-B03H|Kavris Food Court Back Hallway|
-B04H|Foot Stalker Back Hallway|
-B05H|Chublix Back Hallway|
-BO6H|Infinite Grind Back Hallway|
-B07H|Sky-High Doom Back Hallway|
-B08H|All Sportz Back Hallway|
-B09H|Toys B Us Back Hallway|
-B10H|Big Cutz Back Hallway|
+F01H|Floor 1 Hallway|Room Desc.|
+F02H|Floor 2 Hallway|Room Desc.|
+F03H|Ground Floor Hallway|Room Desc.|
+B01H|Buy Better Back Hallway|Room Desc.|
+B02H|Old But Gold Back Hallway|Room Desc.|
+B03H|Kavris Food Court Back Hallway|Room Desc.|
+B04H|Foot Stalker Back Hallway|Room Desc.|
+B05H|Chublix Back Hallway|Room Desc.|
+BO6H|Infinite Grind Back Hallway|Room Desc.|
+B07H|Sky-High Doom Back Hallway|Room Desc.|
+B08H|All Sportz Back Hallway|Room Desc.|
+B09H|Toys B Us Back Hallway|Room Desc.|
+B10H|Big Cutz Back Hallway|Room Desc.|
 EX01|The Exit|The exit of the mall is blocked by a man cloaked in shadows. He guards the door, his hand extended to take the 10 tickets required for you to pass.|
