@@ -15,6 +15,7 @@ public class GameWorldBuilder {
     // and the value being the object. This will allow the createGameMap method to easily populate the Room objects
     // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
     // I think it may also make sense to still store these objects in an ArrayList as well, just in case
+    
     public Map <String, Item> createGameItems() {
         Map<String, Item> itemsByID = new HashMap<>();
         //read the Items.txt file and create Item objects, storing the objects in the HashMap with the itemID as the key
@@ -64,6 +65,7 @@ public class GameWorldBuilder {
             String roomName = data[1].trim();
             String roomDescription = data[2].trim();
 
+            //create the Room objects, then ad them to the GameMap
             Room room = new Room(roomID, roomName, roomDescription);
             gameMap.put(roomID, room);
         }
@@ -127,7 +129,8 @@ public class GameWorldBuilder {
 
                 room.setRoomPuzzle(roomPuzzle);
             }
-
+            //add the updated Room objects to the gameMap
+            gameMap.put(roomID, room);
         }
         fileScanner2.close();
 
