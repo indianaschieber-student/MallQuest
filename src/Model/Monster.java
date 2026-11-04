@@ -1,32 +1,47 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Monster {
+    // MFR1 - Monster information used when inspecting a monster
     private String id;
     private String name;
     private String description;
     private String locationFound;
     private int lvl;
 
+    // MFR2 & MFR3 - Monster stats used during combat
     //for combat features
     private int hp;
     private int maxHp;
     private int attack;
     private String status;
+
+    // MFR5 - Determines whether the player can escape
     private boolean escapeBlocked;
 
-    public Monster(String id, String name, String description, String locationFound, int lvl, int maxHp, int attack) {
+    // MFR3 - Stores the attacks belonging to this monster
+    //Attacks belonging to the respected monster
+    private ArrayList<MonsterAttack> attacks;
+
+    // Creates a monster with its information, stats, and attacks
+    // GameWorldBuilder will provide the attacks through the constructor
+    public Monster(String id, String name, String description, String locationFound, int lvl, int maxHp, int attack, ArrayList<MonsterAttack> attacks) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.locationFound = locationFound;
 
-        //Each Monster receives its own stats
+        // MFR3 - Assigns the monster its attacks
+        this.attacks = new ArrayList<>(attacks);
+
+        // MFR2 & MFR3 - Each monster receives its own stats
         this.lvl = lvl;
         this.hp = maxHp;
         this.maxHp = maxHp;
         this.attack = attack;
 
-        //Starting combat conditions
+        // MFR2 & MFR5 - Starting combat conditions
         this.status = "None";
         this.escapeBlocked = false; // Default escape blocked status
     }
@@ -143,9 +158,16 @@ public class Monster {
         escapeBlocked = blocked;
     }
 
-    public int getAttack() {
+    public int getAttack() { //
         return attack;
     }
+
+
+    // Get the attacks belonging to this monster
+    public ArrayList<MonsterAttack> getAttacks() {
+        return new ArrayList<>(attacks);
+    }
+
 
     /*
 
