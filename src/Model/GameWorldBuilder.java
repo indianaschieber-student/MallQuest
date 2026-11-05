@@ -27,15 +27,13 @@ public class GameWorldBuilder {
         if (line.isEmpty() || line.startsWith("#")) continue;
         
         String[] data = line.split("\\|", -1);
-        if (data.length >= 5) {
+        if (data.length >= 4) {
             String itemID = data[0].trim();
             String category = data[1].trim();
             String name = data[2].trim();
             String description = data[3].trim();
-            String locationFound = data[4].trim();
             
-            // Assuming a base Item constructor or subclass instantiation based on category
-            Item item = new Item(itemID, name, description, locationFound);
+            Item item = new Item(itemID, category, name, description);
             itemsByID.put(itemID, item);
         }
     }
