@@ -28,4 +28,12 @@ public class GameController {
     public String parseCommand() {
         return "";
     }
+
+    public void startNewGame(){
+
+    }
+
+    public void loadGame(){
+
+    }
 }

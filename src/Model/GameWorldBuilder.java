@@ -16,7 +16,8 @@ public class GameWorldBuilder {
     // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
     // I think it may also make sense to still store these objects in an ArrayList as well, just in case
     
-    public Map <String, Item> createGameItems() {
+    public Map <String, Item> createGameItems(String itemFile)
+            throws FileNotFoundException {
         Map<String, Item> itemsByID = new HashMap<>();
         //read the Items.txt file and create Item objects, storing the objects in the HashMap with the itemID as the key
         List<Item> gameItems = new ArrayList<>();
@@ -25,7 +26,8 @@ public class GameWorldBuilder {
         return itemsByID;
     }
 
-    public Map <String, Puzzle> createGamePuzzles() {
+    public Map <String, Puzzle> createGamePuzzles(String puzzleFile)
+            throws FileNotFoundException {
         Map<String, Puzzle> puzzlesByID = new HashMap<>();
         //read the Puzzles.txt file and create Puzzle objects, storing the objects in the HashMap with the puzzleID as the key
         List<Puzzle> gamePuzzles = new ArrayList<>();
@@ -34,7 +36,8 @@ public class GameWorldBuilder {
         return puzzlesByID;
     }
 
-    public Map <String, Monster> createGameMonsters(){
+    public Map <String, Monster> createGameMonsters(String monsterFile)
+            throws FileNotFoundException {
         Map<String, Monster> monstersByID = new HashMap<>();
         //read the Monsters.txt file and create Monster objects, storing the objects in the HashMap with the monsterID as the key
         List<Monster> gameMonsters = new ArrayList<>();
@@ -65,7 +68,7 @@ public class GameWorldBuilder {
             String roomName = data[1].trim();
             String roomDescription = data[2].trim();
 
-            //create the Room objects, then ad them to the GameMap
+            //create the Room objects, then add them to the GameMap
             Room room = new Room(roomID, roomName, roomDescription);
             gameMap.put(roomID, room);
         }
@@ -105,8 +108,8 @@ public class GameWorldBuilder {
             }
 
             //The room object is instantiated with an ID, name, description, inventory, and adjacent Room exits
-            //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the corresponding
-            //object and add it to the appropriate room
+            //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the
+            // corresponding object and add it to the appropriate room
             Room room = new Room(roomID, roomName, roomDescription, roomItems, adjacentRooms);
 
             List<String> roomMonsterIDs = new ArrayList<>();
