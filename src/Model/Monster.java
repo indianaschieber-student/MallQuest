@@ -26,7 +26,7 @@ public class Monster {
 
     // Creates a monster with its information, stats, and attacks
     // GameWorldBuilder will provide the attacks through the constructor
-    public Monster(String id, String name, String description, String locationFound, int lvl, int maxHp, int attack, ArrayList<MonsterAttack> attacks) {
+    public Monster(String id, String name, String description, String locationFound, int lvl, int maxHp, ArrayList<MonsterAttack> attacks) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -39,7 +39,6 @@ public class Monster {
         this.lvl = lvl;
         this.hp = maxHp;
         this.maxHp = maxHp;
-        this.attack = attack;
 
         // MFR2 & MFR5 - Starting combat conditions
         this.status = "None";

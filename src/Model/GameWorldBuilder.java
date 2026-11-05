@@ -34,12 +34,108 @@ public class GameWorldBuilder {
         return puzzlesByID;
     }
 
-    public Map <String, Monster> createGameMonsters(){
+    // Reads MonsterAttacks.txt and stores each attack by its ID.
+    public Map<String, MonsterAttack> createMonsterAttacks()
+            throws FileNotFoundException {
+
+        Map<String, MonsterAttack> attacksByID = new HashMap<>();
+
+        File file = new File("MonsterAttacks.txt");
+        Scanner fileReader = new Scanner(file);
+
+        while (fileReader.hasNextLine()) {
+            String line = fileReader.nextLine().trim();
+
+            // Skip empty lines and comments.
+            if (line.isEmpty() || line.startsWith("#")) {
+                continue;
+            }
+
+            String[] data = line.split("\\|", -1);
+
+            if (data.length != 5) {
+                System.out.println("Invalid attack data: " + line);
+                continue;
+            }
+
+            String id = data[0].trim();
+            String name = data[1].trim();
+            int damage = Integer.parseInt(data[2].trim());
+            String description = data[3].trim();
+            String effect = data[4].trim();
+
+            MonsterAttack newAttack = new MonsterAttack(id, name, damage, description, effect);
+
+            attacksByID.put(id, newAttack);
+        }
+
+        fileReader.close();
+        return attacksByID;
+    }
+
+
+    public Map<String, Monster> createGameMonsters()
+            throws FileNotFoundException {
+
         Map<String, Monster> monstersByID = new HashMap<>();
-        //read the Monsters.txt file and create Monster objects, storing the objects in the HashMap with the monsterID as the key
-        List<Monster> gameMonsters = new ArrayList<>();
-        // Optionally, the Monster objects can also be stored in an ArrayList for easy iteration,
-        // but the HashMap will allow for quick retrieval by ID
+
+        // Load all monster attacks first.
+        Map<String, MonsterAttack> attacksByID =
+                createMonsterAttacks();
+
+        File file = new File("Monsters.txt");
+        Scanner fileReader = new Scanner(file);
+
+        while (fileReader.hasNextLine()) {
+            String line = fileReader.nextLine().trim();
+
+            // Skip blank lines and comments.
+            if (line.isEmpty() || line.startsWith("#")) {
+                continue;
+            }
+
+            String[] data = line.split("\\|", -1);
+
+            // ID, Name, Description, Location, Level, HP, AttackIDs
+            if (data.length != 7) {
+
+                System.out.println("Invalid monster data: " + line);
+                continue;
+            }
+
+            String id = data[0].trim();
+            String name = data[1].trim();
+            String description = data[2].trim();
+            String locationFound = data[3].trim();
+
+            int lvl = Integer.parseInt(data[4].trim());
+            int maxHp = Integer.parseInt(data[5].trim());
+
+            ArrayList<MonsterAttack> monsterAttacks = new ArrayList<>();
+
+            String[] attackIDs = data[6].split(",");
+
+            for (String attackID : attackIDs) {
+                attackID = attackID.trim();
+
+                MonsterAttack monsterAttack = attacksByID.get(attackID);
+
+                if (monsterAttack != null) {
+                    monsterAttacks.add(monsterAttack);
+
+                }
+                else {
+                    System.out.println("Missing attack " + attackID + " for monster " + id);
+                }
+            }
+
+            Monster newMonster = new Monster(id, name, description, locationFound, lvl, maxHp, monsterAttacks);
+
+            monstersByID.put(id, newMonster);
+        }
+
+        fileReader.close();
+
         return monstersByID;
     }
 
