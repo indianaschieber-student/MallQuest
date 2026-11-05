@@ -16,23 +16,43 @@ public class GameWorldBuilder {
     // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
     // I think it may also make sense to still store these objects in an ArrayList as well, just in case
     
-    public Map <String, Item> createGameItems() {
-        Map<String, Item> itemsByID = new HashMap<>();
-        //read the Items.txt file and create Item objects, storing the objects in the HashMap with the itemID as the key
-        List<Item> gameItems = new ArrayList<>();
-        // Optionally, the Item objects can also be stored in an ArrayList for easy iteration,
-        // but the HashMap will allow for quick retrieval by ID
-        return itemsByID;
+    public Map<String, Item> createGameItems(String itemFile) throws FileNotFoundException {
+    Map<String, Item> itemsByID = new HashMap<>();
+    File file = new File(itemFile);
+    if (!file.exists()) return itemsByID;
+    
+    Scanner scanner = new Scanner(file);
+    while (scanner.hasNextLine()) {
+        String line = scanner.nextLine().trim();
+        if (line.isEmpty() || line.startsWith("#")) continue;
+        
+        String[] data = line.split("\\|", -1);
+        if (data.length >= 5) {
+            String itemID = data[0].trim();
+            String category = data[1].trim();
+            String name = data[2].trim();
+            String description = data[3].trim();
+            String locationFound = data[4].trim();
+            
+            // Assuming a base Item constructor or subclass instantiation based on category
+            Item item = new Item(itemID, name, description, locationFound);
+            itemsByID.put(itemID, item);
+        }
     }
+    scanner.close();
+    return itemsByID;
+}
 
-    public Map <String, Puzzle> createGamePuzzles() {
-        Map<String, Puzzle> puzzlesByID = new HashMap<>();
-        //read the Puzzles.txt file and create Puzzle objects, storing the objects in the HashMap with the puzzleID as the key
-        List<Puzzle> gamePuzzles = new ArrayList<>();
-        // Optionally, the Puzzle objects can also be stored in an ArrayList for easy iteration,
-        // but the HashMap will allow for quick retrieval by ID
-        return puzzlesByID;
+public Map<String, Puzzle> createGamePuzzles(String puzzleFile) {
+    Map<String, Puzzle> puzzlesByID = new HashMap<>();
+    try {
+        // Leverages the loadFromFile method already built into your Puzzle class!
+        puzzlesByID.putAll(Puzzle.loadFromFile(puzzleFile));
+    } catch (IOException e) {
+        System.out.println("Could not load puzzle file: " + puzzleFile);
     }
+    return puzzlesByID;
+}
 
     public Map <String, Monster> createGameMonsters(){
         Map<String, Monster> monstersByID = new HashMap<>();
