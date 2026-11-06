@@ -16,13 +16,15 @@ public class GameWorldBuilder {
     // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
     // I think it may also make sense to still store these objects in an ArrayList as well, just in case
     
-    public Map<String, Item> createGameItems(String itemFile) throws FileNotFoundException {
-    Map<String, Item> itemsByID = new HashMap<>();
-    File file = new File(itemFile);
-    if (!file.exists()) return itemsByID;
+
+    public Map<String, Item> createGameItems(String itemFile) 
+            throws FileNotFoundException {
+      Map<String, Item> itemsByID = new HashMap<>();
+      File file = new File(itemFile);
+      if (!file.exists()) return itemsByID;
     
-    Scanner scanner = new Scanner(file);
-    while (scanner.hasNextLine()) {
+      Scanner scanner = new Scanner(file);
+      while (scanner.hasNextLine()) {
         String line = scanner.nextLine().trim();
         if (line.isEmpty() || line.startsWith("#")) continue;
         
@@ -39,18 +41,19 @@ public class GameWorldBuilder {
     }
     scanner.close();
     return itemsByID;
-}
+  }
 
-public Map<String, Puzzle> createGamePuzzles(String puzzleFile) {
-    Map<String, Puzzle> puzzlesByID = new HashMap<>();
-    try {
+  public Map<String, Puzzle> createGamePuzzles(String puzzleFile) 
+          throws FileNotFoundException {
+      Map<String, Puzzle> puzzlesByID = new HashMap<>();
+      try {
         // Leverages the loadFromFile method already built into your Puzzle class!
         puzzlesByID.putAll(Puzzle.loadFromFile(puzzleFile));
-    } catch (IOException e) {
+      } catch (IOException e) {
         System.out.println("Could not load puzzle file: " + puzzleFile);
     }
     return puzzlesByID;
-}
+  }
 
     // Reads MonsterAttacks.txt and stores each attack by its ID.
     public Map<String, MonsterAttack> createMonsterAttacks()
@@ -95,6 +98,8 @@ public Map<String, Puzzle> createGamePuzzles(String puzzleFile) {
     public Map<String, Monster> createGameMonsters()
             throws FileNotFoundException {
 
+    public Map <String, Monster> createGameMonsters(String monsterFile)
+            throws FileNotFoundException {
         Map<String, Monster> monstersByID = new HashMap<>();
 
         // Load all monster attacks first.
@@ -179,7 +184,7 @@ public Map<String, Puzzle> createGamePuzzles(String puzzleFile) {
             String roomName = data[1].trim();
             String roomDescription = data[2].trim();
 
-            //create the Room objects, then ad them to the GameMap
+            //create the Room objects, then add them to the GameMap
             Room room = new Room(roomID, roomName, roomDescription);
             gameMap.put(roomID, room);
         }
@@ -219,8 +224,8 @@ public Map<String, Puzzle> createGamePuzzles(String puzzleFile) {
             }
 
             //The room object is instantiated with an ID, name, description, inventory, and adjacent Room exits
-            //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the corresponding
-            //object and add it to the appropriate room
+            //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the
+            // corresponding object and add it to the appropriate room
             Room room = new Room(roomID, roomName, roomDescription, roomItems, adjacentRooms);
 
             List<String> roomMonsterIDs = new ArrayList<>();
@@ -231,7 +236,7 @@ public Map<String, Puzzle> createGamePuzzles(String puzzleFile) {
                 Random rand = new Random();
                 int randomIndex = rand.nextInt(roomMonsterIDs.size());
 
-                Monster roomMonster = monstersByID.get(roomMonsterIDs);
+                Monster roomMonster = monstersByID.get(roomMonsterIDs.get(randomIndex));
 
                 room.addMonster(roomMonster);
             }
