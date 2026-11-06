@@ -76,4 +76,10 @@ public class Room {
         return roomExits;
     }
 
+    public String getRoomDescription(){
+        return roomDescription;
+    }
+    public String getRoomName(){
+        return roomName;
+    }
 }

@@ -1,3 +1,4 @@
+#RoomID|RoomName|RoomDescription|Adjacent Room RoomIDs|ItemIDs|MonsterIDs|PuzzleID
 F2AM|Abercrombie And Mitch|Room Desc.|F01H,B02H|W002,W003,W004,CI001,CI008,CI002,LI002|MST001,MST005,MST006|PZ2
 F2FS|Foot Stalker|Room Desc.|F01H,B04H|W005,W006,CI010,QI001,LI003,LI004|MST012|PZ14
 F2JS|Tiffany & Jo|Room Desc.|F01H,B02H|W007,W008,QI001,LI005|MST006,MST015,MST004|PZ3
@@ -18,7 +19,7 @@ F1CVS|C-Vous-Say Pharmacy|Room Desc.|F03H,B09H|CI007,CI008,CI018,QI001||
 F1TU|Toys B US|Room Desc.|F03H,B09H|CI009,QI001,LI006|MST007,MST009,MST005,MST003|PZ4
 F3AS|All Sportz|Room Desc.|F02H,B08H|CI002,QI001|MST007,MST004,MST019,MST013|PuzzleID
 F1CSI|Informational Service Room|Room Desc.|F01H,B06H|||
-F01H|Floor 1 Hallway|Room Desc.|F2AM,F2FS,F2JS,F2BB,F2DP,F2SOB,F2BS,F2OG,F02H,F03H|||
+F01H|Floor 1 Hallway|The main floor of the mall. It’s busy with Families and kids running around either shopping or trying to solve the puzzles in stores. \To your Right: Daisy Penny, Salon of Beauty, Stairs leading down, Big Cutz, and Old But Gold. \To your left: Abercombie and Mitch, Foot Stalker, Stairs leading up, Tiffany & Jo, and Buy Better.|F2AM,F2FS,F2JS,F2BB,F2DP,F2SOB,F2BS,F2OG,F02H,F03H|||
 F02H|Floor 2 Hallway|Room Desc.|F01H,F2TD,F2SH,F2KMT,F3AS,EX01|||
 F03H|Ground Floor Hallway|Room Desc.|F01H,F1CX,F1IG,F1CSI,F1MFC,F1CVS,F1TU,F1FF,F1MB|||
 B01H|Buy Better Back Hallway|Room Desc.|F2BB,F2AM|||

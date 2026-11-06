@@ -26,18 +26,38 @@ public class GameController {
         view.printMessage("Hello, " + model.getPlayerName() + "!\n" +
                         "Welcome to Mall Quest, the Text-Based Adventure Game where you play as a child lost in a shopping mall.\n" +
                         "You must solve puzzles in order to collect 10 Escape Room Stamps and leave through the Exit on the top floor of the mall.\n" +
-                        "Enter the name of an adjacent room to walk to it, or enter 'Help' to see a list of player commands.\n +
+                        "Enter the name of an adjacent room to walk to it, or enter 'Help' to see a list of player commands.\n" +
                         "We here at Kirva Shopping Mall wish you the best of luck on your Mall Quest!");
         isPlaying = true;
         while (isPlaying == true){
-            isPlaying = false;
+            //create a variable to store the player's current room, then pull the name and description
+            //Room currentRoom = model.getCurrentRoom();
+            String roomDesc = model.getCurrentRoomDescription();
+            String roomName = model.getCurrentRoomName();
+
+            //Print the name and description of the player's current room
+            view.printRoomName(roomName);
+            view.printRoomDescription(roomDesc);
+            //Prompt the player for input
+            String command = view.promptForCommand();
+            this.parseCommand(command);
+            //isPlaying = false;
         }
     }
 
+    //Parse commmand method for general use, while not in combat or solving a puzzle
+    public void parseCommand(String command) {
 
-    public String parseCommand() {
+        //First, check to see if the command the player entered is the name of an adjacent room
+        //Note to self: add in switch statements to allow the player to enter room abbreviations if time allows
+        if (model.movePlayerToRoom(command)) {
+            return;
+        }
 
-        return "" ;
+        else{
+            view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
+                    "see a full list of commands.");
+        }
 
     }
 

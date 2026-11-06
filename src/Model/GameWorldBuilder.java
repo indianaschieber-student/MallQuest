@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -94,10 +95,6 @@ public class GameWorldBuilder {
         return attacksByID;
     }
 
-
-    public Map<String, Monster> createGameMonsters()
-            throws FileNotFoundException {
-
     public Map <String, Monster> createGameMonsters(String monsterFile)
             throws FileNotFoundException {
         Map<String, Monster> monstersByID = new HashMap<>();
@@ -178,6 +175,7 @@ public class GameWorldBuilder {
         //pass 1 to create initial Room objects with only the roomID, roomName, and roomDescription
         while (fileScanner.hasNextLine()) {
             String line = fileScanner.nextLine().trim();
+            if (line.isEmpty() || line.startsWith("#")) continue; //ignore blank lines, use # to comment out a line
             String[] data = line.split("\\|");
 
             String roomID = data[0].trim();

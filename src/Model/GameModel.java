@@ -81,4 +81,29 @@ public class GameModel {
     public String getPlayerName(){
         return player1.getPlayerName();
     }
+    public Room getCurrentRoom() {
+        Room currentRoom = player1.getPlayerRoom();
+        return currentRoom;
+    }
+    public String getCurrentRoomDescription(){
+        Room currentRoom = player1.getPlayerRoom();
+        return currentRoom.getRoomDescription();
+    }
+    public String getCurrentRoomName(){
+        Room currentRoom = player1.getPlayerRoom();
+        return currentRoom.getRoomName();
+    }
+    //method for moving the player. Accepts a string that represents a room name. If the room name matches
+    //the name of a room in the list of adjacent rooms, the player will move there
+    public boolean movePlayerToRoom(String roomName){
+        //For loop checks the list of adjacent rooms for the player's current room
+        //If the name the player entered is the same as the name of a room in the list,
+        // the player will move to that room
+        for (Room exit : player1.getPlayerRoom().getRoomExits()){
+            if (exit.getRoomName().equalsIgnoreCase(roomName.trim())){
+                return player1.movePlayer(exit, gameMap);
+            }
+        }
+        return false;
+    }
 }
