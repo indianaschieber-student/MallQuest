@@ -78,4 +78,7 @@ public class GameModel {
     public void setPlayerName(String name) {
         player1.setPlayerName(name);
     }
+    public String getPlayerName(){
+        return player1.getPlayerName();
+    }
 }

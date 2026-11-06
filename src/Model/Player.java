@@ -35,7 +35,12 @@ public class Player {
         return this.name;
     }
     public void setPlayerName(String name){
-        this.name = name;
+        if(name == null || name.isEmpty()){
+            this.name ="Kid McRealName";
+        }
+        else{
+            this.name = name;
+        }
     }
 
     //The method returns true if the player levels up, false if not. This may be redundant, in which case
