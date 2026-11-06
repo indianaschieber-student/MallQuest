@@ -1,34 +1,34 @@
-F2AM|Abercrombie And Mitch|Abercrombie and Mitch, a place that reeks of Axe Body Spray and is usually dimly lit. It looks like the teenagers who typically run the store put in just as much effort in decorating for today as they would with any other task: absolute bare minimum. The store is decorated only with some balloons, and a broken mannequin. You can hear the ghostly wails of recently dumped highschoolers, which you decide adds to an attempt of a creepy vibe. You see that they have created a “maze” using their clothing racks, with a sign barely hanging from the broken centerpiece mannequin. The sign only reads “Make it to the end. Get a stamp. Get a coupon. Boo.” The maze has two separate paths: A hallway of shirt racks leading to the left, or a chasm of skinny jeans tables going into the center of the store.|F01H,B02H|W002,W003,W004,CI001,CI008,CI002,LI002|MST006|PZ2
-F2FS|Foot Stalker|This shoe store is surprisingly dim, with towering shelves of shoeboxes arranged like a labyrinth. It clearly operates on a fully self-serve model. There is no deafening music here, only the sound of your own footsteps. Soon, you will notice a creepy phenomenon: the sole sales clerk here is following you. He never initiates conversation and always maintains a precise distance. When you turn around or think you've lost him, he might be standing quietly in the shadows ahead, just watching you. It's hard to tell if he is friend or foe—whenever you pass by the full-length mirrors in the store, you inexplicably take damage; but sometimes, when you are lost among the rows of shoe racks, he quietly leaves health recovery items or crucial clues on the floor for you. By the way, absolutely do not trust the illuminated red "EXIT" door at the end of the hall. The real exit to this store is actually hidden underneath an ordinary-looking ottoman used for trying on shoes. elves of shoeboxes arranged like a labyrinth. It clearly operates on a fully self-serve model. There is no deafening music here, only the sound of your own footsteps. Soon, you will notice a creepy phenomenon: the sole sales clerk here is following you. He never initiates conversation and always maintains a precise distance. When you turn around or think you've lost him, he might be standing quietly in the shadows ahead, just watching you. It's hard to tell if he is friend or foe—whenever you pass by the full-length mirrors in the store, you inexplicably take damage; but sometimes, when you are lost among the rows of shoe racks, he quietly leaves health recovery items or crucial clues on the floor for you. By the way, absolutely do not trust the illuminated red "EXIT" door at the end of the hall. The real exit to this store is actually hidden underneath an ordinary-looking ottoman used for trying on shoes.|F01H,B04H|W005,W006,CI010,QI001,LI003,LI004|MST012|PZ14
+F2AM|Abercrombie And Mitch|Room Desc.|F01H,B02H|W002,W003,W004,CI001,CI008,CI002,LI002|MST001,MST005,MST006|PZ2
+F2FS|Foot Stalker|Room Desc.|F01H,B04H|W005,W006,CI010,QI001,LI003,LI004|MST012|PZ14
 F2JS|Tiffany & Jo|Room Desc.|F01H,B02H|W007,W008,QI001,LI005|MST006,MST015,MST004|PZ3
-F2BB|Buy Better|Room Desc.|F01H,B01H|CI004,CI005,QI001,QI002,LI001|MST006,MST007,MST004|PZ5
-F1MB|A Million Books|Room Desc.|
-F2DP|Daisy Penny||Room Desc.|F01H,BO3H|
-F1CX|Chublix|Room Desc.|
-F1MFC|Kavris Food Court|
-F1IG|Infinite Grind|Room Desc.|
+F2BB|Buy Better|Room Desc.|F01H,B01H|CI004,CI005,QI001,QI002,LI001|MST015,MST010,MST006,MST007,MST004|PZ1
+F1MB|A Million Books|Room Desc.|F03H,B03H|W001,CI001,CI004,QI001,LI007|MST002,MST004,MST013,MST010|PZ5
+F2DP|Daisy Penny|Room Desc.|F01H,BO4H|CI004,LI008|MST002,MST004,MST015,MST010|PZ6
+F1CX|Chublix|Room Desc.|F03H,B05H|CI008,CI004,QI001,LI013|MST006,MST002,MST003,MST015|PZ7
+F1MFC|Kavris Food Court|Room Desc.|F03H,B03H|CI008,CI005,QI001|MST003,MST015,MST022,MST006|PZ8
+F1IG|Infinite Grind|Room Desc.|F03H,B06H|W009,CI011,CI012,QI001,LI009|MST022,MST006|PZ15
 F2SH|Sky-High Doom|Room Desc.|F02H,B07H|CI008,CI013,CI014,QI001,LI010|MST023|
-F1FF|Fatal Flora|Room Desc.|
-F2KMT|Kavris Movie Theater|Room Desc.|
-F2TD|Token of Despair|Room Desc.|
-F2SOB|Salon of Beauty|Room Desc.|F01H,
-F2BS|Big Cutz|Room Desc.|F01H,
-F2OG|Old But Gold|Room Desc.|F01H,
-F1CVS|C-Vous-Say Pharmacy|Room Desc.|
-F1TU|Toys B US|Room Desc.|
-F3AS|All Sportz|Room Desc.|
-F1CSI|Informational Service Room|Room Desc.|F01H,
-F01H|Floor 1 Hallway|Room Desc.|
-F02H|Floor 2 Hallway|Room Desc.|
-F03H|Ground Floor Hallway|Room Desc.|
-B01H|Buy Better Back Hallway|Room Desc.|
-B02H|Old But Gold Back Hallway|Room Desc.|
-B03H|Kavris Food Court Back Hallway|Room Desc.|
-B04H|Foot Stalker Back Hallway|Room Desc.|
-B05H|Chublix Back Hallway|Room Desc.|
-BO6H|Infinite Grind Back Hallway|Room Desc.|
-B07H|Sky-High Doom Back Hallway|Room Desc.|
-B08H|All Sportz Back Hallway|Room Desc.|
-B09H|Toys B Us Back Hallway|Room Desc.|
-B10H|Big Cutz Back Hallway|Room Desc.|
-EX01|The Exit|The exit of the mall is blocked by a man cloaked in shadows. He guards the door, his hand extended to take the 10 tickets required for you to pass.|
+F1FF|Fatal Flora|Room Desc.|F03H,B05H|W010,CI015,CI016,QI001|MST017|PZ16
+F2KMT|Kavris Movie Theater|Room Desc.|F02H,B07H|CI008,QI001|MST019,MST005,MST008,MST003|PZ9
+F2TD|Token of Despair|Room Desc.|F02H,B08H|W011.W012,CI017,QI001,LI012|MST020,MST011,MST006|PZ17
+F2SOB|Salon of Beauty|Room Desc.|F01H,B10H|CI008,QI001,LI014|MST003,MST005,MST001|PZ10
+F2BS|Big Cutz|Room Desc.|F01H,B10H|CI004,CI008,CI002,QI001,LI015|MST014,MST022,MST007|PZ11
+F2OG|Old But Gold|Room Desc.|F01H,B02H|CI008,QI001,LI016|MST002,MST004,MST019|PZ12
+F1CVS|C-Vous-Say Pharmacy|Room Desc.|F03H,B09H|CI007,CI008,CI018,QI001||
+F1TU|Toys B US|Room Desc.|F03H,B09H|CI009,QI001,LI006|MST007,MST009,MST005,MST003|PZ4
+F3AS|All Sportz|Room Desc.|F02H,B08H|CI002,QI001|MST007,MST004,MST019,MST013|PuzzleID
+F1CSI|Informational Service Room|Room Desc.|F01H,B06H|||
+F01H|Floor 1 Hallway|Room Desc.|F2AM,F2FS,F2JS,F2BB,F2DP,F2SOB,F2BS,F2OG,F02H,F03H|||
+F02H|Floor 2 Hallway|Room Desc.|F01H,F2TD,F2SH,F2KMT,F3AS,EX01|||
+F03H|Ground Floor Hallway|Room Desc.|F01H,F1CX,F1IG,F1CSI,F1MFC,F1CVS,F1TU,F1FF,F1MB|||
+B01H|Buy Better Back Hallway|Room Desc.|F2BB,F2AM|||
+B02H|Old But Gold Back Hallway|Room Desc.|F2OG,F2JS|||
+B03H|Kavris Food Court Back Hallway|Room Desc.|F1MFC,F1MB|||
+B04H|Foot Stalker Back Hallway|Room Desc.|F2FS,F2DP|||
+B05H|Chublix Back Hallway|Room Desc.|F1FF,F1CX|||
+BO6H|Infinite Grind Back Hallway|Room Desc.|F1IG,F1CSI|||
+B07H|Sky-High Doom Back Hallway|Room Desc.|F2SH,F2KMT|||
+B08H|All Sportz Back Hallway|Room Desc.|F2TD,F3AS|||
+B09H|Toys B Us Back Hallway|Room Desc.|F1CVS,F1TU|||
+B10H|Big Cutz Back Hallway|Room Desc.|F2SOB,F2BS|||
+EX01|The Exit|The exit of the mall is blocked by a man cloaked in shadows. He guards the door, his hand extended to take the 10 tickets required for you to pass.|F02H||MST024|

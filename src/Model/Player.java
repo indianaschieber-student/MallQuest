@@ -2,6 +2,8 @@ package Model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Player {
     private String name;
@@ -16,7 +18,7 @@ public class Player {
     private int baseAttack;
 
     //Constructor for the player. Base XP is set to 0 and Level is 1.
-    //I will go back and double-check the SRS, base HP is 100 and base attack is 10 at lvl 1
+    // base HP is 100 and base attack is 10 at lvl 1
     // plus 10HP and plus 5 Attack per level
     //previousRoom is null by default, and so is the player's name. This is because the game should prompt
     // the player for their name only at the very start of a new session
@@ -62,9 +64,24 @@ public class Player {
         return levelUpMsg;
     }
 
+    public Room getPlayerRoom(){
+        return this.currentRoom;
+    }
+    public Room getPreviousPlayerRoom(){
+        return this.previousRoom;
+    }
+
     //method to attempt to move. Returns true for a valid move, false for an invalid move
-    public boolean movePlayer(Room room){
-        return true;
+    public boolean movePlayer(Room destination, Map<String, Room> gameMap){
+
+        //check to see if the destination room is adjacent to the current room
+        if (this.currentRoom.getRoomExits().contains(destination)){
+            Room tempRoom = this.currentRoom;
+            this.currentRoom = destination;
+            this.previousRoom = tempRoom;
+            return true;
+        }
+        else return false;
     }
 
 }

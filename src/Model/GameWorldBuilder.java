@@ -194,7 +194,7 @@ public class GameWorldBuilder {
         //pass 2 to add the connections, items, monsters, and puzzles to the Room objects
         while (fileScanner2.hasNextLine()) {
             String line = fileScanner2.nextLine().trim();
-            String[] data = line.split("\\|");
+            String[] data = line.split("\\|",-1);
 
             String roomID = data[0].trim();
             String roomName = data[1].trim();
@@ -215,13 +215,17 @@ public class GameWorldBuilder {
             //Pulls the Item IDs from the text file into an ArrayList, then creates a list of corresponding Item
             // objects, using the HashMap itemsByID as a reference
             ArrayList<String> roomItemIDs = new ArrayList<>();
-            for (String id : data[4].trim().split(",")) {
-                roomItemIDs.add(id.trim());
-            }
             ArrayList<Item> roomItems = new ArrayList<>();
-            for (String id : roomItemIDs) {
-                Item item = itemsByID.get(id);
+            if(!(data[4].isBlank())){
+                for (String id : data[4].trim().split(",")) {
+                    roomItemIDs.add(id.trim());
+                }
+                for (String id : roomItemIDs) {
+                    Item item = itemsByID.get(id);
+                    roomItems.add(item);
+                }
             }
+
 
             //The room object is instantiated with an ID, name, description, inventory, and adjacent Room exits
             //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the
@@ -229,7 +233,7 @@ public class GameWorldBuilder {
             Room room = new Room(roomID, roomName, roomDescription, roomItems, adjacentRooms);
 
             List<String> roomMonsterIDs = new ArrayList<>();
-            if(data[5] != null){
+            if(!(data[5] .isBlank())){
                 for (String id : data[5].trim().split(",")) {
                     roomMonsterIDs.add(id.trim());
                 }
@@ -241,7 +245,7 @@ public class GameWorldBuilder {
                 room.addMonster(roomMonster);
             }
 
-            if(data[6] != null){
+            if(!(data[6].isBlank())){
                 String puzzleID = data[6].trim();
 
                 Puzzle roomPuzzle = puzzlesByID.get(puzzleID);
