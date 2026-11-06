@@ -16,33 +16,149 @@ public class GameWorldBuilder {
     // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
     // I think it may also make sense to still store these objects in an ArrayList as well, just in case
     
-    public Map <String, Item> createGameItems(String itemFile)
+
+    public Map<String, Item> createGameItems(String itemFile) 
             throws FileNotFoundException {
-        Map<String, Item> itemsByID = new HashMap<>();
-        //read the Items.txt file and create Item objects, storing the objects in the HashMap with the itemID as the key
-        List<Item> gameItems = new ArrayList<>();
-        // Optionally, the Item objects can also be stored in an ArrayList for easy iteration,
-        // but the HashMap will allow for quick retrieval by ID
-        return itemsByID;
+      Map<String, Item> itemsByID = new HashMap<>();
+      File file = new File(itemFile);
+      if (!file.exists()) return itemsByID;
+    
+      Scanner scanner = new Scanner(file);
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine().trim();
+        if (line.isEmpty() || line.startsWith("#")) continue;
+        
+        String[] data = line.split("\\|", -1);
+        if (data.length >= 4) {
+            String itemID = data[0].trim();
+            String category = data[1].trim();
+            String name = data[2].trim();
+            String description = data[3].trim();
+            
+            Item item = new Item(itemID, category, name, description);
+            itemsByID.put(itemID, item);
+        }
+    }
+    scanner.close();
+    return itemsByID;
+  }
+
+  public Map<String, Puzzle> createGamePuzzles(String puzzleFile) 
+          throws FileNotFoundException {
+      Map<String, Puzzle> puzzlesByID = new HashMap<>();
+      try {
+        // Leverages the loadFromFile method already built into your Puzzle class!
+        puzzlesByID.putAll(Puzzle.loadFromFile(puzzleFile));
+      } catch (IOException e) {
+        System.out.println("Could not load puzzle file: " + puzzleFile);
+    }
+    return puzzlesByID;
+  }
+
+    // Reads MonsterAttacks.txt and stores each attack by its ID.
+    public Map<String, MonsterAttack> createMonsterAttacks()
+            throws FileNotFoundException {
+
+        Map<String, MonsterAttack> attacksByID = new HashMap<>();
+
+        File file = new File("MonsterAttacks.txt");
+        Scanner fileReader = new Scanner(file);
+
+        while (fileReader.hasNextLine()) {
+            String line = fileReader.nextLine().trim();
+
+            // Skip empty lines and comments.
+            if (line.isEmpty() || line.startsWith("#")) {
+                continue;
+            }
+
+            String[] data = line.split("\\|", -1);
+
+            if (data.length != 5) {
+                System.out.println("Invalid attack data: " + line);
+                continue;
+            }
+
+            String id = data[0].trim();
+            String name = data[1].trim();
+            int damage = Integer.parseInt(data[2].trim());
+            String description = data[3].trim();
+            String effect = data[4].trim();
+
+            MonsterAttack newAttack = new MonsterAttack(id, name, damage, description, effect);
+
+            attacksByID.put(id, newAttack);
+        }
+
+        fileReader.close();
+        return attacksByID;
     }
 
-    public Map <String, Puzzle> createGamePuzzles(String puzzleFile)
+
+    public Map<String, Monster> createGameMonsters()
             throws FileNotFoundException {
-        Map<String, Puzzle> puzzlesByID = new HashMap<>();
-        //read the Puzzles.txt file and create Puzzle objects, storing the objects in the HashMap with the puzzleID as the key
-        List<Puzzle> gamePuzzles = new ArrayList<>();
-        // Optionally, the Puzzle objects can also be stored in an ArrayList for easy iteration,
-        // but the HashMap will allow for quick retrieval by ID
-        return puzzlesByID;
-    }
 
     public Map <String, Monster> createGameMonsters(String monsterFile)
             throws FileNotFoundException {
         Map<String, Monster> monstersByID = new HashMap<>();
-        //read the Monsters.txt file and create Monster objects, storing the objects in the HashMap with the monsterID as the key
-        List<Monster> gameMonsters = new ArrayList<>();
-        // Optionally, the Monster objects can also be stored in an ArrayList for easy iteration,
-        // but the HashMap will allow for quick retrieval by ID
+
+        // Load all monster attacks first.
+        Map<String, MonsterAttack> attacksByID =
+                createMonsterAttacks();
+
+        File file = new File("Monsters.txt");
+        Scanner fileReader = new Scanner(file);
+
+        while (fileReader.hasNextLine()) {
+            String line = fileReader.nextLine().trim();
+
+            // Skip blank lines and comments.
+            if (line.isEmpty() || line.startsWith("#")) {
+                continue;
+            }
+
+            String[] data = line.split("\\|", -1);
+
+            // ID, Name, Description, Location, Level, HP, AttackIDs
+            if (data.length != 7) {
+
+                System.out.println("Invalid monster data: " + line);
+                continue;
+            }
+
+            String id = data[0].trim();
+            String name = data[1].trim();
+            String description = data[2].trim();
+            String locationFound = data[3].trim();
+
+            int lvl = Integer.parseInt(data[4].trim());
+            int maxHp = Integer.parseInt(data[5].trim());
+
+            ArrayList<MonsterAttack> monsterAttacks = new ArrayList<>();
+
+            String[] attackIDs = data[6].split(",");
+
+            for (String attackID : attackIDs) {
+                attackID = attackID.trim();
+
+                MonsterAttack monsterAttack = attacksByID.get(attackID);
+
+                if (monsterAttack != null) {
+                    monsterAttacks.add(monsterAttack);
+
+                }
+                else {
+                    System.out.println("Missing attack " + attackID + " for monster " + id);
+                }
+            }
+
+            Monster newMonster = new Monster(id, name, description, locationFound, lvl, maxHp, monsterAttacks);
+
+            monstersByID.put(id, newMonster);
+        }
+
+        fileReader.close();
+
         return monstersByID;
     }
 
@@ -120,7 +236,7 @@ public class GameWorldBuilder {
                 Random rand = new Random();
                 int randomIndex = rand.nextInt(roomMonsterIDs.size());
 
-                Monster roomMonster = monstersByID.get(roomMonsterIDs);
+                Monster roomMonster = monstersByID.get(roomMonsterIDs.get(randomIndex));
 
                 room.addMonster(roomMonster);
             }
