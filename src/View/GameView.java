@@ -5,6 +5,11 @@ public class GameView {
         System.out.println(msg);
     }*/
 
+    /*public void getPlayerInput(){
+
+    }
+     */
+
     /*public void printRoomDescription(String roomDescription) {
         System.out.println(roomDescription);
     }*/
