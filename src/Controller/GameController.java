@@ -41,6 +41,8 @@ public class GameController {
             //Prompt the player for input
             String command = view.promptForCommand();
             this.parseCommand(command);
+
+
             //isPlaying = false;
         }
     }
@@ -53,7 +55,75 @@ public class GameController {
         if (model.movePlayerToRoom(command)) {
             return;
         }
+        //Prints a list of commands
+        if (command.equalsIgnoreCase("HELP")){
+            //view.printCommandList();
+        }
+        //SRS says "Inspect" but I think "Explore" makes more sense.
+        //Shows Items, Monsters, Puzzles and Adjacent Rooms for the player's current room
+        //Also, the Inspect command can likely be used on Monsters, Puzzles, and Items and not rooms
+        if (command.equalsIgnoreCase("EXPLORE")){
 
+        }
+        //Displays a list of rooms the player has visited
+        if (command.equalsIgnoreCase("MAP")){
+
+        }
+        //Re-prints a Room's Description
+        if (command.equalsIgnoreCase("LOOK")){
+
+        }
+        //Read Lore Items
+        if (command.startsWith("READ")){
+
+        }
+        //Interacts with an object in the room (e.g., puzzle elements, items).
+        //This is what the SRS says. I'm assuming it's only for items in our inventory though
+        //To be honest as I'm looking through the SRS a lot of the finer details of the game
+        // seem very unclear, so just use your discretion on this one I guess
+        if (command.startsWith("USE")){
+
+        }
+
+        //"SEARCH": Checks the room for hidden items or puzzle hints.
+        //This is what is written in the SRS for this command, but I honestly don't know what they mean by this.
+        //I don't think this command serves any purpose so we can probably just ignore it
+
+        //Check the player's inventory
+        if (command.equalsIgnoreCase("INVENTORY")){
+
+        }
+        //Take/Pickup items
+        if (command.startsWith("TAKE")||command.startsWith("PICKUP")){
+
+        }
+        //Drop items
+        if (command.startsWith("DROP")){
+
+        }
+        //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
+        // should ask for a hint while solving a puzzle, or before they solve the puzzle
+        // If so, there can be a separate method parsePuzzleCommand to handle that interaction
+        if (command.equalsIgnoreCase("SOLVE")){
+
+        }
+        //This block of code may be a little tricky. The SRS is somewhat unclear, but I think we need a command to inspect
+        // monsters and puzzles because there are two FR's for this. However, the Functional Requirements don't seem
+        // to have parity on how they want to enter commands. The monster FRs say you can use a number instead of typing a command
+        if (command.startsWith("INSPECT")){
+
+        }
+
+        /*if(Check Monster Status){
+
+        }*/
+
+        //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
+        if (command.equalsIgnoreCase("FIGHT")){
+
+        }
+
+        //This block should go at the very bottom, if the command is not recognized anywhere else
         else{
             view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
                     "see a full list of commands.");
