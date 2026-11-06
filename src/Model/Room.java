@@ -9,6 +9,7 @@ public class Room {
     private String roomDescription;
     private List<Item> roomInventory;
     private List<Room> roomExits;
+    private boolean isVisited;
     private Puzzle roomPuzzle;
     private Monster roomMonster;//this is a single monster and not an ArrayList because each room can only have one monster
 
@@ -23,6 +24,7 @@ public class Room {
         this.roomExits = new ArrayList<>();
         this.roomPuzzle = null; //initialize the puzzle to null, since not all rooms will have a puzzle
         this.roomMonster = null; //initialize the monster to null, since not all rooms will have a monster
+        this.isVisited = false; //this attribute defaults to false, indicating that the player hasn't visited the room yet
     }
     public Room(String roomID, String roomName, String roomDescription, List<Item> items, List<Room> rooms) {
         this.roomID = roomID;
@@ -31,7 +33,8 @@ public class Room {
         this.roomInventory = items;
         this.roomExits = rooms;
         this.roomPuzzle = null; //initialize the puzzle to null, since not all rooms will have a puzzle
-        this.roomMonster = null; //initialize the monster to null, since not all rooms will have a monster
+        this.roomMonster = null; //initialize the monster to null, since not all rooms will have a monster\
+        this.isVisited = false;
     }
 
     public boolean hasPuzzle() {
@@ -57,4 +60,20 @@ public class Room {
             roomMonster = monster;
         }
     }
+
+    public boolean isVisited(){
+        return isVisited();
+    }
+    public void markVisited(){
+        this.isVisited = true;
+    }
+
+    public String getRoomID(){
+        return this.roomID;
+    }
+
+    public List<Room> getRoomExits(){
+        return roomExits;
+    }
+
 }

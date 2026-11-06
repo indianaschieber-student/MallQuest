@@ -1,14 +1,23 @@
 package View;
 
-public class GameView {
-    /*public void printMessage(String msg) {
-        System.out.println(msg);
-    }*/
+import java.util.Scanner;
 
-    /*public void getPlayerInput(){
+public class GameView {
+    private final Scanner scanner = new Scanner(System.in);
+
+    //Constructor for the GameView
+    public GameView(){
 
     }
-     */
+    //Generic print message method
+    public void printMessage(String msg) {
+        System.out.println(msg);
+    }
+
+    public String promptForPlayerName(){
+        printMessage("Enter your name:");
+        return scanner.nextLine().trim();
+    }
 
     /*public void printRoomDescription(String roomDescription) {
         System.out.println(roomDescription);

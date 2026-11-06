@@ -12,7 +12,7 @@ public class GameModel {
     private Map<String,Puzzle> gamePuzzles;
     private Map<String,Monster> gameMonsters;
     private Map<String,Room> gameMap;
-    private Player player;
+    private Player player1;
 
     //GameModel constructor
     //When the GameModel object is created, it calls the GameWorldBuilder to create all the game objects
@@ -57,10 +57,25 @@ public class GameModel {
             return;
         }
 
-        //Creates a player object, spawns in Floor 1 Hallway, the designated starting area
+        //Creates a player object player1, spawns in Floor 1 Hallway, the designated starting area
         Room startingRoom = gameMap.get("F01H");
-        Player player1 = new Player(startingRoom);
-
+        this.player1 = new Player(startingRoom);
     }
 
+    public Map<String,Item> getGameItems(){
+        return this.gameItems;
+    }
+    public Map<String,Puzzle> getGamePuzzles(){
+        return this.gamePuzzles;
+    }
+    public Map<String,Monster> getGameMonsters(){
+        return this.gameMonsters;
+    }
+    public Map<String,Room> getGameMap(){
+        return this.gameMap;
+    }
+
+    public void setPlayerName(String name) {
+        player1.setPlayerName(name);
+    }
 }
