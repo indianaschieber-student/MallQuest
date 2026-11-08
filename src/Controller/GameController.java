@@ -9,6 +9,9 @@ public class GameController {
     private GameModel model = new GameModel();
     private GameView view = new GameView();
 
+    // MFR4 - Randomly selects a monster attack during combat
+    private Random combatRandom = new Random();
+
     //constructor for the GameController class that takes
     //a GameModel and GameView object as arguments
     public GameController(GameModel model, GameView view) {
@@ -235,6 +238,8 @@ public class GameController {
 
         //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
         if (command.equalsIgnoreCase("FIGHT")){
+            combatLoop();
+            return;
 
         }
 
@@ -263,5 +268,158 @@ public class GameController {
     public void loadGame(){
 
     }
+
+
+    // MFR3 - Handles combat between the player and a monster
+    private void combatLoop() {
+
+        // Gets the player's current room
+        Room room = model.getCurrentRoom();
+
+        // Gets the monster inside that room
+        Monster monster = room.getRoomMonster();
+
+        // Gets the existing player from GameModel
+        Player player = model.getPlayer();
+
+        // Checks whether a monster exists in the room
+        if (monster == null) {
+            view.printMessage("There is no monster to fight here.");
+            return;
+        }
+
+        // Checks whether the monster has already been defeated
+        if (monster.isDefeated()) {
+            view.printMessage(monster.getName() + " has already been defeated.");
+            return;
+        }
+
+        // Announces the beginning of combat
+        view.printMessage("You are now fighting " + monster.getName() + "!");
+
+        // MFR3 - Keeps combat running until the monster is defeated
+        // or the player successfully escapes
+        boolean inCombat = true;
+
+        while (inCombat) {
+
+            // Display the monster's current HP
+            view.printMessage(monster.getName() + " HP: " + monster.getHp() + "/" + monster.getMaxHp()
+            );
+
+            // TODO PLAYER #1:
+            // Player.java needs getCurrentHp() and getMaxHp()
+            // so we can display the player's HP here.
+
+            // Ask the player what they want to do
+            view.printMessage("Choose an action: ATTACK or RUN");
+
+            String combatCommand = view.promptForCommand().trim().toUpperCase(Locale.ROOT);
+
+
+
+            // MFR3 - Player attacks the monster
+            if (combatCommand.equals("ATTACK")) {
+
+                // TODO PLAYER #2:
+                // Replace 10 with player.getBaseAttack()
+                // once your teammate adds the method.
+
+                int damage = 10;
+
+                // Reduce the monster's HP
+                monster.takeDamage(damage);
+
+                view.printMessage("You attacked " + monster.getName() + " and dealt " + damage + " damage!");
+
+                // Check if the monster has been defeated
+                if (monster.isDefeated()) {
+                    view.printMessage("You defeated " + monster.getName() + "!");
+
+                    // End combat
+                    inCombat = false;
+                }
+                else {
+                    // MFR4 - Monster retaliates if it survived
+                    monsterAttackTurn(monster, player);
+                }
+            }
+
+            // MFR3 - Player attempts to escape combat
+            else if (combatCommand.equals("RUN")) {
+
+                // Check whether the monster allows escape
+                if (monster.canEscape()) {
+
+                    view.printMessage("You successfully escaped from " + monster.getName() + "!");
+
+                    // End combat
+                    inCombat = false;
+                }
+                else {
+                    view.printMessage("You cannot escape from " + monster.getName() + "!");
+
+                    // Monster retaliates after failed escape
+                    monsterAttackTurn(monster, player);
+                }
+            }
+
+            // Handle invalid combat commands
+            else {
+                view.printMessage("Invalid command. Please enter ATTACK or RUN.");
+            }
+
+        }
+
+    }
+
+
+    // MFR4 - Monster attacks the player during combat
+    private void monsterAttackTurn(Monster monster, Player player) {
+
+        // Get all attacks assigned to this monster
+        ArrayList<MonsterAttack> attacks = monster.getAttacks();
+
+        // Check if the monster has any attacks
+        if (attacks.isEmpty()) {
+            view.printMessage(monster.getName() + " has no attacks!");
+            return;
+        }
+
+        // Randomly select an attack from the monster's attack list
+        int randomIndex = combatRandom.nextInt(attacks.size());
+        MonsterAttack selectedAttack = attacks.get(randomIndex);
+
+        // Get the selected attack's damage
+        int damage = selectedAttack.getDamage();
+
+        // Display the monster's attack
+        view.printMessage(
+                monster.getName() + " used "
+                        + selectedAttack.getName() + "!"
+        );
+
+
+        // TODO PLAYER #3:
+        // Player.java needs takeDamage(int damage).
+        // Replace the temporary message below with:
+        // player.takeDamage(damage);
+
+        view.printMessage("[TODO PLAYER #3] Monster would deal " + damage + " damage to the player.");
+
+        // TODO PLAYER #4:
+        // Once Player.java has getCurrentHp() and getMaxHp(),
+        // display the player's remaining HP here.
+
+        // TODO PLAYER #5:
+        // Once Player.java has isDefeated(),
+        // check whether the player has been defeated.
+
+        // TODO MFR4:
+        // Apply selectedAttack.getEffect() once the team
+        // finishes deciding how status effects will work.
+    }
+
+
 
 }

@@ -106,4 +106,8 @@ public class GameModel {
         }
         return false;
     }
+
+    public Player getPlayer(){
+        return player1;
+    }
 }
