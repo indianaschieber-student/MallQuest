@@ -58,7 +58,7 @@ public class GameModel {
         }
 
         //Creates a player object player1, spawns in Floor 1 Hallway, the designated starting area
-        Room startingRoom = gameMap.get("F01H");
+        Room startingRoom = gameMap.get("F1H");
         this.player1 = new Player(startingRoom);
     }
 

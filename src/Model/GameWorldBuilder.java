@@ -192,6 +192,7 @@ public class GameWorldBuilder {
         //pass 2 to add the connections, items, monsters, and puzzles to the Room objects
         while (fileScanner2.hasNextLine()) {
             String line = fileScanner2.nextLine().trim();
+            if (line.isEmpty() || line.startsWith("#")) continue; //ignore blank lines, use # to comment out a line
             String[] data = line.split("\\|",-1);
 
             String roomID = data[0].trim();
@@ -225,10 +226,13 @@ public class GameWorldBuilder {
             }
 
 
-            //The room object is instantiated with an ID, name, description, inventory, and adjacent Room exits
-            //Then, the method checks for monsters and puzzles in the text file, then uses the ID to lookup the
-            // corresponding object and add it to the appropriate room
-            Room room = new Room(roomID, roomName, roomDescription, roomItems, adjacentRooms);
+            //The room object is found by its ID, then the exits and items are added
+            Room room = gameMap.get(roomID);
+            room.getRoomExits().addAll(adjacentRooms);
+            if (roomItems != null||!(roomItems.isEmpty())){
+                room.getRoomInventory().addAll(roomItems);
+            }
+
 
             List<String> roomMonsterIDs = new ArrayList<>();
             if(!(data[5] .isBlank())){

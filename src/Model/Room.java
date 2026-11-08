@@ -60,6 +60,9 @@ public class Room {
             roomMonster = monster;
         }
     }
+    public Monster getRoomMonster(){
+        return this.roomMonster;
+    }
 
     public boolean isVisited(){
         return isVisited();
@@ -81,5 +84,15 @@ public class Room {
     }
     public String getRoomName(){
         return roomName;
+    }
+
+    public List<Item> getRoomInventory(){
+        return roomInventory;
+    }
+    public void addItemToRoom(Item item){
+        roomInventory.add(item);
+    }
+    public void takeItemFromRoom(Item item){
+        roomInventory.remove(item);
     }
 }
