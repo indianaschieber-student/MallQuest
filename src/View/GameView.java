@@ -71,7 +71,34 @@ public class GameView {
         printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         printMessage("You are currently in: " + formatBold(roomName) + ".");
     }
-    //A method to return a Room's Description when the player uses the EXPLORE command
+
+    //A Method to print a List of Game commands when the player enters "HELP"
+    //There was mention on the SRS of using a list of numbers to represent commands, so I added the numbers for now,
+    // but I didn't implement it yet. We could probably implement this fairly easy if necessary, we would potentially
+    // need to prompt the player for an Item Name if they try to use a number to pickup an item, for instance.
+    //HELP command
+    public void printCommandList(){
+        printMessage("(Commands are not Case-Sensitve)" +
+                "\n(1)EXPLORE: Displays the names of any items, monsters, or puzzles present in the current room; " +
+                "\n also displays a list of adjacent rooms that the player can travel to from their current room." +
+                "\n(2)MAP: Displays a List of all the rooms in the game, and which floor they are on." +
+                "\n(3)LOOK: Displays the description of the player's current room." +
+                "\n(4)INVENTORY: Displays a list of all items in the player's inventory." +
+                "\n(5)PICKUP [Item Name] or TAKE [Item Name]: Allows the player to add an item to their inventory, if that item is in the player's current room." +
+                "\n(6)DROP [Item Name]: Removes an Item from the player's inventory, placing the item in the player's current room." +
+                "\n(7)READ [Item Name] or EXAMINE [Item Name]: Displays an item's description." +
+                "\n(8)USE [Item Name]: Allows the player to use consumable items to restore HP, if the item is present in their inventory. Item is removed from inventory after use." +
+                "\n(9)INSPECT PUZZLE or INSPECT MONSTER: Displays a description for the monster or puzzle for the player's current room, or a description for both if neither is specified." +
+                "\n(11)HINT or REQUEST HINT: Gives the player a hint to the puzzle in the player's current room, if there is a puzzle present." +
+                "\n(10)SOLVE or SOLVE PUZZLE: Prompts the player for a solution to the puzzle in the player's current room, if there is a puzzle present." +
+                "\n(12)FIGHT or FIGHT MONSTER: Begin combat with the monster in the player's current room, if there is a monster present." +
+                "\n(13)SAVE or SAVE GAME: Saves the user's current session." +
+                "\n(14)QUIT or QUIT GAME: Ends the user's current session.");
+        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    //A method to return a Room's Description
+    //EXPLORE command
     public void printExploreCommand(String monsterName, boolean hasPuzzle, List<String> itemNames, Map<String,String> exitNames){
         if(!(monsterName.isEmpty())){
             printMessage("There is an enemy in this room: " + monsterName + "!");
@@ -108,8 +135,8 @@ public class GameView {
 
     }
 
-    //A method to return a list of all the Main Rooms in the game (not counting back hallways) when the player
-    // uses the MAP command
+    //A method to return a list of all the Main Rooms in the game (not counting back hallways) and which floor they are on
+    //MAP command
     public void printMap(Map<String,String> floor1Rooms, Map<String,String> floor2Rooms, Map<String,String>groundFloorRooms){
         printMessage("Enter either a room's name or ID to travel to that room, if you are in an adjacent room." +
                 "\nThe Main Hallways connect to every other room on their corresponding floor.");
@@ -127,30 +154,60 @@ public class GameView {
         }
         printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
-    //A Method to print a List of Game commands when the player enters "HELP"
-    //There was mention on the SRS of using a list of numbers to represent commands, so I added the numbers for now,
-    // but I didn't implement it yet. We could probably implement this fairly easy if necessary, we would potentially
-    // need to prompt the player for an Item Name if they try to use a number to pickup an item, for instance.
-    public void printCommandList(){
-        printMessage("(Commands are not Case-Sensitve)" +
-                "\n(1)EXPLORE: Displays the names of any items, monsters, or puzzles present in the current room; " +
-                "\n also displays a list of adjacent rooms that the player can travel to from their current room." +
-                "\n(2)MAP: Displays a List of all the rooms in the game, and which floor they are on." +
-                "\n(3)LOOK: Displays the description of the player's current room." +
-                "\n(4)INVENTORY: Displays a list of all items in the player's inventory." +
-                "\n(5)PICKUP [Item Name] or TAKE [Item Name]: Allows the player to add an item to their inventory, if that item is in the player's current room." +
-                "\n(6)DROP [Item Name]: Removes an Item from the player's inventory, placing the item in the player's current room." +
-                "\n(7)READ [Item Name] or EXAMINE [Item Name]: Displays an item's description." +
-                "\n(8)USE [Item Name]: Allows the player to use consumable items to restore HP, if the item is present in their inventory. Item is removed from inventory after use." +
-                "\n(9)INSPECT PUZZLE or INSPECT MONSTER: Displays a description for the monster or puzzle for the player's current room, or a description for both if neither is specified." +
-                "\n(11)HINT or REQUEST HINT: Gives the player a hint to the puzzle in the player's current room, if there is a puzzle present." +
-                "\n(10)SOLVE or SOLVE PUZZLE: Prompts the player for a solution to the puzzle in the player's current room, if there is a puzzle present." +
-                "\n(12)FIGHT or FIGHT MONSTER: Begin combat with the monster in the player's current room, if there is a monster present." +
-                "\n(13)SAVE or SAVE GAME: Saves the user's current session." +
-                "\n(14)QUIT or QUIT GAME: Ends the user's current session.");
-                printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+    //INVENTORY command
+    public void printInvnetory(List<String> inventory){
+
     }
 
+    //TAKE/PICKUP [Item Name] command
+    public void printPickupItem(String itemName){
+
+    }
+
+    //DROP [Item Name] command
+    public void printDropItem(String itemName){
+
+    }
+
+    //READ/EXAMINE [Item Name] command
+    public void printItemDescription(String itemName, String itemDescription){
+
+    }
+
+    //USE [Item Name] command
+    public void printUseItem(String itemName){
+
+    }
+
+    //INSPECT PUZZLE
+    public void printPuzzleDescription(String roomName, String puzzleDescription){
+
+    }
+
+    //I figured we'd want to see the Monster's name, description, level, HP, and attck?
+    //Feel free to change the signature to whatever you feel is appropriate
+    //INSPECT MONSTER
+    public void printMonsterDescription(String monsterName, String monsterDescription, int lvl, int maxHP, int attack){
+
+    }
+
+    //HINT command
+    public void printPuzzleHint(String puzzleHint){
+        printMessage(puzzleHint);
+        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    //SOLVE
+
+    //FIGHT
+
+    //SAVE
+
+    //QUIT
+    public void promptForQuit(){
+
+    }
     //Displays GAME OVER message
     public void printGameOver(){
 

@@ -216,14 +216,19 @@ public class GameController {
             // other relevant information
 
             //Block of code to inspect puzzle: Presumably returns a puzzle's description
+            if (command.substring(8).trim().equalsIgnoreCase("PUZZLE")){
 
+            }
         }
 
         //The SRS didn't specify that you have to be in the puzzle to request a hint, and this makes sense
         //The Hint option should tell you where to find the lore item with the puzzle solution, or tell you
         // to examine the item in your inventory if you have already picked it up.
         if (command.equalsIgnoreCase("HINT")||command.equalsIgnoreCase("REQUEST HINT")){
-
+            //Pulls the Hint from the current Room Puzzle
+            String hint = ((model.getCurrentRoom()).getRoomPuzzle()).getHint();
+            view.printPuzzleHint(hint);
+            return;
         }
 
         //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
@@ -244,6 +249,7 @@ public class GameController {
 
         if (command.equalsIgnoreCase("QUIT")||command.equalsIgnoreCase("QUIT GAME")){
             //Ask the player "Are you sure you want to quit?" Prompt for Y/N
+            view.promptForQuit();
             isPlaying = false;
             //view.printGameOver();
         }
