@@ -13,6 +13,7 @@ public class Player {
     private int currentHp;
     private List<Item> playerInventory;
     private int totalXp;
+    private int currentXp;
     private int xpToNextLevel;
     private int playerLevel;
     private int baseAttack;
@@ -47,8 +48,8 @@ public class Player {
     // I can change it to a void return type
     public boolean gainXp(int xp){
         this.totalXp += xp;
-        this.xpToNextLevel += xp;
-        if (this.xpToNextLevel >= 100){
+        this.currentXp += xp;
+        if (this.currentXp >= this.xpToNextLevel){
             this.levelUp();
             return true;
         }
@@ -56,14 +57,14 @@ public class Player {
     }
 
     //I could be wrong, but I couldn't find anything in the SRS that states how much XP is required for level up.
-    //For now, I set the value to 100XP. So, when the level up method is called the player's level, HP, and
-    // base attack are adjusted. Then, the player's xpToNextLevel is reduced by 100, and the method will return the
-    // level up message, notifying the player of their new level and stats
+    //First level up costs 100 Xp, every subsequent level cost 20 mor Xp
     public String levelUp(){
         this.playerLevel += 1;
         this.baseAttack += 5;
         this.maxHp += 10;
-        this.xpToNextLevel -= 100;
+        this.currentXp -= this.xpToNextLevel;
+        //Every time the player levels up, it will cost the player 20 more XP to level up next time
+        this.xpToNextLevel += 20;
         String levelUpMsg = "LEVEL UP! You are now Level " + this.playerLevel + "! Your Max HP has increased to "
                 + this.maxHp + " and your base Attack has increased to " + this.baseAttack + "!";
         return levelUpMsg;

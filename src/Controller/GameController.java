@@ -93,20 +93,22 @@ public class GameController {
     // a number instead of typing out the full command
     public String numberCommand(String command) {
         switch (command.trim()) {
-            case "1":  return "EXPLORE";
-            case "2":  return "MAP";
-            case "3":  return "LOOK";
-            case "4":  return "INVENTORY";
-            case "5":  return "PICKUP";
-            case "6":  return "DROP";
-            case "7":  return "EXAMINE";
-            case "8":  return "USE";
-            case "9":  return "INSPECT";
-            case "10": return "SOLVE";
-            case "11": return "HINT";
-            case "12": return "FIGHT";
-            case "13": return "SAVE";
-            case "14": return "QUIT";
+            case "1":  return "STATUS";
+            case "2":  return "EXPLORE";
+            case "3":  return "MAP";
+            case "4":  return "LOOK";
+            case "5":  return "INVENTORY";
+            case "6":  return "PICKUP";
+            case "7":  return "DROP";
+            case "8":  return "EXAMINE";
+            case "9":  return "USE";
+            case "10": return "INSPECT";
+            case "11": return "SOLVE";
+            case "12": return "HINT";
+            case "13": return "FIGHT";
+            case "14": return "SAVE";
+            case "15": return "QUIT";
+            case "16": return "HELP";
             default:   return command;
         }
     }
@@ -121,11 +123,14 @@ public class GameController {
             printCurrentRoom();
             return;
         }
-        //Prints a list of commands
-        if (command.equalsIgnoreCase("HELP")){
-            view.printCommandList();
-            return;
+
+        //Displays player's Name, HP, Level, XP to next level, currently equipped items, base attack
+        //As per the SRS: Items collected, Quests completed (I decided to do puzzles completed because there are no quests),
+        // and number of rooms visited. I figured I'd also add number of monsters defeated, if we have time to implement.
+        if((command.equalsIgnoreCase("STATUS"))||(command.equalsIgnoreCase("CHECK STATUS"))){
+
         }
+
         //SRS says "Inspect" but I think "Explore" makes more sense
         //Shows Monsters, Puzzles, Items, and Adjacent Rooms for the player's current room
         //Also, the Inspect command can likely be used on Monsters, Puzzles, and Items and not rooms
@@ -257,6 +262,12 @@ public class GameController {
             view.promptForQuit();
             isPlaying = false;
             //view.printGameOver();
+        }
+
+        //Prints a list of commands
+        if (command.equalsIgnoreCase("HELP")){
+            view.printCommandList();
+            return;
         }
 
         //This block should go at the very bottom, if the command is not recognized anywhere else
