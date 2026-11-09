@@ -13,6 +13,7 @@ public class Room {
     private Puzzle roomPuzzle;
     private Monster roomMonster;//this is a single monster and not an ArrayList because each room can only have one monster
 
+
     //Two constructors. This is because the Room objects must first be instantiated before the connections between rooms can be established.
     //First, create the room objects with the first constructor, then go through the txt file again
     // and add connections, encounters, items, and puzzles.
@@ -65,7 +66,7 @@ public class Room {
     }
 
     public boolean isVisited(){
-        return isVisited();
+        return this.isVisited;
     }
     public void markVisited(){
         this.isVisited = true;
@@ -95,4 +96,5 @@ public class Room {
     public void takeItemFromRoom(Item item){
         roomInventory.remove(item);
     }
+
 }

@@ -196,8 +196,6 @@ public class GameWorldBuilder {
             String[] data = line.split("\\|",-1);
 
             String roomID = data[0].trim();
-            String roomName = data[1].trim();
-            String roomDescription = data[2].trim();
 
             //pulls the Room IDs from the text file into an ArrayList, then creates a list that references
             // their corresponding room objects, using the HashMap gameMap as a reference

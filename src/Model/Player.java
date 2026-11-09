@@ -17,6 +17,9 @@ public class Player {
     private int xpToNextLevel;
     private int playerLevel;
     private int baseAttack;
+    private int puzzlesSolved;
+    private int monstersDefeated;
+    private int roomsVisited;
 
     //Constructor for the player. Base XP is set to 0 and Level is 1.
     // base HP is 100 and base attack is 10 at lvl 1
@@ -26,10 +29,15 @@ public class Player {
     public Player (Room startingRoom){
         this.currentRoom = startingRoom;
         this.maxHp = 100;
+        this.currentHp = this.maxHp;
         this.baseAttack = 5;
         this.playerLevel = 1;
         this.totalXp = 0;
         this.playerInventory = new ArrayList<>();
+        this.roomsVisited = 1;
+        this.monstersDefeated = 0;
+        this.puzzlesSolved = 0;
+        this.xpToNextLevel = 100;
     }
 
     public String getPlayerName(){
@@ -44,6 +52,32 @@ public class Player {
         }
     }
 
+    public int getMaxHp(){
+        return this.maxHp;
+    }
+    public int getCurrentHp(){
+        return this.currentHp;
+    }
+    public int getPlayerLevel(){ return this.playerLevel;}
+    public int getCurrentXp(){
+        return this.currentXp;
+    }
+    public int getXpToNextLevel(){
+        return this.xpToNextLevel;
+    }
+    public int getBaseAttack() { return this.baseAttack;}
+    public Room getPlayerRoom(){
+        return this.currentRoom;
+    }
+    public Room getPreviousPlayerRoom(){
+        return this.previousRoom;
+    }
+    public int getPuzzlesSolved(){ return this.puzzlesSolved;}
+    public int getRoomsVisited(){ return this.roomsVisited;}
+    public int getMonstersDefeated(){ return this.monstersDefeated;}
+
+
+    public void increaseRoomsVisited(){this.roomsVisited += 1;}
     //The method returns true if the player levels up, false if not. This may be redundant, in which case
     // I can change it to a void return type
     public boolean gainXp(int xp){
@@ -70,21 +104,14 @@ public class Player {
         return levelUpMsg;
     }
 
-    public Room getPlayerRoom(){
-        return this.currentRoom;
-    }
-    public Room getPreviousPlayerRoom(){
-        return this.previousRoom;
-    }
-
     //method to attempt to move. Returns true for a valid move, false for an invalid move
-    public boolean movePlayer(Room destination, Map<String, Room> gameMap){
+    public boolean movePlayer(Room destination){
 
         //check to see if the destination room is adjacent to the current room
         if (this.currentRoom.getRoomExits().contains(destination)){
             Room tempRoom = this.currentRoom;
             this.currentRoom = destination;
-            this.previousRoom = tempRoom;
+            this.previousRoom = tempRoom; //Sets new room as current room, and their current room as previous room
             return true;
         }
         else return false;

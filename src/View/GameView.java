@@ -55,6 +55,22 @@ public class GameView {
                 "Enter the name of an adjacent room to walk to it, or enter 'Help' to see a list of player commands.\n" +
                 "We here at Kirva Shopping Mall wish you the best of luck on your Mall Quest!");
     }
+
+    //These two methods are used to display a room name and description when the player moves rooms
+    // The text for using the look command is slightly different
+    public void printRoomName(String roomName, boolean isVisited){
+        if (isVisited == true){
+            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("You are currently in: " + formatBold(roomName) + ".");
+            printMessage("This room seems familiar...");
+        }
+        else {
+            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("New room discovered!");
+            printMessage("You are currently in: " + formatBold(roomName) + ".");
+        }
+
+    }
     public void printRoomDescription(String roomDescription) {
         printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //This is specifically for the Hallways, which have the Adjacent rooms listed in separate lines on the SRS
@@ -67,16 +83,24 @@ public class GameView {
         else printMessage(wrapText(roomDescription));
         printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
-    public void printRoomName(String roomName){
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        printMessage("You are currently in: " + formatBold(roomName) + ".");
+
+
+    //STATUS
+    public void printPlayerStatus(String name, String hp, int level, String xpToNextLevel, int baseAttack, int roomsVisited, int puzzlesCompleted){
+        printMessage("Player: " + formatBold(name) +
+                "\nLevel: " + level + ", XP to Next Level: " + xpToNextLevel +
+                "\nHP: " + hp +
+                "\nBase Attack: " + baseAttack +
+                "\nRooms Visited: " + roomsVisited +
+                "\nPuzzles Completed: " + puzzlesCompleted );
     }
 
     //A method to return a Room's Description
     //EXPLORE command
-    public void printExploreCommand(String monsterName, boolean hasPuzzle, List<String> itemNames, Map<String,String> exitNames){
+    public void printExploreCommand(String monsterName, boolean hasPuzzle, List<String> itemNames, Map<String,String> exitNames, String roomName){
+        printMessage("You are currently in: " + formatBold(roomName) + ".");
         if(!(monsterName.isEmpty())){
-            printMessage("There is an enemy in this room: " + monsterName + "!");
+            printMessage("There is an enemy in this room: " + monsterName + "! Use the 'INSPECT MONSTER' command to learn more!");
         }
         else{
             printMessage("There are no enemies in this room... for now.");
@@ -101,6 +125,7 @@ public class GameView {
                     System.out.print(itemNames.get(n - 1) + ".");
                 }
             }
+            System.out.println();
         }
 
         printMessage(formatBold("Adjacent Rooms: "));
@@ -128,6 +153,21 @@ public class GameView {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
         printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    //Displays current Room Name and Description
+    public void printLook(String roomName, String roomDescription, boolean isVisited){
+        if (isVisited == true){
+            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("You are currently in: " + formatBold(roomName) + ".");
+            printMessage("You have visited this room before.");
+        }
+        else {
+            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("You are currently in: " + formatBold(roomName) + ".");
+            printMessage("This is your first time visiting this room.");
+        }
+        printRoomDescription(roomDescription);
     }
 
     //INVENTORY command
@@ -164,14 +204,19 @@ public class GameView {
 
     //INSPECT PUZZLE
     public void printPuzzleDescription(String roomName, String puzzleDescription){
-
+        printMessage("Puzzle for " + roomName + ": " +
+        "\n" + wrapText(puzzleDescription));
+        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //I figured we'd want to see the Monster's name, description, level, HP, and attck?
     //Feel free to change the signature to whatever you feel is appropriate
     //INSPECT MONSTER
-    public void printMonsterDescription(String monsterName, String monsterDescription, int lvl, int maxHP, int attack){
-
+    public void printMonsterDescription(String monsterName, String monsterDescription, int lvl, int maxHp, String roomName){
+        printMessage("Monster in " + roomName + ": " +
+                "\n" + monsterName + "  Level: " + lvl + ", HP: " + maxHp +
+                "\n" + wrapText(monsterDescription));
+        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //HINT command
@@ -187,11 +232,31 @@ public class GameView {
     //SAVE
 
     //QUIT
-    public void promptForQuit(){
-
+    public boolean promptForQuit() {
+        //Initiates a loop the player can't exit until they enter yes or no
+        boolean validAnswer = false;
+        while (!validAnswer) {
+            printMessage("Are you sure you want to quit the game?");
+            String input = scanner.nextLine().trim();
+            String answer = switch(input.toUpperCase()) {
+                case "Y" ->
+                    answer = "YES";
+                case "N" ->
+                    answer = "NO";
+                default ->
+                    answer = input;
+            };
+            if (answer.equalsIgnoreCase("YES")) {
+                return true;
+            } else if (answer.equalsIgnoreCase("NO")) {
+                return false;
+            } else {
+                System.out.println("Invalid input. Please Type 'Yes' or 'No' (Y/N)");
+                continue;
+            }
+        }
+        return false;
     }
-
-    //STATUS
 
     //A Method to print a List of Game commands when the player enters "HELP"
     //HELP command
@@ -201,7 +266,7 @@ public class GameView {
                 "\n(2)EXPLORE: Displays the names of any items, monsters, or puzzles present in the current room; " +
                 "\n also displays a list of adjacent rooms that the player can travel to from their current room." +
                 "\n(3)MAP: Displays a List of all the rooms in the game, and which floor they are on." +
-                "\n(4)LOOK: Displays the description of the player's current room." +
+                "\n(4)LOOK or LOOK AROUND: Displays the description of the player's current room." +
                 "\n(5)INVENTORY: Displays a list of all items in the player's inventory." +
                 "\n(6)PICKUP [Item Name] or TAKE [Item Name]: Allows the player to add an item to their inventory, if that item is in the player's current room." +
                 "\n(7)DROP [Item Name]: Removes an Item from the player's inventory, placing the item in the player's current room." +
@@ -220,7 +285,10 @@ public class GameView {
 
     //Displays GAME OVER message
     public void printGameOver(){
-
+        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("We Hope you've enjoyed your shopping experience at " +
+                          "\nKuvira Mall! Please Give Us 5 Stars on Doodle Reviews!" +
+                        "\n======================GAME OVER=========================");
     }
 
     public String promptForPlayerName(){
