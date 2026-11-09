@@ -14,7 +14,6 @@ public class Monster {
     //for combat features
     private int hp;
     private int maxHp;
-    private int attack;
     private String status;
 
     // MFR5 - Determines whether the player can escape
@@ -136,17 +135,6 @@ public class Monster {
         status = newStatus;
     }
 
-    // MFR4 - Reduce monster's attack
-    public void reduceAttack(int amount) {
-        if (amount > 0) {
-            attack -= amount;
-        }
-
-        if (attack < 0) {
-            attack = 0;
-        }
-    }
-
     // MFR5 - Check if player can escape
     public boolean canEscape() {
         return !escapeBlocked;
@@ -156,11 +144,6 @@ public class Monster {
     public void setEscapeBlocked(boolean blocked) {
         escapeBlocked = blocked;
     }
-
-    public int getAttack() { //
-        return attack;
-    }
-
 
     // Get the attacks belonging to this monster
     public ArrayList<MonsterAttack> getAttacks() {
