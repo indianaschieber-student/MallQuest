@@ -60,19 +60,19 @@ public class GameView {
     // The text for using the look command is slightly different
     public void printRoomName(String roomName, boolean isVisited){
         if (isVisited == true){
-            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             printMessage("You are currently in: " + formatBold(roomName) + ".");
             printMessage("This room seems familiar...");
         }
         else {
-            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             printMessage("New room discovered!");
             printMessage("You are currently in: " + formatBold(roomName) + ".");
         }
 
     }
     public void printRoomDescription(String roomDescription) {
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //This is specifically for the Hallways, which have the Adjacent rooms listed in separate lines on the SRS
         if(roomDescription.contains("\\")){
             String [] lines = roomDescription.split("\\\\");
@@ -81,7 +81,7 @@ public class GameView {
                 }
         }
         else printMessage(wrapText(roomDescription));
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
 
@@ -152,18 +152,19 @@ public class GameView {
         for (Map.Entry<String,String> entry : floor2Rooms.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //Displays current Room Name and Description
+    //LOOK command
     public void printLook(String roomName, String roomDescription, boolean isVisited){
         if (isVisited == true){
-            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             printMessage("You are currently in: " + formatBold(roomName) + ".");
             printMessage("You have visited this room before.");
         }
         else {
-            printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             printMessage("You are currently in: " + formatBold(roomName) + ".");
             printMessage("This is your first time visiting this room.");
         }
@@ -206,7 +207,7 @@ public class GameView {
     public void printPuzzleDescription(String roomName, String puzzleDescription){
         printMessage("Puzzle for " + roomName + ": " +
         "\n" + wrapText(puzzleDescription));
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //I figured we'd want to see the Monster's name, description, level, HP, and attck?
@@ -216,13 +217,13 @@ public class GameView {
         printMessage("Monster in " + roomName + ": " +
                 "\n" + monsterName + "  Level: " + lvl + ", HP: " + maxHp +
                 "\n" + wrapText(monsterDescription));
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //HINT command
     public void printPuzzleHint(String puzzleHint){
         printMessage(puzzleHint);
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //SOLVE or SOLVE PUZZLE command
@@ -280,15 +281,15 @@ public class GameView {
                 "\n(14)SAVE or SAVE GAME: Saves the user's current session." +
                 "\n(15)QUIT or QUIT GAME: Ends the user's current session." +
                 "\n(16)HELP: Displays a list of valid game commands.");
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //Displays GAME OVER message
     public void printGameOver(){
-        printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         printMessage("We Hope you've enjoyed your shopping experience at " +
                           "\nKuvira Mall! Please Give Us 5 Stars on Doodle Reviews!" +
-                        "\n======================GAME OVER=========================");
+                        "\n=======================GAME OVER=======================");
     }
 
     public String promptForPlayerName(){

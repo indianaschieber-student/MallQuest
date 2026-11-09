@@ -347,7 +347,8 @@ public class GameController {
             // should ask for a hint while solving a puzzle, or before they solve the puzzle
             // If so, there can be a separate method parsePuzzleCommand to handle that interaction
             if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
-
+                PuzzleLoop loop = new PuzzleLoop();
+                
             }
 
             //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
