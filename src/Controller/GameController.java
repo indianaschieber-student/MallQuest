@@ -248,28 +248,101 @@ public class GameController {
 
         //Check the player's inventory
         if (command.equalsIgnoreCase("INVENTORY")) {
-
+            List<Item> inventory = player.getInventory();
+            if (inventory == null || inventory.isEmpty()) {
+                view.printMessage("Your inventory is empty.");
+            } else {
+                view.printMessage("--- Your Inventory ---");
+                for (Item item : inventory) {
+                    view.printMessage("- " + item.getName() + " [" + item.getCategory() + "] (" + item.getId() + ")");
+                }
+            }
+            return;
         }
-        //Take/Pickup items
+        
+        //Take/Pickup items (e.g., "PICKUP W001" or "TAKE Water Bottle")
         if (command.startsWith("TAKE") || command.startsWith("PICKUP")) {
-
+            String target = command.substring(command.indexOf(" ") + 1).trim();
+            if (target.isEmpty() || target.equalsIgnoreCase("TAKE") || target.equalsIgnoreCase("PICKUP")) {
+                view.printMessage("What would you like to take/pickup?");
+                return;
+            }
+            Item itemToTake = currentRoom.removeItem(target);
+            if (itemToTake != null) {
+                player.addItem(itemToTake);
+                view.printMessage("You picked up: " + itemToTake.getName());
+            } else {
+                view.printMessage("You don't see that item here.");
+            }
+            return;
         }
-        //Drop items
+        
+        //Drop items (e.g., "DROP W001")
         if (command.startsWith("DROP")) {
-
+            String target = command.substring(4).trim();
+            if (target.isEmpty()) {
+                view.printMessage("What would you like to drop?");
+                return;
+            }
+            Item itemToDrop = player.removeItemByName(target);
+            if (itemToDrop != null) {
+                currentRoom.addItem(itemToDrop);
+                view.printMessage("You dropped: " + itemToDrop.getName());
+            } else {
+                view.printMessage("You aren't carrying that item.");
+            }
+            return;
         }
-        //Read Lore Items; The SRS explicitly asked for a "READ" command,
-        // but I think a generic "EXAMINE" command would make more sense.
-        //That way, you can see the item descriptions for all items, not just lore items.
+        
+        //Read Lore Items / Examine items (e.g., "EXAMINE LI001" or "READ map")
         if (command.startsWith("READ") || command.startsWith("EXAMINE")) {
+            String target = command.substring(command.indexOf(" ") + 1).trim();
+            if (target.isEmpty() || target.equalsIgnoreCase("READ") || target.equalsIgnoreCase("EXAMINE")) {
+                view.printMessage("What would you like to read or examine?");
+                return;
+            }
+            Item item = player.findItemInInventory(target);
+            if (item == null) {
+                // If not in inventory, check room items
+                item = currentRoom.findItem(target);
+            }
 
+            if (item != null) {
+                if (item instanceof LoreItem) {
+                    LoreItem lore = (LoreItem) item;
+                    view.printMessage(lore.provideInfo());
+                } else {
+                    view.printMessage(item.getName() + ": " + item.getDescription());
+                }
+            } else {
+                view.printMessage("You don't have or see that item to examine.");
+            }
+            return;
         }
-        //Interacts with an object in the room (e.g., puzzle elements, items).
-        //This is what the SRS says. I'm assuming it's only for items in our inventory though
-        //To be honest as I'm looking through the SRS a lot of the finer details of the game
-        // seem very unclear, so just use your discretion on this one I guess
+        
+        //Interacts with an object / consumable in the inventory (e.g., "USE CI001")
         if (command.startsWith("USE")) {
-
+            String target = command.substring(3).trim();
+            if (target.isEmpty()) {
+                view.printMessage("What would you like to use?");
+                return;
+            }
+            Item item = player.findItemInInventory(target);
+            if (item != null) {
+                if (item instanceof Consumable) {
+                    Consumable consumable = (Consumable) item;
+                    consumable.consume(player);
+                    view.printMessage("You used " + consumable.getName() + " and restored health!");
+                    if (consumable.isSingleUse()) {
+                        player.removeItem(item);
+                    }
+                } else {
+                    view.printMessage("You cannot use " + item.getName() + " like that.");
+                }
+            } else {
+                view.printMessage("You don't have that item in your inventory.");
+            }
+            return;
         }
 
         //This block of code may be a little tricky. The SRS is somewhat unclear, but I think we need a command to inspect
