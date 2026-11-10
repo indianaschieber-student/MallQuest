@@ -19,13 +19,32 @@ public class Item {
         this.description = description;
     }
 
-    // Turns one line of Items.txt into an Item (expects exactly 4 fields)
+    // Turns one line of Items.txt into an Item or its appropriate subclass
     public static Item fromLine(String line) {
         String[] parts = line.split("\\|", -1); // -1 keeps empty fields (blank descriptions)
         if (parts.length != 4) {
             throw new IllegalArgumentException("Bad item line: " + line);
         }
-        return new Item(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim());
+        
+        String id = parts[0].trim();
+        String category = parts[1].trim();
+        String name = parts[2].trim();
+        String description = parts[3].trim();
+
+        // Instantiate subclasses based on category
+        switch (category.toLowerCase()) {
+            case "cosmetic":
+                return new CosmeticItem(id, category, name, description);
+            case "lore":
+                return new LoreItem(id, category, name, description);
+            case "quest":
+                return new QuestItem(id, category, name, description);
+            case "consumable":
+            case "weapon":
+                return new WeaponItem(id, category, name, description, 0);
+            default:
+                return new Item(id, category, name, description);
+        }
     }
 
     // Reads the whole file and returns a map of itemId -> Item
