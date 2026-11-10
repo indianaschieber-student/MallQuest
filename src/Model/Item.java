@@ -19,9 +19,9 @@ public class Item {
         this.description = description;
     }
 
-    // Turns one line of Items.txt into an Item or its appropriate subclass
+    // Turns one line of Items.txt into an Item or subclass instance
     public static Item fromLine(String line) {
-        String[] parts = line.split("\\|", -1); // -1 keeps empty fields (blank descriptions)
+        String[] parts = line.split("\\|", -1);
         if (parts.length != 4) {
             throw new IllegalArgumentException("Bad item line: " + line);
         }
@@ -31,23 +31,21 @@ public class Item {
         String name = parts[2].trim();
         String description = parts[3].trim();
 
-        // Instantiate subclasses based on category
+        // Instantiate subclass matching the UML diagram
         switch (category.toLowerCase()) {
-            case "cosmetic":
-                return new CosmeticItem(id, category, name, description);
+            case "consumable":
+                return new Consumable(id, category, name, description, 5, 0, false, true);
             case "lore":
                 return new LoreItem(id, category, name, description);
+            case "cosmetic":
+                return new CosmeticItem(id, category, name, description);
             case "quest":
                 return new QuestItem(id, category, name, description);
-            case "consumable":
-            case "weapon":
-                return new WeaponItem(id, category, name, description, 0);
             default:
                 return new Item(id, category, name, description);
         }
     }
 
-    // Reads the whole file and returns a map of itemId -> Item
     public static Map<String, Item> loadFromFile(String path) throws IOException {
         Map<String, Item> items = new LinkedHashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -55,7 +53,7 @@ public class Item {
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty() || line.startsWith("#")) {
-                    continue; // skip blank lines and comments
+                    continue;
                 }
                 Item item = fromLine(line);
                 items.put(item.getId(), item);
