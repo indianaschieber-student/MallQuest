@@ -227,6 +227,12 @@ public class GameView {
     }
 
     //SOLVE or SOLVE PUZZLE command
+    public String promptForPuzzleSolution(String puzzlePrompt){
+        printMessage(puzzlePrompt);
+        String input = scanner.nextLine().trim();
+        String answer = input;
+        return answer;
+    }
 
     //FIGHT
 
