@@ -117,4 +117,20 @@ public class Player {
         else return false;
     }
 
+
+    // PLAYER COMBAT - Reduces player HP when attacked by a monster - KX
+    public void takeDamage(int damage) {
+
+        // Only accept positive damage
+        if (damage > 0) {
+            this.currentHp -= damage;
+
+            // Prevent HP from dropping below zero
+            if (this.currentHp < 0) {
+                this.currentHp = 0;
+            }
+        }
+    }
+
+
 }
