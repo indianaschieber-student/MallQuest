@@ -170,8 +170,10 @@ public class GameController {
     public void parseCommand(String command) {
         //Convert numbers into their corresponding commands
         command = numberCommand(command);
-        //Create a Room object for player's current Room, useful for many of these methods
+        // Create Room and Player objects for current context
         Room currentRoom = model.getCurrentRoom();
+        Player player = model.getPlayer();
+
         //Check to see if the command the player entered is the name of an adjacent room, or its room id
         if (model.movePlayerToRoom(roomAbbreviations(command))) {
             printCurrentRoom();
@@ -182,7 +184,7 @@ public class GameController {
         //As per the SRS: Items collected, Quests completed (I decided to do puzzles solved because there are no quests),
         // and number of rooms visited. I figured I'd also add number of monsters defeated, if we have time to implement.
         if (command.equalsIgnoreCase("STATUS") || command.equalsIgnoreCase("CHECK STATUS")) {
-            Player player = model.getPlayer();
+
 
             String hp = player.getCurrentHp() + "/" + player.getMaxHp();
             String xp = player.getCurrentXp() + "/" + player.getXpToNextLevel();
