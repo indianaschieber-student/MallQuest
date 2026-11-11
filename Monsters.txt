@@ -3,7 +3,7 @@ MST002|Old Lady|A sweet elderly woman with no concept of personal space. Means n
 MST003|Part-time Employee|An exhausted employee who just wants to go home. Not aggressive, but will defend themselves if the player gets in their way.|F1CX,F1MFC,F2KMT,F2SOB,F1TU|1|10|ATK007,ATK008,ATK009
 MST004|Shoplifter|A suspicious figure in a lumpy coat full of stolen goods. More interested in escaping the mall than fighting.|F2JS,F2BB,F1MB,F2DP,F2OG,F3AS|1|10|ATK010,ATK011,ATK012
 MST005|Bully Teen|A smug teenager looking to intimidate. Becomes more aggressive when challenged.|F2AM,F2KMT,F2SOB,F1TU|2|20|ATK013,ATK014,ATK015,ATK016
-MST006|Mall Cop|A well-meaning but overly serious mall security officer. Constant questioning impedes the player's exploration. In the Arcade, serves as a puzzle key.|F2AM,F2JS,F2BB,F1CX,F1IG,F2SH,F1FF,F2TD|2|20|ATK017,ATK018,ATK019,ATK020
+MST006|Mall Cop|A well-meaning but overly serious mall security officer. Constant questioning impedes the player's exploration.|F2AM,F2JS,F2BB,F1CX,F1IG,F2SH,F1FF,F2TD|2|20|ATK017,ATK018,ATK019,ATK020
 MST007|Annoying Kid|A hyperactive child running loose in the mall. Not dangerous alone, but relentless and exhausting.|F2BB,F2BS,F1TU,F3AS|2|20|ATK021,ATK022,ATK023,ATK024
 MST008|Angsty Teen|A brooding teenager who does not want to be disturbed. Surprisingly aggressive when interrupted.|F2KMT|2|20|ATK025,ATK026,ATK027,ATK028
 MST009|Annoying Kid's Mom|A stressed mother who becomes fiercely protective if she believes the player harmed her child.|F1TU|3|30|ATK029,ATK030,ATK031,ATK032,ATK033

@@ -75,6 +75,7 @@ public class Player {
     public int getPuzzlesSolved(){ return this.puzzlesSolved;}
     public int getRoomsVisited(){ return this.roomsVisited;}
     public int getMonstersDefeated(){ return this.monstersDefeated;}
+    public List<Item> getPlayerInventory(){ return this.playerInventory; }
 
 
     public void increaseRoomsVisited(){this.roomsVisited += 1;}
