@@ -9,6 +9,7 @@ public class GameController {
     private boolean isPlaying = false;
     private GameModel model = new GameModel();
     private GameView view = new GameView();
+    private Player player = model.getPlayer();
 
     // MFR4 - Randomly selects a monster attack during combat
     private Random combatRandom = new Random();
