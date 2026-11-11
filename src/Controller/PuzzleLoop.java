@@ -1,16 +1,15 @@
 package Controller;
 
-import Model.Puzzle;
-import Model.PuzzleStep;
-import Model.Room;
+import Model.*;
 import View.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PuzzleLoop {
 
-    public void startPuzzleLoop(Puzzle puzzle, Room room, GameView view, int attemptsLeft){
+    public void startPuzzleLoop(Puzzle puzzle, Room room, GameView view, int attemptsLeft, Player player, Map<String, Item> items){
         while (attemptsLeft > 0) {
             view.printPuzzleDescription(room.getRoomName(), puzzle.getDescription());
             view.printMessage("You have " + attemptsLeft + " attempts left. Enter one of the answers for the prompt, " +
@@ -31,7 +30,12 @@ public class PuzzleLoop {
             //If player enters correct solution, puzzle is solved, player is awarded escape room stamp (stamp is removed from room)
             // and player's puzzle solved count goes up
             if (puzzle.attempt(playerInputs) == true){
-                view.printMessage("You Solved the puzzle!");
+                view.printMessage(puzzle.getCorrectText());
+                view.printMessage("You successfully solved the puzzle! An escape room stamp has been added to your inventory!");
+                Item stamp = items.get("QI001");
+                (player.getPlayerInventory()).add(stamp);
+                (room.getRoomInventory()).remove(stamp);
+                player.increaseRoomsVisited();
                 return;
             }
             //Print message telling the player they failed to solve the puzzle,

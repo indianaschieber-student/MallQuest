@@ -348,7 +348,7 @@ public class GameController {
             // If so, there can be a separate method parsePuzzleCommand to handle that interaction
             if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
                 PuzzleLoop loop = new PuzzleLoop();
-                loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, 4);
+                loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, 4, model.getPlayer(), model.getGameItems());
             }
 
             //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods

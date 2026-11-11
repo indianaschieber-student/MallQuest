@@ -93,6 +93,7 @@ public class GameView {
                 "\nBase Attack: " + baseAttack +
                 "\nRooms Visited: " + roomsVisited +
                 "\nPuzzles Completed: " + puzzlesCompleted );
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //A method to return a Room's Description
@@ -132,6 +133,8 @@ public class GameView {
         for (Map.Entry<String, String> entry : exitNames.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
     }
 
