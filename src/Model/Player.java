@@ -77,6 +77,47 @@ public class Player {
     public int getMonstersDefeated(){ return this.monstersDefeated;}
     public List<Item> getPlayerInventory(){ return this.playerInventory; }
 
+    // --- INVENTORY METHODS FOR GAMECONTROLLER ---
+
+    // Standard alias getter to support getInventory()
+    public List<Item> getInventory() {
+        return this.playerInventory;
+    }
+
+    // Adds an item to the player's inventory
+    public void addItem(Item item) {
+        if (item != null) {
+            this.playerInventory.add(item);
+        }
+    }
+
+    // Removes an item matching by ID or Name
+    public Item removeItemByName(String nameOrId) {
+        for (Item item : this.playerInventory) {
+            if (item.getId().equalsIgnoreCase(nameOrId) || item.getName().equalsIgnoreCase(nameOrId)) {
+                this.playerInventory.remove(item);
+                return item;
+            }
+        }
+        return null;
+    }
+
+    // Overloaded removal method using an Item object reference directly
+    public boolean removeItem(Item item) {
+        return this.playerInventory.remove(item);
+    }
+
+    // Searches for an item in inventory by ID or Name without removing it
+    public Item findItemInInventory(String nameOrId) {
+        for (Item item : this.playerInventory) {
+            if (item.getId().equalsIgnoreCase(nameOrId) || item.getName().equalsIgnoreCase(nameOrId)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    // --- END INVENTORY METHODS ---
 
     public void increaseRoomsVisited(){this.roomsVisited += 1;}
     //The method returns true if the player levels up, false if not. This may be redundant, in which case
@@ -133,5 +174,8 @@ public class Player {
         }
     }
 
-
+    // Setter for HP (used by consumable healing items)
+    public void setHp(int hp) {
+        this.currentHp = Math.min(hp, this.maxHp);
+    }
 }
