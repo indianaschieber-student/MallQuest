@@ -97,4 +97,30 @@ public class Room {
         roomInventory.remove(item);
     }
 
+    // Temporary inventory helpers inside Room.java
+
+    public void addItem(Item item) {
+        if (item != null) {
+            this.roomInventory.add(item);
+        }
+    }
+
+    public Item removeItem(String nameOrId) {
+        for (Item item : this.roomInventory) {
+            if (item.getId().equalsIgnoreCase(nameOrId) || item.getName().equalsIgnoreCase(nameOrId)) {
+                this.roomInventory.remove(item);
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Item findItem(String nameOrId) {
+        for (Item item : this.roomInventory) {
+            if (item.getId().equalsIgnoreCase(nameOrId) || item.getName().equalsIgnoreCase(nameOrId)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

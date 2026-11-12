@@ -17,7 +17,7 @@ public class Consumable extends Item {
 
     public void consume(Player player) {
         if (player != null && hpRestore > 0) {
-            player.setHp(player.getHp() + hpRestore);
+            player.setHp(player.getCurrentHp() + hpRestore);
         }
     }
 
