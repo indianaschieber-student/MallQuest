@@ -50,7 +50,7 @@ public class GameView {
     // and prints each sentence on its own line
     public void printWelcome(String playerName){
         printMessage("Hello, " + playerName + "!\n" +
-                "Welcome to Mall Quest, the Text-Based Adventure Game where you play as a child lost in a shopping mall.\n" +
+                "Welcome to Mall Quest, the Text-Based Adventure Game where you play as an intrepid child lost in a shopping mall.\n" +
                 "You must solve puzzles in order to collect 10 Escape Room Stamps and leave through the Exit on the top floor of the mall.\n" +
                 "Enter the name of an adjacent room to walk to it, or enter 'Help' to see a list of player commands.\n" +
                 "We here at Kirva Shopping Mall wish you the best of luck on your Mall Quest!");
@@ -58,16 +58,22 @@ public class GameView {
 
     //These two methods are used to display a room name and description when the player moves rooms
     // The text for using the look command is slightly different
-    public void printRoomName(String roomName, boolean isVisited){
+    public void printRoomName(String roomName, boolean isVisited, String monsterName){
         if (isVisited == true){
             printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             printMessage("You are currently in: " + formatBold(roomName) + ".");
             printMessage("This room seems familiar...");
+            if (!(monsterName.isEmpty()||monsterName.equals(null))){
+                printMessage("Warning: " + monsterName + " is here and appears hostile!");
+            }
         }
         else {
             printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             printMessage("New room discovered!");
             printMessage("You are currently in: " + formatBold(roomName) + ".");
+            if (!(monsterName.isEmpty()||monsterName.equals(null))){
+                printMessage("Warning: " + monsterName + " is here and appears hostile!");
+            }
         }
 
     }
@@ -93,12 +99,13 @@ public class GameView {
                 "\nBase Attack: " + baseAttack +
                 "\nRooms Visited: " + roomsVisited +
                 "\nPuzzles Completed: " + puzzlesCompleted );
+        //monsters defeated
         printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //A method to return a Room's Description
     //EXPLORE command
-    public void printExploreCommand(String monsterName, boolean hasPuzzle, List<String> itemNames, Map<String,String> exitNames, String roomName){
+    public void printExploreCommand(String monsterName, boolean hasPuzzle, boolean puzzleSolved, List<String> itemNames, Map<String,String> exitNames, String roomName){
         printMessage("You are currently in: " + formatBold(roomName) + ".");
         if(!(monsterName.isEmpty())){
             printMessage("There is an enemy in this room: " + monsterName + "! Use the 'INSPECT MONSTER' command to learn more!");
@@ -107,8 +114,11 @@ public class GameView {
             printMessage("There are no enemies in this room... for now.");
         }
 
-        if (hasPuzzle == true){
+        if (hasPuzzle == true && puzzleSolved == false){
             printMessage("This room has a puzzle! Use the 'INSPECT PUZZLE' command to learn more!");
+        }
+        else if (hasPuzzle == true && puzzleSolved == true){
+            printPuzzleSolved();
         }
         else{
             printMessage("There are no puzzles in this room for you to solve.");
@@ -225,8 +235,8 @@ public class GameView {
 
     //HINT command
     public void printPuzzleHint(String puzzleHint){
-        printMessage(puzzleHint);
-        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            printMessage(puzzleHint);
+            printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     //SOLVE or SOLVE PUZZLE command
@@ -235,6 +245,43 @@ public class GameView {
         String input = scanner.nextLine().trim();
         String answer = input;
         return answer;
+    }
+
+    public void printPuzzleSuccess(String correctText){
+        printMessage(wrapText(correctText));
+        printMessage("You successfully solved the puzzle! " +
+                "An escape room stamp has been added to your inventory!");
+    }
+
+    public void printPuzzleTryAgain(List<String> playerInputs){
+        System.out.print("The solution you entered (");
+        for (int x=0;x<playerInputs.size();x++){
+            if (x == playerInputs.size()-1){
+                System.out.print(playerInputs.get(x));
+            }
+            else{
+                System.out.print(playerInputs.get(x)+ ", ");
+            }
+        }
+        printMessage(") is incorrect; \nPlease try another solution.");
+    }
+
+    public void printPuzzleFailure(String incorrectText){
+        printMessage(wrapText(incorrectText));
+        printMessage("You failed to solve the puzzle.");
+    }
+
+    public void printPlayerEjected(String oldRoomName, String newRoomName){
+        printMessage("You have been removed from " +oldRoomName +
+                "\nYou are now in: " + newRoomName + ".");
+    }
+
+    public void printLostItem(String itemName){
+        printMessage("In all the confusion, you dropped " + itemName + ".");
+    }
+
+    public void printPuzzleSolved(){
+        printMessage("You have already solved the puzzle in this room.");
     }
 
     //FIGHT

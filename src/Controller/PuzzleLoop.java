@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class PuzzleLoop {
 
-    public void startPuzzleLoop(Puzzle puzzle, Room room, GameView view, int attemptsLeft, Player player, Map<String, Item> items){
+    public void startPuzzleLoop(Puzzle puzzle, Room room, GameView view, GameModel model, int attemptsLeft, Player player, Map<String, Item> items){
         while (attemptsLeft > 0) {
             view.printPuzzleDescription(room.getRoomName(), puzzle.getDescription());
             view.printMessage("You have " + attemptsLeft + " attempts left. Enter one of the answers for the prompt, " +
-                    "its corresponding number, or enter 'Quit' to exit the puzzle.");
+                    "its corresponding number, \nenter 'Attempts' to see how many attempts you have left, or enter 'Quit' to exit the puzzle.");
             List<PuzzleStep> puzzleSteps = puzzle.getPuzzleSteps();
             List<String> playerInputs = new ArrayList<>();
             for (int x=0; x < puzzleSteps.size(); x++){
@@ -21,6 +21,12 @@ public class PuzzleLoop {
                 //Player input stored as a String in a list of playerInputs
                 String input = view.promptForPuzzleSolution((puzzleSteps.get(x)).getPrompt());
                 String newInput = switchPlayerInput(input, (puzzleSteps.get(x)).getChoices());
+                if (newInput.equalsIgnoreCase("ATTEMPTS")||
+                        newInput.equalsIgnoreCase("CHECK ATTEMPTS")){
+                    view.printMessage("You have " + attemptsLeft + " attempts left.");
+                    input = view.promptForPuzzleSolution((puzzleSteps.get(x)).getPrompt());
+                    newInput = switchPlayerInput(input, (puzzleSteps.get(x)).getChoices());
+                }
                 if (newInput.equalsIgnoreCase("QUIT")){
                     return;
                 }
@@ -30,20 +36,35 @@ public class PuzzleLoop {
             //If player enters correct solution, puzzle is solved, player is awarded escape room stamp (stamp is removed from room)
             // and player's puzzle solved count goes up
             if (puzzle.attempt(playerInputs) == true){
-                view.printMessage(puzzle.getCorrectText());
-                view.printMessage("You successfully solved the puzzle! An escape room stamp has been added to your inventory!");
+                view.printPuzzleSuccess(puzzle.getCorrectText());
                 Item stamp = items.get("QI001");
                 (player.getPlayerInventory()).add(stamp);
                 (room.getRoomInventory()).remove(stamp);
-                player.increaseRoomsVisited();
+                player.increasePuzzlesSolved();
                 return;
             }
+            attemptsLeft--;
             //Print message telling the player they failed to solve the puzzle,
             // what their answers were, restart puzzle loop
             //If player runs out of attempts, kick them from the room and 50/50 chance to lose a random item
+            if (attemptsLeft == 0){
+                view.printPuzzleFailure(puzzle.getIncorrectText());
+                int random = (int)(Math.random() * 2);//generate a random int 1 or 0
+                if (random == 1){
+                    String itemName = player.removeRandomConsumable();
+                    if(!(itemName.isBlank())){
+                        view.printLostItem(itemName);  // 50/50 chance the player loses a consumable, if they have any
+                    }
+                }
+                String oldRoomName = (player.getPlayerRoom()).getRoomName();
+                String newRoomName = model.ejectPlayer();
+                if (!(newRoomName == null||newRoomName.isBlank())){
+                    view.printPlayerEjected(oldRoomName,newRoomName);
+                }
+                puzzle.resetAttempts();
+            }
             else{
-                attemptsLeft--;
-                view.printMessage("You failed to solve the puzzle...");
+                view.printPuzzleTryAgain(playerInputs);
                 continue;
             }
         }
