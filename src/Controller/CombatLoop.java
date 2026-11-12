@@ -70,13 +70,34 @@ public class CombatLoop {
             // MFR3 - Player attacks the monster
             if (combatCommand.equals("ATTACK")) {
 
-                // MFR3 - Use the player's current base attack damage
-                int damage = player.getBaseAttack();
 
-                // Reduce the monster's HP
-                monster.takeDamage(damage);
+                // MFR3 - Check whether the player's attack hits
+                boolean attackHits = playerAttackHits(player, monster);
 
-                view.printMessage("You attacked " + monster.getName() + " and dealt " + damage + " damage!");
+                if (attackHits) {
+
+                    // Calculate the player's attack damage
+                    int damage = player.getBaseAttack();
+
+                    // TODO MFR3 - Add equipped weapon bonus
+                    // once weapon equipment is connected.
+
+                    // Apply damage to the monster
+                    monster.takeDamage(damage);
+
+                    view.printMessage(
+                            "You attacked " + monster.getName()
+                                    + " and dealt " + damage + " damage!"
+                    );
+
+                } else {
+
+                    // Missed attacks do not damage the monster
+                    view.printMessage(
+                            "Your attack missed " + monster.getName() + "!"
+                    );
+                }
+
 
                 // Check if the monster has been defeated
 
@@ -201,8 +222,10 @@ public class CombatLoop {
         // Display the monster's attack
         view.printMessage(monster.getName() + " used " + selectedAttack.getName() + "!");
 
-        // MFR4 - Monster deals damage to the player
+        // Monster deals damage to the player
         player.takeDamage(damage);
+        // Apply any additional effect from the monster's attack
+        applyMonsterAttackEffect(selectedAttack, monster, player);
 
         // Display how much damage the monster dealt
         view.printMessage(monster.getName() + " dealt " + damage + " damage to you!");
@@ -210,9 +233,6 @@ public class CombatLoop {
         // Display the player's remaining HP
         view.printMessage("Your remaining HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
 
-        // TODO MFR4:
-        // Apply selectedAttack.getEffect() once the team
-        // finishes deciding how status effects will work.
     }
 
 
@@ -407,6 +427,56 @@ public class CombatLoop {
                 "[TODO] Player defeat recovery is not fully connected yet."
         );
     }
+
+
+    // MFR3 - Determines whether the player's attack hits
+    private static boolean playerAttackHits(Player player, Monster monster) {
+
+        // Get the player's level
+        int playerLevel = player.getPlayerLevel();
+
+        // Get the monster's level
+        int monsterLevel = monster.getLvl();
+
+        // TODO MFR3:
+        // Determine the hit chance based on the difference
+        // between the player's level and the monster's level.
+        // Exact percentages need to be confirmed with the team.
+
+        view.printMessage(
+                "[TODO] Calculate attack accuracy using player level "
+                        + playerLevel + " and monster level " + monsterLevel + "."
+        );
+
+        // Temporary behavior: attacks always hit until
+        // the team confirms the accuracy formula.
+        return true;
+    }
+
+
+
+    // MFR3 - Handles special effects from monster attacks
+    private static void applyMonsterAttackEffect(
+            MonsterAttack attack, Monster monster, Player player) {
+
+        // Get the effect ID assigned to this monster attack
+        String effectID = attack.getEffectID();
+
+        // Check whether the attack has a special effect
+        if (effectID == null || effectID.trim().isEmpty()) {
+            return;
+        }
+
+        // TODO MFR3 - Look up the effect ID in AtkEffects.txt
+        // and apply its behavior to the player or monster.
+
+        view.printMessage(
+                "[TODO MFR3] Apply monster attack effect: " + effectID.trim()
+        );
+    }
+
+
+
 
 
 

@@ -2,79 +2,79 @@
 ATK001|Cry|0|Teen cries uncontrollably; player loses next turn.|ATKFX001
 ATK002|Complain|0|Player attack success +70%, but damage -3 pts.|ATKFX002
 ATK003|They Don't Understand Me!|0|Player attack success -40% for 1 turn.|ATKFX003
-ATK004|Cheek Pinch|3|Deals 3 damage.|ATKFX004
+ATK004|Cheek Pinch|3|Deals 3 damage.|ATKFX000
 ATK005|Sweet Talk|0|Player loses next turn.|ATKFX001
 ATK006|You Look Just Like My Grandchild!|0|Player attack success -20% for 2 turns.|ATKFX005
-ATK007|Tired Shove|4|Deals 4 damage.|ATKFX006
+ATK007|Tired Shove|4|Deals 4 damage.|ATKFX000
 ATK008|Customer Service Voice|0|Player damage -3 pts for 1 turn.|ATKFX007
 ATK009|Break Time|0|Monster walks away; player may escape.|ATKFX009
-ATK010|Coat Swing|3|Deals 3 damage.|ATKFX004
-ATK011|Drop the Goods|2|Deals 2 damage; player may lose next turn.| ATKFX008
-ATK012|Run!|0|Monster flees; may relocate player to a different room.|ATKFX009
+ATK010|Coat Swing|3|Deals 3 damage.|ATKFX000
+ATK011|Drop the Goods|2|Deals 2 damage; player may lose next turn.|ATKFX020
+ATK012|Run!|0|Monster flees; may relocate player to a different room.|ATKFX021
 ATK013|Insult|0|Player attack success -40% for 1 turn.|ATKFX003
-ATK014|Shoulder Check|6|Deals 6 damage.|ATKFX010
-ATK015|Give Me Your Money|0|Refusing triggers Shoulder Check.| ATKFX010
+ATK014|Shoulder Check|6|Deals 6 damage.|ATKFX000
+ATK015|Give Me Your Money|0|Refusing triggers Shoulder Check.|ATKFX022
 ATK016|Laugh|0|Player defense -3 pts.|ATKFX011
 ATK017|Where Are Your Parents?|0|Player loses next turn.|ATKFX001
 ATK018|Friendly Warning|0|Player attack success -30%.|ATKFX012
-ATK019|Are You Lost?|0|Player must accept help or escape.| ATKFX009
-ATK020|Radio Check|0|Raises chance of another Mall Cop encounter.| ATKFX017
-ATK021|Scream|5|Deals 5 damage; stuns player.| ATKFX018
-ATK022|Ask "Why?"|0|Prevents player's next action.| ATKFX001
+ATK019|Are You Lost?|0|Player must accept help or escape.|ATKFX023
+ATK020|Radio Check|0|Raises chance of another Mall Cop encounter.|ATKFX017
+ATK021|Scream|5|Deals 5 damage; stuns player.|ATKFX024
+ATK022|Ask "Why?"|0|Prevents player's next action.|ATKFX001
 ATK023|Run Around|0|Player attack success -30%.|ATKFX012
 ATK024|Tattle|0|May trigger an additional encounter.|ATKFX017
 ATK025|Eye Roll|0|Player attack success -30%.|ATKFX012
 ATK026|Headphone Blast|0|Stuns player for 1 turn.|ATKFX001
-ATK027|Leave Me Alone!|6|Deals 6 damage.|ATKFX010
+ATK027|Leave Me Alone!|6|Deals 6 damage.|ATKFX000
 ATK028|Dramatic Sigh|0|Player attack power -4 pts.|ATKFX019
 ATK029|What Did You Do?!|0|Player cannot act for 1 turn.|ATKFX001
 ATK030|Mom Voice|0|Player attack success -20%, damage -5 pts.|ATKFX014
 ATK031|Come Here!|0|Player cannot escape for 1 turn.|ATKFX016
-ATK032|You Better Apologize!|0|Refusing raises her attack success +30%.|
-ATK033|I'm Calling Your Parents!|0|Player may panic and flee.|Player may panic and flee.
-ATK034|Where Am I? Spin|3|Bumps into player; deals 3 damage.|Bumps into player; deals 3 damage.
-ATK035|Unrelated Story|0|Player damage -2 pts.|Player damage -2 pts.
-ATK036|Lost Again|0|Wanders off; player may escape.|Wanders off; player may escape.
-ATK037|Rage Quit Slam|4|Deals 4 damage.|Deals 4 damage.
-ATK038|Salt Spray|0|Player defense -2 pts for 2 turns.|Player defense -2 pts for 2 turns.
-ATK039|Tryhard Focus|0|Next attack +2 damage.|Next attack +2 damage.
+ATK032|You Better Apologize!|0|Refusing raises her attack success +30%.|ATKFX025
+ATK033|I'm Calling Your Parents!|0|Player may panic and flee.|ATKFX026
+ATK034|Where Am I? Spin|3|Bumps into player; deals 3 damage.|ATKFX000
+ATK035|Unrelated Story|0|Player damage -2 pts.|ATKFX027
+ATK036|Lost Again|0|Wanders off; player may escape.|ATKFX009
+ATK037|Rage Quit Slam|4|Deals 4 damage.|ATKFX000
+ATK038|Salt Spray|0|Player defense -2 pts for 2 turns.|ATKFX028
+ATK039|Tryhard Focus|0|Next attack +2 damage.|ATKFX029
 ATK040|Sudden Appearance|0|Startles player; player loses next turn.|ATKFX001
-ATK041|Unblinking Stare|0|Player attack -4 for 1 turn.|Player attack -4 for 1 turn.
-ATK042|Product Shove|3|Shoves a product into the player's face; deals 3 damage.|Shoves a product into the player's face; deals 3 damage.
-ATK043|Vanishing Break|0|Disappears into stockroom; player may reposition.|Disappears into stockroom; player may reposition.
-ATK044|Hard Sell Shove|5|Pushes player toward a display; deals 5 damage.|Pushes player toward a display; deals 5 damage.
-ATK045|Let Me Show You! Grab|0|Pulls player toward a product; escape chance -40%.|Pulls player toward a product; escape chance -40%.
-ATK046|Upsell Overload|0|Talks nonstop; player next attack -3 pts.|Talks nonstop; player next attack -3 pts.
-ATK047|Cryptic Whisper|5|Deals 5 damage; may stun the player.|Deals 5 damage; may stun the player.
+ATK041|Unblinking Stare|0|Player attack -4 for 1 turn.|ATKFX030
+ATK042|Product Shove|3|Shoves a product into the player's face; deals 3 damage.|ATKFX000
+ATK043|Vanishing Break|0|Disappears into stockroom; player may reposition.|ATKFX031
+ATK044|Hard Sell Shove|5|Pushes player toward a display; deals 5 damage.|ATKFX000
+ATK045|Let Me Show You! Grab|0|Pulls player toward a product; escape chance -40%.|ATKFX032
+ATK046|Upsell Overload|0|Talks nonstop; player next attack -3 pts.|ATKFX033
+ATK047|Cryptic Whisper|5|Deals 5 damage; may stun the player.|ATKFX034
 ATK048|Shadow Step|0|Moves unpredictably; player attack success -20%.|ATKFX015
-ATK049|Hidden Intent|0|Pauses; player escape chance +20%.|Pauses; player escape chance +20%.
-ATK050|Gentle-but-Annoying Nudge|3|Deals 3 damage.|Deals 3 damage.
+ATK049|Hidden Intent|0|Pauses; player escape chance +20%.|ATKFX035
+ATK050|Gentle-but-Annoying Nudge|3|Deals 3 damage.|ATKFX000
 ATK051|Sales Pitch|0|Player attack success -10% for 1 turn.|ATKFX013
-ATK052|Step Away|0|Gets distracted by another customer; player may escape.|Gets distracted by another customer; player may escape.
-ATK053|Mega Sneeze|4|Deals 4 damage.|Deals 4 damage.
-ATK054|Germ Cloud|0|Player defense -2 pts for 2 turns.|Player defense -2 pts for 2 turns.
-ATK055|Do you have a tissue?|0|If player has a tissue, encounter ends. If not, triggers Mega Sneeze.|If player has a tissue, encounter ends. If not, triggers Mega Sneeze.
-ATK056|Vine Whip|6|Deals 6 damage.|Deals 6 damage.
-ATK057|Entangle|0|Restrains player; player loses turns until they break free.|Restrains player; player loses turns until they break free.
-ATK058|Photosynthesis Pause|0|Heals itself 4 HP.|Heals itself 4 HP.
-ATK059|Gummy Chomp|4|Deals 4 damage.|Deals 4 damage.
-ATK060|Sugar Stick|0|Jumps and sticks to player; escape chance -15%.|Jumps and sticks to player; escape chance -15%.
-ATK061|Sweet Smile|0|Charms player; attack -2 pts.|Charms player; attack -2 pts.
-ATK062|Cold Breeze|5|Deals 5 damage.|Deals 5 damage.
-ATK063|Poltergeist Push|2|Moves objects to strike player; deals 2–6 damage.|Moves objects to strike player; deals 2–6 damage.
-ATK064|Fade Out|0|Becomes intangible; player's next attack misses.|Becomes intangible; player's next attack misses.
-ATK065|Claw Snatch|7|Deals 7 damage; 30% chance to steal an item.|Deals 7 damage; 30% chance to steal an item.
-ATK066|Prize Drop|7|Drops a heavy plush on the player; deals 7 damage.|Drops a heavy plush on the player; deals 7 damage.
-ATK067|Jam Reset|0|Machine freezes; player escape chance +25%.|Machine freezes; player escape chance +25%.
-ATK068|Foam Ball Fling|4|Deals 4 damage.|Deals 4 damage.
-ATK069|Pit Pounce|0|Leaps onto player; player defense -3 pts for 1 turn.|Leaps onto player; player defense -3 pts for 1 turn.
-ATK070|Grapple|0|Grabs player and pulls them into the pit; player must escape or attack.|Grabs player and pulls them into the pit; player must escape or attack.
-ATK071|Caffeine Lunge|7|Lunges at player believing they have caffeine; deals 7 damage.|Lunges at player believing they have caffeine; deals 7 damage.
-ATK072|Hyper Jitters|0|Shaking makes monster harder to hit; player attack success -15%.|Shaking makes monster harder to hit; player attack success -15%.
-ATK073|Crash|0|Slows dramatically; player may escape or strike freely.|Slows dramatically; player may escape or strike freely.
-ATK074|Static-Charged Fastball|6|Throws electric dodgeball; deals 6 damage and knocks player backward.|Throws electric dodgeball; deals 6 damage and knocks player backward.
-ATK075|Arena Control|0|Jumps across trampolines to block escape; player cannot flee.|Jumps across trampolines to block escape; player cannot flee.
-ATK076|Taunting Chant|0|Mocking cheers; player attack -3 pts for 1 turn.|Mocking cheers; player attack -3 pts for 1 turn.
-ATK077|Parental Blockade|0|Steps directly into the player's path with unwavering resolve, preventing escape for all of combat.|Steps directly into the player's path with unwavering resolve, preventing escape for all of combat.
-ATK078|Dad Reflex Counter|4|Uses uncanny parental reflexes to deflect the player's attack, dealing 4-7 points of damage with a firm but controlled shove.|Uses uncanny parental reflexes to deflect the player's attack, dealing 4-7 points of damage with a firm but controlled shove.
-ATK079|Encouraging Pressure|0|Delivers a motivational speech that boosts his own defense for 1 turn of combat and lowers the player's attack by 2 points for 1 turn.|Delivers a motivational speech that boosts his own defense for 1 turn of combat and lowers the player's attack by 2 points for 1 turn.
+ATK052|Step Away|0|Gets distracted by another customer; player may escape.|ATKFX009
+ATK053|Mega Sneeze|4|Deals 4 damage.|ATKFX000
+ATK054|Germ Cloud|0|Player defense -2 pts for 2 turns.|ATKFX028
+ATK055|Do you have a tissue?|0|If player has a tissue, encounter ends. If not, triggers Mega Sneeze.|ATKFX036
+ATK056|Vine Whip|6|Deals 6 damage.|ATKFX000
+ATK057|Entangle|0|Restrains player; player loses turns until they break free.|ATKFX037
+ATK058|Photosynthesis Pause|0|Heals itself 4 HP.|ATKFX038
+ATK059|Gummy Chomp|4|Deals 4 damage.|ATKFX000
+ATK060|Sugar Stick|0|Jumps and sticks to player; escape chance -15%.|ATKFX039
+ATK061|Sweet Smile|0|Charms player; attack -2 pts.|ATKFX040
+ATK062|Cold Breeze|5|Deals 5 damage.|ATKFX000
+ATK063|Poltergeist Push|2|Moves objects to strike player; deals 2–6 damage.|ATKFX000
+ATK064|Fade Out|0|Becomes intangible; player's next attack misses.|ATKFX042
+ATK065|Claw Snatch|7|Deals 7 damage; 30% chance to steal an item.|ATKFX043
+ATK066|Prize Drop|7|Drops a heavy plush on the player; deals 7 damage.|ATKFX000
+ATK067|Jam Reset|0|Machine freezes; player escape chance +25%.|ATKFX044
+ATK068|Foam Ball Fling|4|Deals 4 damage.|ATKFX000
+ATK069|Pit Pounce|0|Leaps onto player; player defense -3 pts for 1 turn.|ATKFX045
+ATK070|Grapple|0|Grabs player and pulls them into the pit; player must escape or attack.|ATKFX046
+ATK071|Caffeine Lunge|7|Lunges at player believing they have caffeine; deals 7 damage.|ATKFX000
+ATK072|Hyper Jitters|0|Shaking makes monster harder to hit; player attack success -15%.|ATKFX047
+ATK073|Crash|0|Slows dramatically; player may escape or strike freely.|ATKFX048
+ATK074|Static-Charged Fastball|6|Throws electric dodgeball; deals 6 damage and knocks player backward.|ATKFX049
+ATK075|Arena Control|0|Jumps across trampolines to block escape; player cannot flee.|ATKFX016
+ATK076|Taunting Chant|0|Mocking cheers; player attack -3 pts for 1 turn.|ATKFX051
+ATK077|Parental Blockade|0|Steps directly into the player's path with unwavering resolve, preventing escape for all of combat.|ATKFX050
+ATK078|Dad Reflex Counter|4|Uses uncanny parental reflexes to deflect the player's attack, dealing 4-7 points of damage with a firm but controlled shove.|ATKFX000
+ATK079|Encouraging Pressure|0|Delivers a motivational speech that boosts his own defense for 1 turn of combat and lowers the player's attack by 2 points for 1 turn.|ATKFX053
