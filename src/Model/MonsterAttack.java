@@ -7,7 +7,7 @@ public class MonsterAttack {
     private String name;
     private int damage;
     private String description;
-    private String effect;
+    private String effectID;
 
     // Creates an attack using information from GameWorldBuilder
     public MonsterAttack(String id, String name, int damage,
@@ -16,7 +16,7 @@ public class MonsterAttack {
         this.name = name;
         this.damage = damage;
         this.description = description;
-        this.effect = effect;
+        this.effectID = effect;
     }
 
     // MFR3 - Gets the attack's ID for matching
@@ -40,7 +40,8 @@ public class MonsterAttack {
     }
 
     // MFR3 - Gets the attack's special effect
-    public String getEffect() {
-        return effect;
+    public String getEffectID() {
+        return effectID;
+
     }
 }

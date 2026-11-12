@@ -7,16 +7,21 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
-public class combatLoop {
-    private boolean isPlaying = false;
-    private GameModel model = new GameModel();
-    private GameView view = new GameView();
+public class CombatLoop {
+    private static boolean isPlaying = false;
+
+    // References to the existing game model and view
+    private static GameModel model;
+    private static GameView view;
 
     // MFR4 - Randomly selects a monster attack during combat
-    private Random combatRandom = new Random();
+    private static Random combatRandom = new Random();
 
     // MFR3 - Handles combat between the player and a monster
-    private void combatLoop () {
+    public static void combatLoop (GameModel gameModel, GameView gameView) {
+
+        model = gameModel;
+        view = gameView;
 
 
         // Gets the player's current room
@@ -87,11 +92,8 @@ public class combatLoop {
                     // MFR4 - Monster retaliates if it survived
                     monsterAttackTurn(monster, player);
 
-                    // TODO MFR3 - Player defeat recovery
-
                     if (player.getCurrentHp() <= 0) {
-                        view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
-
+                        handlePlayerDefeat(player);
                         inCombat = false;
                     }
                 }
@@ -120,49 +122,8 @@ public class combatLoop {
                         // Monster retaliates after item use
                         monsterAttackTurn(monster, player);
 
-                        // Check whether the player was defeated
                         if (player.getCurrentHp() <= 0) {
-
-                            // TODO MFR3 - Player defeat recovery
-                            // SRS requires respawn at Pharmacy with 1 HP
-                            // get pharmacy ID
-                            // and removal of one random inventory item.
-                            view.printMessage("[TODO] Player defeat recovery: " +
-                                    "lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
-
-                            // Temporarily end combat, not the game
-                            inCombat = false;
-                        }
-                    }
-                }
-            }
-
-
-            // MFR4 - Player attempts an alternative action on a monster
-            else if (combatCommand.equals("ACT")) {
-
-                // Attempt to perform an action on the monster
-                boolean actionPerformed = actOnMonster(monster);
-
-                // A successful action may consume the player's turn
-                if (actionPerformed) {
-
-                    if (monster.isDefeated()) {
-
-                        handleMonsterVictory(monster, player);
-
-                        inCombat = false;
-                    }
-
-                    else {
-
-                        // Monster takes its turn unless an ACT effect prevents it
-                        monsterAttackTurn(monster, player);
-
-                        // Check whether the player was defeated
-                        if (player.getCurrentHp() <= 0) {
-                            view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
-
+                            handlePlayerDefeat(player);
                             inCombat = false;
                         }
                     }
@@ -180,16 +141,16 @@ public class combatLoop {
 
                     // End combat
                     inCombat = false;
-                } else {
+                }
+
+                else {
                     view.printMessage("You cannot escape from " + monster.getName() + "!");
 
                     // Monster retaliates after failed escape
                     monsterAttackTurn(monster, player);
 
-                    // MFR4 - Check whether the player has been defeated
                     if (player.getCurrentHp() <= 0) {
-                        view.printMessage("You have been defeated! Game over.");
-                        isPlaying = false;
+                        handlePlayerDefeat(player);
                         inCombat = false;
                     }
                 }
@@ -219,7 +180,7 @@ public class combatLoop {
 
 
     // MFR4 - Monster attacks the player during combat
-    private void monsterAttackTurn (Monster monster, Player player){
+    public static void monsterAttackTurn (Monster monster, Player player){
 
         // Get all attacks assigned to this monster
         ArrayList<MonsterAttack> attacks = monster.getAttacks();
@@ -256,7 +217,7 @@ public class combatLoop {
 
 
     // MFR3 / IFR6 - Handles using an item during combat
-    private boolean useCombatItem(Player player, Monster monster) {
+    public static boolean useCombatItem(Player player, Monster monster) {
 
         // TODO INVENTORY #1:
         // Player.java currently stores playerInventory as a private field,
@@ -284,7 +245,7 @@ public class combatLoop {
 
 
     // MFR2 - Displays the monster's current combat status
-    private void checkMonsterStatus(Monster monster) {
+    private static void checkMonsterStatus(Monster monster) {
 
         // Check whether a monster exists
         if (monster == null) {
@@ -300,10 +261,7 @@ public class combatLoop {
                 "Monster: " + monster.getName()
         );
 
-        view.printMessage(
-                "HP: " + monster.getHp()
-                        + "/" + monster.getMaxHp()
-        );
+        view.printMessage("HP: " + monster.getHp() + "/" + monster.getMaxHp());
 
         // Display the monster's level
         view.printMessage(
@@ -317,16 +275,14 @@ public class combatLoop {
             status = "None";
         }
 
-        view.printMessage(
-                "Status: " + status
-        );
+        view.printMessage("Status: " + status);
 
         view.printMessage("----------------------");
     }
 
 
     // MFR4 - Handles alternative interactions with monsters
-    private boolean actOnMonster(Monster monster) {
+    private static boolean actOnMonster(Monster monster) {
 
         if (monster == null) {
             view.printMessage("There is no monster to interact with.");
@@ -375,7 +331,7 @@ public class combatLoop {
 
 
     // MFR3 - Handles rewards when a monster is defeated
-    private void handleMonsterVictory(Monster monster, Player player) {
+    private static void handleMonsterVictory(Monster monster, Player player) {
 
         // Announce the monster's defeat
         view.printMessage(
@@ -417,6 +373,41 @@ public class combatLoop {
                 "[TODO] Award an Escape Room Stamp if applicable."
         );
     }
+
+
+    // MFR3 - Handles player defeat during combat
+    private static void handlePlayerDefeat(Player player) {
+
+        // Check if the player has actually been defeated
+        if (player.getCurrentHp() > 0) {
+            return;
+        }
+
+        view.printMessage("You have been defeated!");
+
+        // TODO INVENTORY - Remove one random inventory item
+        // Requires access to the player's inventory
+        view.printMessage(
+                "[TODO] Remove one random item from the player's inventory."
+        );
+
+        // TODO PLAYER HP - Restore HP to exactly 1
+        // Requires a method in Player.java to update current HP
+        view.printMessage(
+                "[TODO] Restore the player's HP to 1."
+        );
+
+        // TODO ROOM - Move player to Pharmacy (F1PH)
+        // Requires a way to locate and teleport to the Pharmacy
+        view.printMessage(
+                "[TODO] Respawn the player at Pharmacy (F1PH)."
+        );
+
+        view.printMessage(
+                "[TODO] Player defeat recovery is not fully connected yet."
+        );
+    }
+
 
 
 }

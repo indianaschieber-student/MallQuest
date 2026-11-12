@@ -396,6 +396,7 @@ public class GameController {
             else {
                 view.printMessage("Command not recognized. Use '10', 'Inspect', 'Inspect Monster', or 'Inspect Puzzle'.");
             }
+
             return;
         }
 
@@ -411,7 +412,10 @@ public class GameController {
                     String hint = (currentRoom.getRoomPuzzle()).getHint();
                     view.printPuzzleHint(hint);
                     return;
-                } else {
+
+                }
+
+                else {
                     view.printMessage("There is no puzzle in this room!");
                 }
 
@@ -427,7 +431,7 @@ public class GameController {
 
             //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
             if (command.equalsIgnoreCase("FIGHT")) {
-                combatLoop();
+                CombatLoop.combatLoop(model, view);
                 return;
 
             }
@@ -443,7 +447,10 @@ public class GameController {
                     isPlaying = false;
                     view.printGameOver();
                     return;
-                } else {
+
+                }
+
+                else {
                     return;
                 }
 
@@ -459,6 +466,7 @@ public class GameController {
             else {
                 view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
                         "see a full list of commands.");
+
                 view.printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
 

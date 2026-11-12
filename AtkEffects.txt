@@ -1,0 +1,23 @@
+# id | Effect Desc | Turn Mod | Success Mod | Dmg Mod | Def Mod | Esc Mod | Player Mod | Monster Success
+ATKFX000 | No Effect | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX001 | Player loses next turn. | 1 | 0 | 0 | 0 | 0 | 0
+ATKFX002 | Player attack success +70%, but damage -3 pts. | 1 | 0.70 | -3 | 0 | 0 | 0
+ATKFX003 | Player attack success -40% for 1 turn. | 1 | -0.40 | 0 | 0 | 0 | 0
+ATKFX004 | Deals 3 damage. | 0 | 0 | 3 | 0 | 0 | 0
+ATKFX005 | Player attack success -20% for 2 turns. | 2 | -0.20 | 0 | 0 | 0 | 0
+ATKFX006 | Deals 4 damage. | 0 | 0 | 4 | 0 | 0 | 0
+ATKFX007 | Player damage -3 pts for 1 turn. | 1 | 0 | 0 | 0 | 0 | 3
+ATKFX008 | Deals 2 damage; player may lose next turn. | 1 | 0 | 2 | 0 | 0 | 0
+ATKFX009 | Player can leave. | 0 | 0 | 0 | 0 | 1 | 0
+ATKFX010 | Deals 6 damage. | 0 | 0 | 6 | 0 | 0 | 0
+ATKFX011 | Player defense -3 pts. | 0 | 0 | 0 | -3 | 0 | 0
+ATKFX012 | Player attack success -30%. | 0 | -0.30 | 0 | 0 | 0 | 0
+ATKFX013 | Player attack success -10% for 1 turn. | 1 | -0.10 | 0 | 0 | 0 | 0
+ATKFX014 | Player attack success -20%, damage -5 pts. | 0 | -0.20 | -5 | 0 | 0 | 0
+ATKFX015 | Player attack success -20% | 0 | -0.20 | 0 | 0 | 0 | 0
+ATKFX016 | Player cannot escape for 1 turn. | 0 | 0 | 0 | 0 | 2 | 0
+ATKFX017 | Adds another encounter. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX018 | Deals 5 damage. | 0 | 0 | 5 | 0 | 0 | 0
+ATKFX019 | Player damage -4 pts | 0 | 0 | 0 | 0 | 0 | 4
+ATKFC020 | ... | 1 | -0.40 | 0 | 0 | 0 | 0 | 0.30
+
