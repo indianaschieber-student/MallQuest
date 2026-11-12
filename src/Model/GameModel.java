@@ -2,6 +2,8 @@ package Model;
 
 import View.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -122,6 +124,27 @@ public class GameModel {
             }
         }
         return false;
+    }
+
+    //moves the player to the main hallway for their corresponding floor when they flee from a monster or
+    // fail to solve a puzzle
+    public String ejectPlayer(){
+        Room currentRoom = player1.getPlayerRoom();
+        String currentFloor = (currentRoom.getRoomID()).substring(0,2);
+        //Also include the exit, the player has a mandatory combat encounter here that they may run from
+        if (currentFloor.equals("F2")||currentFloor.equals("EX")){
+            movePlayerToRoom("Floor 2 Hallway");
+            return (player1.getPlayerRoom()).getRoomName();
+        }
+        if (currentFloor.equals("F1")){
+            movePlayerToRoom("Floor 1 Hallway");
+            return (player1.getPlayerRoom()).getRoomName();
+        }
+        if (currentFloor.equals("FG")){
+            movePlayerToRoom("Ground Floor Hallway");
+            return (player1.getPlayerRoom()).getRoomName();
+        }
+        return null;
     }
 
 }

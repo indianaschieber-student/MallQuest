@@ -26,7 +26,11 @@ public class GameController {
     // then only when the player moves rooms or uses the LOOK command
     private void printCurrentRoom() {
         boolean isVisited = (model.getCurrentRoom()).isVisited();
-        view.printRoomName(model.getCurrentRoomName(), isVisited);
+        String monsterName = "";
+        if ((model.getCurrentRoom().hasMonster())){
+            monsterName = ((model.getCurrentRoom()).getRoomMonster()).getName();
+        }
+        view.printRoomName(model.getCurrentRoomName(), isVisited, monsterName);
         view.printRoomDescription(model.getCurrentRoomDescription());
     }
 
@@ -205,6 +209,10 @@ public class GameController {
                 monsterName = monster.getName();
             }
             boolean hasPuzzle = currentRoom.hasPuzzle();
+            boolean puzzleSolved = false;
+            if (currentRoom.hasPuzzle()){
+                if ((currentRoom.getRoomPuzzle()).isSolved()){puzzleSolved = true;}
+            }
             List<Item> items = currentRoom.getRoomInventory();
             List<String> itemNames = new ArrayList<>();
             for (Item item : items) {
@@ -215,7 +223,7 @@ public class GameController {
             for (Room tempRoom : exits) {
                 exitNames.put(tempRoom.getRoomID(), tempRoom.getRoomName());
             }
-            view.printExploreCommand(monsterName, hasPuzzle, itemNames, exitNames, currentRoom.getRoomName());
+            view.printExploreCommand(monsterName, hasPuzzle, puzzleSolved, itemNames, exitNames, currentRoom.getRoomName());
             return;
         }
         //Displays a list of all rooms and which floor they are on
@@ -374,6 +382,9 @@ public class GameController {
                 if (puzzle == null) {
                     view.printMessage("There are no puzzles in this room for you to solve.");
                 }
+                else if(puzzle.isSolved()){
+                    view.printPuzzleSolved();
+                }
                 else{
                     view.printPuzzleDescription(currentRoom.getRoomName(), puzzle.getDescription());
                 }
@@ -388,6 +399,9 @@ public class GameController {
                 }
                 if (puzzle == null) {
                     view.printMessage("There are no puzzles in this room for you to solve.");
+                }
+                else if(puzzle.isSolved()){
+                    view.printPuzzleSolved();
                 }
                 else{
                     view.printPuzzleDescription(currentRoom.getRoomName(), puzzle.getDescription());
@@ -409,11 +423,16 @@ public class GameController {
             // to examine the item in your inventory if you have already picked it up.
             if (command.equalsIgnoreCase("HINT") || command.equalsIgnoreCase("REQUEST HINT")) {
                 //Pulls the Hint from the current Room Puzzle
+                Puzzle puzzle = currentRoom.getRoomPuzzle();
                 if (currentRoom.hasPuzzle()) {
                     String hint = (currentRoom.getRoomPuzzle()).getHint();
                     view.printPuzzleHint(hint);
                     return;
-                } else {
+                }
+                else if(puzzle.isSolved()){
+                    view.printPuzzleSolved();
+                }
+                else {
                     view.printMessage("There is no puzzle in this room!");
                 }
 
@@ -423,8 +442,15 @@ public class GameController {
             // should ask for a hint while solving a puzzle, or before they solve the puzzle
             // If so, there can be a separate method parsePuzzleCommand to handle that interaction
             if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
-                PuzzleLoop loop = new PuzzleLoop();
-                loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, 4, model.getPlayer(), model.getGameItems());
+                Puzzle puzzle = currentRoom.getRoomPuzzle();
+                if (puzzle.isSolved()){
+                    view.printPuzzleSolved();
+                }
+                else{
+                    PuzzleLoop loop = new PuzzleLoop();
+                    loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model,4, model.getPlayer(), model.getGameItems());
+                }
+                return;
             }
 
             //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods

@@ -119,7 +119,29 @@ public class Player {
 
     // --- END INVENTORY METHODS ---
 
+    //Removes a random consumable item from the player's inventory
+    public String removeRandomConsumable() {
+        List<Item> consumables = new ArrayList<>();
+        //Check player inventory for consumables
+        for (Item item : this.playerInventory) {
+            if ((item.getName()).startsWith("CI")) {
+                consumables.add(item);
+            }
+        }
+        //if player inventory has no consumables, return false
+        if (consumables.isEmpty()) {
+            return "";
+        }
+        //Pull a random index from 0-(n-1) for a list of size n
+        Item selected = consumables.get((int) (Math.random() * consumables.size()));
+        this.playerInventory.remove(selected);
+        return selected.getName();
+    }
+
     public void increaseRoomsVisited(){this.roomsVisited += 1;}
+    public void increasePuzzlesSolved(){this.puzzlesSolved ++;}
+    public void increaseMonstersDefeated(){this.monstersDefeated ++;}
+
     //The method returns true if the player levels up, false if not. This may be redundant, in which case
     // I can change it to a void return type
     public boolean gainXp(int xp){
