@@ -49,7 +49,7 @@ public class PuzzleLoop {
             //If player runs out of attempts, kick them from the room and 50/50 chance to lose a random item
             if (attemptsLeft == 0){
                 view.printPuzzleFailure(puzzle.getIncorrectText());
-                int random = (int)(Math.random() * 2);//generate a random int 1 or 0
+                int random = 1; //(int)(Math.random() * 2);//generate a random int 1 or 0
                 if (random == 1){
                     String itemName = player.removeRandomConsumable();
                     if(!(itemName.isBlank())){
@@ -61,7 +61,6 @@ public class PuzzleLoop {
                 if (!(newRoomName == null||newRoomName.isBlank())){
                     view.printPlayerEjected(oldRoomName,newRoomName);
                 }
-                puzzle.resetAttempts();
             }
             else{
                 view.printPuzzleTryAgain(playerInputs);

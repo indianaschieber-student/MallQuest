@@ -62,7 +62,7 @@ public class CombatLoop {
             view.printMessage("Your HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
 
             // MFR3 - Display available combat actions
-            view.printMessage("Choose an action: ATTACK, USE ITEM, RUN or CHECK STATUS");
+            view.printMessage("Choose an action: ATTACK, USE ITEM, ACT, RUN or CHECK STATUS");
 
             String combatCommand = view.promptForCommand().trim().toUpperCase(Locale.ROOT);
 
@@ -239,27 +239,27 @@ public class CombatLoop {
     // MFR3 / IFR6 - Handles using an item during combat
     public static boolean useCombatItem(Player player, Monster monster) {
 
-        // TODO INVENTORY #1:
-        // Player.java currently stores playerInventory as a private field,
-        // but does not provide a getter to access the items.
-        view.printMessage("[TODO INVENTORY #1] Cannot display inventory yet. " + "Player.java needs an inventory getter.");
+        String itemTarget = view.promptForItemName();
+        if (itemTarget != null && !itemTarget.trim().isEmpty()) {
+            Item item = player.findItemInInventory(itemTarget.trim());
+            if (item != null) {
+                if (item instanceof Consumable) {
+                    Consumable consumable = (Consumable) item;
+                    consumable.consume(player);
+                    view.printMessage("You used " + consumable.getName() + "!");
+                    if (consumable.isSingleUse()) {
+                        player.removeItem(item);
+                    }
+                    return true;
+                } else {
+                    view.printMessage("You can't use that item in combat.");
+                }
+            } else {
+                view.printMessage("You don't have that item.");
+            }
+        }
 
-        // TODO INVENTORY #2 - Item selection
-        view.printMessage("[TODO] Display numbered inventory and select an item.");
-
-        // TODO CONSUMABLE #1 - Healing
-        view.printMessage("[TODO] Healing items will restore player HP " + "without exceeding maximum HP.");
-
-        // TODO CONSUMABLE #2 - Combat damage
-        view.printMessage("[TODO] Combat damage items will reduce monster HP.");
-
-        // TODO CONSUMABLE #3 - Debuff removal
-        view.printMessage("[TODO] Debuff-removing items will clear applicable effects.");
-
-        // TODO INVENTORY #3 - Item removal
-        view.printMessage("[TODO] Remove the consumed item from inventory.");
-
-        // No item was used, so the player's turn is not consumed.
+        // No valid item was used, so the player's turn is not consumed.
         return false;
     }
 
@@ -456,25 +456,22 @@ public class CombatLoop {
 
 
     // MFR3 - Handles special effects from monster attacks
-
     private static void applyMonsterAttackEffect(
             MonsterAttack attack, Monster monster, Player player) {
 
+        // Get the effect ID assigned to this monster attack
         String effectID = attack.getEffectID();
 
+        // Check whether the attack has a special effect
         if (effectID == null || effectID.trim().isEmpty()) {
             return;
         }
 
-        AttackEffect effect = new AttackEffect(effectID);
+        // TODO MFR3 - Look up the effect ID in AtkEffects.txt
+        // and apply its behavior to the player or monster.
 
-
+        view.printMessage(
+                "[TODO MFR3] Apply monster attack effect: " + effectID.trim()
+        );
     }
-
-
-
-
-
-
-
 }

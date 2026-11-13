@@ -16,33 +16,47 @@ public class GameWorldBuilder {
     // and the value being the object. This will allow the createGameMap method to easily populate the Room objects
     // by pulling the IDs from the Rooms.txt file and retrieving the corresponding objects from the Hashmaps.
     // I think it may also make sense to still store these objects in an ArrayList as well, just in case
-    
 
-    public Map<String, Item> createGameItems(String itemFile) 
+
+    public Map<String, Item> createGameItems(String itemFile)
             throws FileNotFoundException {
-      Map<String, Item> itemsByID = new HashMap<>();
-      File file = new File(itemFile);
-      if (!file.exists()) return itemsByID;
-    
-      Scanner scanner = new Scanner(file);
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine().trim();
-        if (line.isEmpty() || line.startsWith("#")) continue;
-        
-        String[] data = line.split("\\|", -1);
-        if (data.length >= 4) {
-            String itemID = data[0].trim();
-            String category = data[1].trim();
-            String name = data[2].trim();
-            String description = data[3].trim();
-            
-            Item item = new Item(itemID, category, name, description);
-            itemsByID.put(itemID, item);
+        Map<String, Item> itemsByID = new HashMap<>();
+        File file = new File(itemFile);
+        if (!file.exists()) return itemsByID;
+
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty() || line.startsWith("#")) continue;
+
+            String[] data = line.split("\\|", -1);
+            if (data.length >= 4) {
+                String itemID = data[0].trim();
+                String category = data[1].trim();
+                String name = data[2].trim();
+                String description = data[3].trim();
+
+                Item item;
+
+                // Instantiate Consumable with default values for its extra fields if not parsed from file
+                if (category.equalsIgnoreCase("Consumable")) {
+                    item = new Consumable(itemID, category, name, description, 5, 0, false, true);
+                } else if (category.equalsIgnoreCase("Cosmetic")) {
+                    item = new CosmeticItem(itemID, category, name, description);
+                } else if (category.equalsIgnoreCase("Quest")) {
+                    item = new QuestItem(itemID, category, name, description);
+                } else if (category.equalsIgnoreCase("Lore")) {
+                    item = new LoreItem(itemID, category, name, description);
+                } else {
+                    item = new Item(itemID, category, name, description);
+                }
+
+                itemsByID.put(itemID, item);
+            }
         }
+        scanner.close();
+        return itemsByID;
     }
-    scanner.close();
-    return itemsByID;
-  }
 
   public Map<String, Puzzle> createGamePuzzles(String puzzleFile) 
           throws FileNotFoundException {
@@ -239,9 +253,18 @@ public class GameWorldBuilder {
                 }
                 Random rand = new Random();
                 int randomIndex = rand.nextInt(roomMonsterIDs.size());
-
-                Monster roomMonster = monstersByID.get(roomMonsterIDs.get(randomIndex));
-
+                //Creates a new monster object for each room. That way, if two rooms have the same monster they don't
+                // share attributes, such as an HP pool and defeated status, etc.
+                Monster template = monstersByID.get(roomMonsterIDs.get(randomIndex));
+                Monster roomMonster = new Monster(
+                        template.getId(),
+                        template.getName(),
+                        template.getDescription(),
+                        template.getLocationFound(),
+                        template.getLvl(),
+                        template.getMaxHp(),
+                        template.getAttacks()
+                );
                 room.addMonster(roomMonster);
             }
 

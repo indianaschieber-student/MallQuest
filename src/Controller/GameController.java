@@ -11,7 +11,8 @@ public class GameController {
     private GameView view = new GameView();
     private Player player = model.getPlayer();
 
-
+    // MFR4 - Randomly selects a monster attack during combat
+    private Random combatRandom = new Random();
 
     //constructor for the GameController class that takes
     //a GameModel and GameView object as arguments
@@ -26,7 +27,7 @@ public class GameController {
     private void printCurrentRoom() {
         boolean isVisited = (model.getCurrentRoom()).isVisited();
         String monsterName = "";
-        if ((model.getCurrentRoom().hasMonster())){
+        if ((model.getCurrentRoom().hasMonster())) {
             monsterName = ((model.getCurrentRoom()).getRoomMonster()).getName();
         }
         view.printRoomName(model.getCurrentRoomName(), isVisited, monsterName);
@@ -51,6 +52,14 @@ public class GameController {
 
             //isPlaying = false;
         }
+    }
+
+    public void startNewGame() {
+
+    }
+
+    public void loadGame() {
+
     }
 
     //I used GitHub Copilot to generate this switch block here; it allows the player to enter a room's name
@@ -180,21 +189,27 @@ public class GameController {
         Player player = model.getPlayer();
 
         //Check to see if the command the player entered is the name of an adjacent room, or its room id
-        if (model.movePlayerToRoom(roomAbbreviations(command))) {
-            printCurrentRoom();
+        String destination = roomAbbreviations(command).trim();
+        //Blocks the player from entering The Exit unless they have solved 10 puzzles
+        if (destination.equalsIgnoreCase("The Exit")
+                && player.getPuzzlesSolved() < 10) {
+            view.printMessage("You can't leave the mall until you collect 10 Escape Room Stamps!");
             return;
         }
 
+        if (model.movePlayerToRoom(destination)) {
+            printCurrentRoom();
+            return;
+        }
         //Displays player's Name, HP, Level, XP to next level, currently equipped items, base attack
         //As per the SRS: Items collected, Quests completed (I decided to do puzzles solved because there are no quests),
         // and number of rooms visited. I figured I'd also add number of monsters defeated, if we have time to implement.
         if (command.equalsIgnoreCase("STATUS") || command.equalsIgnoreCase("CHECK STATUS")) {
-
-
             String hp = player.getCurrentHp() + "/" + player.getMaxHp();
             String xp = player.getCurrentXp() + "/" + player.getXpToNextLevel();
+            String cosmeticName = (player.getEquippedCosmetic() != null) ? player.getEquippedCosmetic().getName() : null;
             view.printPlayerStatus(player.getPlayerName(), hp, player.getPlayerLevel(), xp,
-                    player.getBaseAttack(), player.getRoomsVisited(), player.getPuzzlesSolved());
+                    player.getBaseAttack(), player.getRoomsVisited(), player.getPuzzlesSolved(), cosmeticName);
             return;
         }
 
@@ -209,8 +224,10 @@ public class GameController {
             }
             boolean hasPuzzle = currentRoom.hasPuzzle();
             boolean puzzleSolved = false;
-            if (currentRoom.hasPuzzle()){
-                if ((currentRoom.getRoomPuzzle()).isSolved()){puzzleSolved = true;}
+            if (currentRoom.hasPuzzle()) {
+                if ((currentRoom.getRoomPuzzle()).isSolved()) {
+                    puzzleSolved = true;
+                }
             }
             List<Item> items = currentRoom.getRoomInventory();
             List<String> itemNames = new ArrayList<>();
@@ -263,22 +280,40 @@ public class GameController {
                 view.printMessage("Your inventory is empty.");
             } else {
                 view.printMessage("--- Your Inventory ---");
+                // Count occurrences by item name to group duplicates cleanly
+                Map<String, Integer> itemCounts = new LinkedHashMap<>();
                 for (Item item : inventory) {
-                    view.printMessage("- " + item.getName() + " [" + item.getCategory() + "] (" + item.getId() + ")");
+                    itemCounts.put(item.getName(), itemCounts.getOrDefault(item.getName(), 0) + 1);
+                }
+                for (Map.Entry<String, Integer> entry : itemCounts.entrySet()) {
+                    view.printMessage("- " + entry.getKey() + " x" + entry.getValue());
                 }
             }
             return;
         }
-        
-        //Take/Pickup items (e.g., "PICKUP W001" or "TAKE Water Bottle")
-        if (command.startsWith("TAKE") || command.startsWith("PICKUP")) {
-            String target = command.substring(command.indexOf(" ") + 1).trim();
-            if (target.isEmpty() || target.equalsIgnoreCase("TAKE") || target.equalsIgnoreCase("PICKUP")) {
-                view.printMessage("What would you like to take/pickup?");
+
+        //Take/Pickup items (supports typing "TAKE" / "PICKUP" alone or with arguments)
+        if (command.equalsIgnoreCase("TAKE") || command.equalsIgnoreCase("PICKUP") || command.startsWith("TAKE ") || command.startsWith("PICKUP ")) {
+            String target = "";
+            if (command.equalsIgnoreCase("TAKE") || command.equalsIgnoreCase("PICKUP")) {
+                target = view.promptForItemName();
+            } else {
+                target = command.substring(command.indexOf(" ") + 1).trim();
+            }
+
+            if (target.isEmpty()) {
+                view.printMessage("No item specified.");
                 return;
             }
+
             Item itemToTake = currentRoom.removeItem(target);
             if (itemToTake != null) {
+                // Check restriction for Escape Room Stamp
+                if (itemToTake instanceof QuestItem && (((QuestItem) itemToTake).isStamp() || itemToTake.getId().equalsIgnoreCase("QI001"))) {
+                    view.printMessage("You cannot pick up the Escape Room Stamp!");
+                    currentRoom.addItem(itemToTake); // Put it back on the room floor
+                    return;
+                }
                 player.addItem(itemToTake);
                 view.printMessage("You picked up: " + itemToTake.getName());
             } else {
@@ -286,14 +321,34 @@ public class GameController {
             }
             return;
         }
-        
+
         //Drop items (e.g., "DROP W001")
-        if (command.startsWith("DROP")) {
-            String target = command.substring(4).trim();
+        if (command.equalsIgnoreCase("DROP") || command.startsWith("DROP ")) {
+            String target = "";
+            if (command.equalsIgnoreCase("DROP")) {
+                target = view.promptForItemName();
+            } else {
+                target = command.substring(4).trim();
+            }
+
             if (target.isEmpty()) {
                 view.printMessage("What would you like to drop?");
                 return;
             }
+
+            Item itemToCheck = player.findItemInInventory(target);
+            if (itemToCheck != null) {
+                // Check restrictions: Cannot drop lore items or escape room stamp
+                if (itemToCheck instanceof LoreItem) {
+                    view.printMessage("You cannot drop lore items!");
+                    return;
+                }
+                if (itemToCheck instanceof QuestItem && (((QuestItem) itemToCheck).isStamp() || itemToCheck.getId().equalsIgnoreCase("QI001"))) {
+                    view.printMessage("You cannot drop the Escape Room Stamp!");
+                    return;
+                }
+            }
+
             Item itemToDrop = player.removeItemByName(target);
             if (itemToDrop != null) {
                 currentRoom.addItem(itemToDrop);
@@ -303,14 +358,21 @@ public class GameController {
             }
             return;
         }
-        
-        //Read Lore Items / Examine items (e.g., "EXAMINE LI001" or "READ map")
-        if (command.startsWith("READ") || command.startsWith("EXAMINE")) {
-            String target = command.substring(command.indexOf(" ") + 1).trim();
-            if (target.isEmpty() || target.equalsIgnoreCase("READ") || target.equalsIgnoreCase("EXAMINE")) {
-                view.printMessage("What would you like to read or examine?");
+
+        //Read Lore Items / Examine items (supports typing "READ" / "EXAMINE" alone or with arguments)
+        if (command.equalsIgnoreCase("READ") || command.equalsIgnoreCase("EXAMINE") || command.startsWith("READ ") || command.startsWith("EXAMINE ")) {
+            String target = "";
+            if (command.equalsIgnoreCase("READ") || command.equalsIgnoreCase("EXAMINE")) {
+                target = view.promptForItemName();
+            } else {
+                target = command.substring(command.indexOf(" ") + 1).trim();
+            }
+
+            if (target.isEmpty()) {
+                view.printMessage("No item specified to read or examine.");
                 return;
             }
+
             Item item = player.findItemInInventory(target);
             if (item == null) {
                 // If not in inventory, check room items
@@ -320,23 +382,33 @@ public class GameController {
             if (item != null) {
                 if (item instanceof LoreItem) {
                     LoreItem lore = (LoreItem) item;
-                    view.printMessage(lore.provideInfo());
+                    // Wrap the lore information text using GameView's wrapText method
+                    view.printMessage(GameView.wrapText(lore.provideInfo()));
                 } else {
-                    view.printMessage(item.getName() + ": " + item.getDescription());
+                    // Wrap standard item descriptions using GameView's wrapText method
+                    String fullDesc = item.getName() + ": " + item.getDescription();
+                    view.printMessage(GameView.wrapText(fullDesc));
                 }
             } else {
                 view.printMessage("You don't have or see that item to examine.");
             }
             return;
         }
-        
-        //Interacts with an object / consumable in the inventory (e.g., "USE CI001")
-        if (command.startsWith("USE")) {
-            String target = command.substring(3).trim();
+
+        //Interacts with an object / consumable in the inventory (supports typing "USE" alone or with arguments)
+        if (command.equalsIgnoreCase("USE") || command.startsWith("USE ")) {
+            String target = "";
+            if (command.equalsIgnoreCase("USE")) {
+                target = view.promptForItemName();
+            } else {
+                target = command.substring(3).trim();
+            }
+
             if (target.isEmpty()) {
                 view.printMessage("What would you like to use?");
                 return;
             }
+
             Item item = player.findItemInInventory(target);
             if (item != null) {
                 if (item instanceof Consumable) {
@@ -351,6 +423,45 @@ public class GameController {
                 }
             } else {
                 view.printMessage("You don't have that item in your inventory.");
+            }
+            return;
+        }
+
+        // EQUIP cosmetic item command (supports "EQUIP" alone or with arguments)
+        if (command.equalsIgnoreCase("EQUIP") || command.startsWith("EQUIP ")) {
+            String target = "";
+            if (command.equalsIgnoreCase("EQUIP")) {
+                target = view.promptForItemName();
+            } else {
+                target = command.substring(6).trim();
+            }
+
+            if (target.isEmpty()) {
+                view.printMessage("No cosmetic item specified.");
+                return;
+            }
+
+            Item item = player.findItemInInventory(target);
+            if (item != null) {
+                if (item instanceof CosmeticItem) {
+                    player.setEquippedCosmetic((CosmeticItem) item);
+                    view.printMessage("You equipped: " + item.getName());
+                } else {
+                    view.printMessage("You cannot equip " + item.getName() + ".");
+                }
+            } else {
+                view.printMessage("You don't have that item in your inventory.");
+            }
+            return;
+        }
+
+        // UNEQUIP cosmetic item command
+        if (command.equalsIgnoreCase("UNEQUIP") || command.equalsIgnoreCase("TAKE OFF")) {
+            if (player.getEquippedCosmetic() != null) {
+                view.printMessage("You unequipped: " + player.getEquippedCosmetic().getName());
+                player.setEquippedCosmetic(null);
+            } else {
+                view.printMessage("You don't have any cosmetic item equipped.");
             }
             return;
         }
@@ -380,16 +491,12 @@ public class GameController {
             else if (subcommand.equalsIgnoreCase("PUZZLE")) {
                 if (puzzle == null) {
                     view.printMessage("There are no puzzles in this room for you to solve.");
-                }
-                else if(puzzle.isSolved()){
+                } else if (puzzle.isSolved()) {
                     view.printPuzzleSolved();
-                }
-                else{
+                } else {
                     view.printPuzzleDescription(currentRoom.getRoomName(), puzzle.getDescription());
                 }
-            }
-
-            else if ((subcommand == null) || (subcommand.isBlank())) {
+            } else if ((subcommand == null) || (subcommand.isBlank())) {
                 if (monster == null) {
                     view.printMessage("There are no monsters in this room.");
                 } else {
@@ -398,114 +505,108 @@ public class GameController {
                 }
                 if (puzzle == null) {
                     view.printMessage("There are no puzzles in this room for you to solve.");
-                }
-                else if(puzzle.isSolved()){
+                } else if (puzzle.isSolved()) {
                     view.printPuzzleSolved();
-                }
-                else{
+                } else {
                     view.printPuzzleDescription(currentRoom.getRoomName(), puzzle.getDescription());
                 }
 
-            }
-
-            else {
+            } else {
                 view.printMessage("Command not recognized. Use '10', 'Inspect', 'Inspect Monster', or 'Inspect Puzzle'.");
             }
-
             return;
         }
 
 
-
-
-            //The SRS didn't specify that you have to be in the puzzle to request a hint, and this makes sense
-            //The Hint option should tell you where to find the lore item with the puzzle solution, or tell you
-            // to examine the item in your inventory if you have already picked it up.
-            if (command.equalsIgnoreCase("HINT") || command.equalsIgnoreCase("REQUEST HINT")) {
-                //Pulls the Hint from the current Room Puzzle
-                Puzzle puzzle = currentRoom.getRoomPuzzle();
-                if (currentRoom.hasPuzzle()) {
-                    String hint = (currentRoom.getRoomPuzzle()).getHint();
-                    view.printPuzzleHint(hint);
-                    return;
-                }
-                else if(puzzle.isSolved()){
-                    view.printPuzzleSolved();
-                }
-                else {
-                    view.printMessage("There is no puzzle in this room!");
-                }
-
-            }
-
-            //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
-            // should ask for a hint while solving a puzzle, or before they solve the puzzle
-            // If so, there can be a separate method parsePuzzleCommand to handle that interaction
-            if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
-                Puzzle puzzle = currentRoom.getRoomPuzzle();
-                if (puzzle.isSolved()){
-                    view.printPuzzleSolved();
-                }
-                else{
-                    PuzzleLoop loop = new PuzzleLoop();
-                    loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model,4, model.getPlayer(), model.getGameItems());
-                }
+        //The SRS didn't specify that you have to be in the puzzle to request a hint, and this makes sense
+        //The Hint option should tell you where to find the lore item with the puzzle solution, or tell you
+        // to examine the item in your inventory if you have already picked it up.
+        if (command.equalsIgnoreCase("HINT") || command.equalsIgnoreCase("REQUEST HINT")) {
+            //Pulls the Hint from the current Room Puzzle
+            Puzzle puzzle = currentRoom.getRoomPuzzle();
+            if (currentRoom.hasPuzzle()) {
+                String hint = (currentRoom.getRoomPuzzle()).getHint();
+                view.printPuzzleHint(hint);
                 return;
-            }
-
-            //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
-            if (command.equalsIgnoreCase("FIGHT")) {
-                CombatLoop.combatLoop(model, view);
-                return;
-
-            }
-
-            if (command.equalsIgnoreCase("SAVE") || command.equalsIgnoreCase("SAVE GAME")) {
-
-            }
-
-            if (command.equalsIgnoreCase("QUIT") || command.equalsIgnoreCase("QUIT GAME")) {
-                //Ask the player "Are you sure you want to quit?" Prompt for Y/N
-                boolean quit = view.promptForQuit();
-                if (quit) {
-                    isPlaying = false;
-                    view.printGameOver();
-                    return;
-
-                }
-
-                else {
-                    return;
-                }
-
-            }
-
-            //Prints a list of commands
-            if (command.equalsIgnoreCase("HELP")) {
-                view.printCommandList();
-                return;
-            }
-
-            //This block should go at the very bottom, if the command is not recognized anywhere else
-            else {
-                view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
-                        "see a full list of commands.");
-
-                view.printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            } else if (puzzle.isSolved()) {
+                view.printPuzzleSolved();
+            } else {
+                view.printMessage("There is no puzzle in this room!");
             }
 
         }
 
-        public void startNewGame () {
+        //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
+        // should ask for a hint while solving a puzzle, or before they solve the puzzle
+        // If so, there can be a separate method parsePuzzleCommand to handle that interaction
+        if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
+            Puzzle puzzle = currentRoom.getRoomPuzzle();
+            if (puzzle.isSolved()) {
+                view.printPuzzleSolved();
+            } else {
+                PuzzleLoop loop = new PuzzleLoop();
+                loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model, 4, model.getPlayer(), model.getGameItems());
+            }
+            return;
+        }
+
+        //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
+        //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
+        if (command.equalsIgnoreCase("FIGHT")) {
+            CombatLoop.combatLoop(model, view);
+            return;
 
         }
 
-        public void loadGame () {
+        if (command.equalsIgnoreCase("SAVE") || command.equalsIgnoreCase("SAVE GAME")) {
 
         }
 
+        if (command.equalsIgnoreCase("QUIT") || command.equalsIgnoreCase("QUIT GAME")) {
+            //Ask the player "Are you sure you want to quit?" Prompt for Y/N
+            boolean quit = view.promptForQuit();
+            if (quit) {
+                isPlaying = false;
+                view.printGameOver();
+                return;
+            } else {
+                return;
+            }
 
+        }
 
+        //Prints a list of commands
+        if (command.equalsIgnoreCase("HELP")) {
+            view.printCommandList();
+            return;
+        }
+
+        //This block should go at the very bottom, if the command is not recognized anywhere else
+        else {
+            view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
+                    "see a full list of commands.");
+            view.printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        }
+
+    }
+
+    public void handleItemUsageInCombat(Player player, Room currentRoom, GameView view, String itemName) {
+        Item item = player.findItemInInventory(itemName);
+        if (item != null) {
+            if (item instanceof Consumable) {
+                Consumable consumable = (Consumable) item;
+                consumable.consume(player);
+                view.printMessage("You used " + consumable.getName() + " and restored health!");
+                if (consumable.isSingleUse()) {
+                    player.removeItem(item);
+                }
+            } else {
+                view.printMessage("You cannot use " + item.getName() + " like that during combat.");
+            }
+        } else {
+            view.printMessage("You don't have that item in your inventory.");
+        }
+    }
 
 
 }
