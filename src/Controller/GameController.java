@@ -7,9 +7,8 @@ import java.util.*;
 
 public class GameController {
     private boolean isPlaying = false;
-    private GameModel model = new GameModel();
-    private GameView view = new GameView();
-    private Player player = model.getPlayer();
+    private GameModel model;
+    private GameView view;
 
     // MFR4 - Randomly selects a monster attack during combat
     private Random combatRandom = new Random();
@@ -27,7 +26,7 @@ public class GameController {
     private void printCurrentRoom() {
         boolean isVisited = (model.getCurrentRoom()).isVisited();
         String monsterName = "";
-        if ((model.getCurrentRoom().hasMonster())){
+        if ((model.getCurrentRoom().hasMonster())) {
             monsterName = ((model.getCurrentRoom()).getRoomMonster()).getName();
         }
         view.printRoomName(model.getCurrentRoomName(), isVisited, monsterName);
@@ -35,6 +34,15 @@ public class GameController {
     }
 
     public void startGame() {
+        //Prompt the user to choose a save file
+        startNewGame();
+    }
+
+    public void loadGame () {
+
+    }
+
+    public void startNewGame() {
         //First, the view prompts the player for their name.
         // The name is then stored as a player attribute
         model.setPlayerName(view.promptForPlayerName());
@@ -210,8 +218,10 @@ public class GameController {
             }
             boolean hasPuzzle = currentRoom.hasPuzzle();
             boolean puzzleSolved = false;
-            if (currentRoom.hasPuzzle()){
-                if ((currentRoom.getRoomPuzzle()).isSolved()){puzzleSolved = true;}
+            if (currentRoom.hasPuzzle()) {
+                if ((currentRoom.getRoomPuzzle()).isSolved()) {
+                    puzzleSolved = true;
+                }
             }
             List<Item> items = currentRoom.getRoomInventory();
             List<String> itemNames = new ArrayList<>();
@@ -270,7 +280,7 @@ public class GameController {
             }
             return;
         }
-        
+
         //Take/Pickup items (e.g., "PICKUP W001" or "TAKE Water Bottle")
         if (command.startsWith("TAKE") || command.startsWith("PICKUP")) {
             String target = command.substring(command.indexOf(" ") + 1).trim();
@@ -287,7 +297,7 @@ public class GameController {
             }
             return;
         }
-        
+
         //Drop items (e.g., "DROP W001")
         if (command.startsWith("DROP")) {
             String target = command.substring(4).trim();
@@ -304,7 +314,7 @@ public class GameController {
             }
             return;
         }
-        
+
         //Read Lore Items / Examine items (e.g., "EXAMINE LI001" or "READ map")
         if (command.startsWith("READ") || command.startsWith("EXAMINE")) {
             String target = command.substring(command.indexOf(" ") + 1).trim();
@@ -330,7 +340,7 @@ public class GameController {
             }
             return;
         }
-        
+
         //Interacts with an object / consumable in the inventory (e.g., "USE CI001")
         if (command.startsWith("USE")) {
             String target = command.substring(3).trim();
@@ -381,16 +391,12 @@ public class GameController {
             else if (subcommand.equalsIgnoreCase("PUZZLE")) {
                 if (puzzle == null) {
                     view.printMessage("There are no puzzles in this room for you to solve.");
-                }
-                else if(puzzle.isSolved()){
+                } else if (puzzle.isSolved()) {
                     view.printPuzzleSolved();
-                }
-                else{
+                } else {
                     view.printPuzzleDescription(currentRoom.getRoomName(), puzzle.getDescription());
                 }
-            }
-
-            else if ((subcommand == null) || (subcommand.isBlank())) {
+            } else if ((subcommand == null) || (subcommand.isBlank())) {
                 if (monster == null) {
                     view.printMessage("There are no monsters in this room.");
                 } else {
@@ -399,181 +405,225 @@ public class GameController {
                 }
                 if (puzzle == null) {
                     view.printMessage("There are no puzzles in this room for you to solve.");
-                }
-                else if(puzzle.isSolved()){
+                } else if (puzzle.isSolved()) {
                     view.printPuzzleSolved();
-                }
-                else{
+                } else {
                     view.printPuzzleDescription(currentRoom.getRoomName(), puzzle.getDescription());
                 }
 
-            }
-
-            else {
+            } else {
                 view.printMessage("Command not recognized. Use '10', 'Inspect', 'Inspect Monster', or 'Inspect Puzzle'.");
             }
             return;
         }
 
 
-
-
-            //The SRS didn't specify that you have to be in the puzzle to request a hint, and this makes sense
-            //The Hint option should tell you where to find the lore item with the puzzle solution, or tell you
-            // to examine the item in your inventory if you have already picked it up.
-            if (command.equalsIgnoreCase("HINT") || command.equalsIgnoreCase("REQUEST HINT")) {
-                //Pulls the Hint from the current Room Puzzle
-                Puzzle puzzle = currentRoom.getRoomPuzzle();
-                if (currentRoom.hasPuzzle()) {
-                    String hint = (currentRoom.getRoomPuzzle()).getHint();
-                    view.printPuzzleHint(hint);
-                    return;
-                }
-                else if(puzzle.isSolved()){
-                    view.printPuzzleSolved();
-                }
-                else {
-                    view.printMessage("There is no puzzle in this room!");
-                }
-
+        //The SRS didn't specify that you have to be in the puzzle to request a hint, and this makes sense
+        //The Hint option should tell you where to find the lore item with the puzzle solution, or tell you
+        // to examine the item in your inventory if you have already picked it up.
+        if (command.equalsIgnoreCase("HINT") || command.equalsIgnoreCase("REQUEST HINT")) {
+            //Pulls the Hint from the current Room Puzzle
+            Puzzle puzzle = currentRoom.getRoomPuzzle();
+            if (currentRoom.hasPuzzle()) {
+                String hint = (currentRoom.getRoomPuzzle()).getHint();
+                view.printPuzzleHint(hint);
+                return;
+            } else if (puzzle.isSolved()) {
+                view.printPuzzleSolved();
+            } else {
+                view.printMessage("There is no puzzle in this room!");
             }
 
-            //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
-            // should ask for a hint while solving a puzzle, or before they solve the puzzle
-            // If so, there can be a separate method parsePuzzleCommand to handle that interaction
-            if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
-                Puzzle puzzle = currentRoom.getRoomPuzzle();
-                if (puzzle.isSolved()){
-                    view.printPuzzleSolved();
-                }
-                else{
-                    PuzzleLoop loop = new PuzzleLoop();
-                    loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model,4, model.getPlayer(), model.getGameItems());
-                }
+        }
+
+        //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
+        // should ask for a hint while solving a puzzle, or before they solve the puzzle
+        // If so, there can be a separate method parsePuzzleCommand to handle that interaction
+        if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
+            Puzzle puzzle = currentRoom.getRoomPuzzle();
+            if (puzzle.isSolved()) {
+                view.printPuzzleSolved();
+            } else {
+                PuzzleLoop loop = new PuzzleLoop();
+                loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model, 4, model.getPlayer(), model.getGameItems());
+            }
+            return;
+        }
+
+        //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
+        if (command.equalsIgnoreCase("FIGHT")) {
+            combatLoop();
+            return;
+
+        }
+
+        if (command.equalsIgnoreCase("SAVE") || command.equalsIgnoreCase("SAVE GAME")) {
+
+        }
+
+        if (command.equalsIgnoreCase("QUIT") || command.equalsIgnoreCase("QUIT GAME")) {
+            //Ask the player "Are you sure you want to quit?" Prompt for Y/N
+            boolean quit = view.promptForQuit();
+            if (quit) {
+                isPlaying = false;
+                view.printGameOver();
+                return;
+            } else {
                 return;
             }
 
-            //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
-            if (command.equalsIgnoreCase("FIGHT")) {
-                combatLoop();
-                return;
+        }
 
-            }
+        //Prints a list of commands
+        if (command.equalsIgnoreCase("HELP")) {
+            view.printCommandList();
+            return;
+        }
 
-            if (command.equalsIgnoreCase("SAVE") || command.equalsIgnoreCase("SAVE GAME")) {
+        //This block should go at the very bottom, if the command is not recognized anywhere else
+        else {
+            view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
+                    "see a full list of commands.");
+            view.printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        }
 
-            }
+    }
 
-            if (command.equalsIgnoreCase("QUIT") || command.equalsIgnoreCase("QUIT GAME")) {
-                //Ask the player "Are you sure you want to quit?" Prompt for Y/N
-                boolean quit = view.promptForQuit();
-                if (quit) {
-                    isPlaying = false;
-                    view.printGameOver();
-                    return;
+    // MFR3 - Handles combat between the player and a monster
+    private void combatLoop() {
+
+        // Gets the player's current room
+        Room room = model.getCurrentRoom();
+
+        // Gets the monster inside that room
+        Monster monster = room.getRoomMonster();
+
+        // Gets the existing player from GameModel
+        Player player = model.getPlayer();
+
+        // Checks whether a monster exists in the room
+        if (monster == null) {
+            view.printMessage("There is no monster to fight here.");
+            return;
+        }
+
+        // Checks whether the monster has already been defeated
+        if (monster.isDefeated()) {
+            view.printMessage(monster.getName() + " has already been defeated.");
+            return;
+        }
+
+        // Announces the beginning of combat
+        view.printMessage("You are now fighting " + monster.getName() + "!");
+
+        // MFR3 - Keeps combat running until the monster is defeated
+        // or the player successfully escapes
+        boolean inCombat = true;
+
+        while (inCombat) {
+
+            // Display the monster's current HP
+            view.printMessage(monster.getName() + " HP: " + monster.getHp() + "/" + monster.getMaxHp()
+            );
+
+            // MFR3 - Display the player's current and maximum HP
+            view.printMessage("Your HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
+
+            // MFR3 - Display available combat actions
+            view.printMessage("Choose an action: ATTACK, USE ITEM, ACT, RUN or CHECK STATUS");
+
+            String combatCommand = view.promptForCommand().trim().toUpperCase(Locale.ROOT);
+
+
+            // MFR3 - Player attacks the monster
+            if (combatCommand.equals("ATTACK")) {
+
+                // MFR3 - Use the player's current base attack damage
+                int damage = player.getBaseAttack();
+
+                // Reduce the monster's HP
+                monster.takeDamage(damage);
+
+                view.printMessage("You attacked " + monster.getName() + " and dealt " + damage + " damage!");
+
+                // Check if the monster has been defeated
+
+                if (monster.isDefeated()) {
+
+                    handleMonsterVictory(monster, player);
+
+                    inCombat = false;
                 } else {
-                    return;
+                    // MFR4 - Monster retaliates if it survived
+                    monsterAttackTurn(monster, player);
+
+                    // TODO MFR3 - Player defeat recovery
+
+                    if (player.getCurrentHp() <= 0) {
+                        view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
+
+                        inCombat = false;
+                    }
                 }
-
             }
 
-            //Prints a list of commands
-            if (command.equalsIgnoreCase("HELP")) {
-                view.printCommandList();
-                return;
+
+            // MFR3 - Player attempts to use an item during combat
+            else if (combatCommand.equals("USE ITEM")) {
+
+                // Call the combat item selection method
+                boolean itemUsed = useCombatItem(player, monster);
+
+                // If a valid item was used, the monster gets a turn
+                if (itemUsed) {
+
+                    // Check whether the item defeated the monster
+                    if (monster.isDefeated()) {
+
+                        handleMonsterVictory(monster, player);
+
+                        inCombat = false;
+                    } else {
+
+                        // Monster retaliates after item use
+                        monsterAttackTurn(monster, player);
+
+                        // Check whether the player was defeated
+                        if (player.getCurrentHp() <= 0) {
+
+                            // TODO MFR3 - Player defeat recovery
+                            // SRS requires respawn at Pharmacy with 1 HP
+                            // and removal of one random inventory item.
+                            view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
+
+                            // Temporarily end combat, not the game
+                            inCombat = false;
+                        }
+                    }
+                }
             }
 
-            //This block should go at the very bottom, if the command is not recognized anywhere else
-            else {
-                view.printMessage("Command not recognized. Type 'Explore' to see a list of adjacent rooms, or 'Help' to " +
-                        "see a full list of commands.");
-                view.printMessage("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            }
 
-        }
+            // MFR4 - Player attempts an alternative action on a monster
+            else if (combatCommand.equals("ACT")) {
 
-        public void startNewGame () {
+                // Attempt to perform an action on the monster
+                boolean actionPerformed = actOnMonster(monster);
 
-        }
-
-        public void loadGame () {
-
-        }
-
-
-        // MFR3 - Handles combat between the player and a monster
-        private void combatLoop () {
-
-            // Gets the player's current room
-            Room room = model.getCurrentRoom();
-
-            // Gets the monster inside that room
-            Monster monster = room.getRoomMonster();
-
-            // Gets the existing player from GameModel
-            Player player = model.getPlayer();
-
-            // Checks whether a monster exists in the room
-            if (monster == null) {
-                view.printMessage("There is no monster to fight here.");
-                return;
-            }
-
-            // Checks whether the monster has already been defeated
-            if (monster.isDefeated()) {
-                view.printMessage(monster.getName() + " has already been defeated.");
-                return;
-            }
-
-            // Announces the beginning of combat
-            view.printMessage("You are now fighting " + monster.getName() + "!");
-
-            // MFR3 - Keeps combat running until the monster is defeated
-            // or the player successfully escapes
-            boolean inCombat = true;
-
-            while (inCombat) {
-
-                // Display the monster's current HP
-                view.printMessage(monster.getName() + " HP: " + monster.getHp() + "/" + monster.getMaxHp()
-                );
-
-                // MFR3 - Display the player's current and maximum HP
-                view.printMessage("Your HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
-
-                // MFR3 - Display available combat actions
-                view.printMessage("Choose an action: ATTACK, USE ITEM, ACT, RUN or CHECK STATUS");
-
-                String combatCommand = view.promptForCommand().trim().toUpperCase(Locale.ROOT);
-
-
-                // MFR3 - Player attacks the monster
-                if (combatCommand.equals("ATTACK")) {
-
-                    // MFR3 - Use the player's current base attack damage
-                    int damage = player.getBaseAttack();
-
-                    // Reduce the monster's HP
-                    monster.takeDamage(damage);
-
-                    view.printMessage("You attacked " + monster.getName() + " and dealt " + damage + " damage!");
-
-                    // Check if the monster has been defeated
+                // A successful action may consume the player's turn
+                if (actionPerformed) {
 
                     if (monster.isDefeated()) {
 
                         handleMonsterVictory(monster, player);
 
                         inCombat = false;
-                    }
+                    } else {
 
-
-                    else {
-                        // MFR4 - Monster retaliates if it survived
+                        // Monster takes its turn unless an ACT effect prevents it
                         monsterAttackTurn(monster, player);
 
-                        // TODO MFR3 - Player defeat recovery
-
+                        // Check whether the player was defeated
                         if (player.getCurrentHp() <= 0) {
                             view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
 
@@ -581,161 +631,92 @@ public class GameController {
                         }
                     }
                 }
+            }
 
 
-                // MFR3 - Player attempts to use an item during combat
-                else if (combatCommand.equals("USE ITEM")) {
+            // MFR3 - Player attempts to escape combat
+            else if (combatCommand.equals("RUN")) {
 
-                    // Call the combat item selection method
-                    boolean itemUsed = useCombatItem(player, monster);
+                // Check whether the monster allows escape
+                if (monster.canEscape()) {
 
-                    // If a valid item was used, the monster gets a turn
-                    if (itemUsed) {
+                    view.printMessage("You successfully escaped from " + monster.getName() + "!");
 
-                        // Check whether the item defeated the monster
-                        if (monster.isDefeated()) {
+                    // End combat
+                    inCombat = false;
+                } else {
+                    view.printMessage("You cannot escape from " + monster.getName() + "!");
 
-                            handleMonsterVictory(monster, player);
+                    // Monster retaliates after failed escape
+                    monsterAttackTurn(monster, player);
 
-                            inCombat = false;
-                        }
-
-                        else {
-
-                            // Monster retaliates after item use
-                            monsterAttackTurn(monster, player);
-
-                            // Check whether the player was defeated
-                            if (player.getCurrentHp() <= 0) {
-
-                                // TODO MFR3 - Player defeat recovery
-                                // SRS requires respawn at Pharmacy with 1 HP
-                                // and removal of one random inventory item.
-                                view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
-
-                                // Temporarily end combat, not the game
-                                inCombat = false;
-                            }
-                        }
-                    }
-                }
-
-
-                // MFR4 - Player attempts an alternative action on a monster
-                else if (combatCommand.equals("ACT")) {
-
-                    // Attempt to perform an action on the monster
-                    boolean actionPerformed = actOnMonster(monster);
-
-                    // A successful action may consume the player's turn
-                    if (actionPerformed) {
-
-                        if (monster.isDefeated()) {
-
-                            handleMonsterVictory(monster, player);
-
-                            inCombat = false;
-                        }
-
-                        else {
-
-                            // Monster takes its turn unless an ACT effect prevents it
-                            monsterAttackTurn(monster, player);
-
-                            // Check whether the player was defeated
-                            if (player.getCurrentHp() <= 0) {
-                                view.printMessage("[TODO] Player defeat recovery: lose one random item and respawn at Pharmacy (F1PH) with 1 HP.");
-
-                                inCombat = false;
-                            }
-                        }
-                    }
-                }
-
-
-                // MFR3 - Player attempts to escape combat
-                else if (combatCommand.equals("RUN")) {
-
-                    // Check whether the monster allows escape
-                    if (monster.canEscape()) {
-
-                        view.printMessage("You successfully escaped from " + monster.getName() + "!");
-
-                        // End combat
+                    // MFR4 - Check whether the player has been defeated
+                    if (player.getCurrentHp() <= 0) {
+                        view.printMessage("You have been defeated! Game over.");
+                        isPlaying = false;
                         inCombat = false;
-                    } else {
-                        view.printMessage("You cannot escape from " + monster.getName() + "!");
-
-                        // Monster retaliates after failed escape
-                        monsterAttackTurn(monster, player);
-
-                        // MFR4 - Check whether the player has been defeated
-                        if (player.getCurrentHp() <= 0) {
-                            view.printMessage("You have been defeated! Game over.");
-                            isPlaying = false;
-                            inCombat = false;
-                        }
                     }
                 }
-
-
-                // MFR2 - Player checks the monster's current status
-                else if (combatCommand.equals("CHECK STATUS") || combatCommand.equals("STATUS")) {
-
-                    // Display the monster's current combat information
-                    checkMonsterStatus(monster);
-
-                    // Checking status does not consume a combat turn
-                }
-
-                // Handle invalid combat commands
-                else {
-                    view.printMessage(
-                            "Invalid command. Please enter ATTACK, USE ITEM, ACT, RUN, or CHECK STATUS."
-                    );
-                }
-
-
             }
+
+
+            // MFR2 - Player checks the monster's current status
+            else if (combatCommand.equals("CHECK STATUS") || combatCommand.equals("STATUS")) {
+
+                // Display the monster's current combat information
+                checkMonsterStatus(monster);
+
+                // Checking status does not consume a combat turn
+            }
+
+            // Handle invalid combat commands
+            else {
+                view.printMessage(
+                        "Invalid command. Please enter ATTACK, USE ITEM, ACT, RUN, or CHECK STATUS."
+                );
+            }
+
 
         }
 
+    }
 
-        // MFR4 - Monster attacks the player during combat
-        private void monsterAttackTurn (Monster monster, Player player){
 
-            // Get all attacks assigned to this monster
-            ArrayList<MonsterAttack> attacks = monster.getAttacks();
+    // MFR4 - Monster attacks the player during combat
+    private void monsterAttackTurn(Monster monster, Player player) {
 
-            // Check if the monster has any attacks
-            if (attacks.isEmpty()) {
-                view.printMessage(monster.getName() + " has no attacks!");
-                return;
-            }
+        // Get all attacks assigned to this monster
+        ArrayList<MonsterAttack> attacks = monster.getAttacks();
 
-            // Randomly select an attack from the monster's attack list
-            int randomIndex = combatRandom.nextInt(attacks.size());
-            MonsterAttack selectedAttack = attacks.get(randomIndex);
-
-            // Get the selected attack's damage
-            int damage = selectedAttack.getDamage();
-
-            // Display the monster's attack
-            view.printMessage(monster.getName() + " used " + selectedAttack.getName() + "!");
-
-            // MFR4 - Monster deals damage to the player
-            player.takeDamage(damage);
-
-            // Display how much damage the monster dealt
-            view.printMessage(monster.getName() + " dealt " + damage + " damage to you!");
-
-            // Display the player's remaining HP
-            view.printMessage("Your remaining HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
-
-            // TODO MFR4:
-            // Apply selectedAttack.getEffect() once the team
-            // finishes deciding how status effects will work.
+        // Check if the monster has any attacks
+        if (attacks.isEmpty()) {
+            view.printMessage(monster.getName() + " has no attacks!");
+            return;
         }
+
+        // Randomly select an attack from the monster's attack list
+        int randomIndex = combatRandom.nextInt(attacks.size());
+        MonsterAttack selectedAttack = attacks.get(randomIndex);
+
+        // Get the selected attack's damage
+        int damage = selectedAttack.getDamage();
+
+        // Display the monster's attack
+        view.printMessage(monster.getName() + " used " + selectedAttack.getName() + "!");
+
+        // MFR4 - Monster deals damage to the player
+        player.takeDamage(damage);
+
+        // Display how much damage the monster dealt
+        view.printMessage(monster.getName() + " dealt " + damage + " damage to you!");
+
+        // Display the player's remaining HP
+        view.printMessage("Your remaining HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
+
+        // TODO MFR4:
+        // Apply selectedAttack.getEffect() once the team
+        // finishes deciding how status effects will work.
+    }
 
 
     // MFR3 / IFR6 - Handles using an item during combat
@@ -900,8 +881,6 @@ public class GameController {
                 "[TODO] Award an Escape Room Stamp if applicable."
         );
     }
-
-
 
 
 }

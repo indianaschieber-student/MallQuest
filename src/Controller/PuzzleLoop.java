@@ -61,7 +61,6 @@ public class PuzzleLoop {
                 if (!(newRoomName == null||newRoomName.isBlank())){
                     view.printPlayerEjected(oldRoomName,newRoomName);
                 }
-                puzzle.resetAttempts();
             }
             else{
                 view.printPuzzleTryAgain(playerInputs);

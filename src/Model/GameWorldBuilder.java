@@ -239,9 +239,18 @@ public class GameWorldBuilder {
                 }
                 Random rand = new Random();
                 int randomIndex = rand.nextInt(roomMonsterIDs.size());
-
-                Monster roomMonster = monstersByID.get(roomMonsterIDs.get(randomIndex));
-
+                //Creates a new monster object for each room. That way, if two rooms have the same monster they don't
+                // share attributes, such as an HP pool and defeated status, etc.
+                Monster template = monstersByID.get(roomMonsterIDs.get(randomIndex));
+                Monster roomMonster = new Monster(
+                        template.getId(),
+                        template.getName(),
+                        template.getDescription(),
+                        template.getLocationFound(),
+                        template.getLvl(),
+                        template.getMaxHp(),
+                        template.getAttacks()
+                );
                 room.addMonster(roomMonster);
             }
 

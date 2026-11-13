@@ -15,7 +15,6 @@ public class Puzzle {
     private final String correctText;
     private final String incorrectText;
     private final String hint;
-    private int attempts = 0;
     private boolean solved = false;
 
     //New puzzle constructor, stores the prompts in an arraylist
@@ -78,47 +77,12 @@ public class Puzzle {
         return puzzles;
     }
 
-    // Checks the player's answers (in order) against the solution. Counts as one attempt.
-    /*public boolean attempt(List<String> answer) {
-        if (solved || isLockedOut()) {
-            return false;
-        }
-        attempts++;
-        if (matches(answer)) {
-            solved = true;
-        }
-        return solved;
-    }
-
-    public boolean attempt(String... answer) {
-        return attempt(Arrays.asList(answer));
-    }
-
-    private boolean matches(List<String> answer) {
-
-        List<String> correctSolution = new ArrayList<>();
-        for (PuzzleStep step : puzzleSteps){
-            correctSolution.add(step.getCorrectAnswer());
-        }
-
-        if (answer.size() != correctSolution.size()) {
-            return false;
-        }
-        for (int i = 0; i < correctSolution.size(); i++) {
-            if (!normalize(answer.get(i)).equals(normalize(correctSolution.get(i)))) {
-                return false;
-            }
-        }
-        return true;
-    }*/
-
     //Attempt and match method modified by Indy after adding PuzzleSteps
     public boolean attempt(List<String> answers) {
-        if (solved || isLockedOut()) {
+        if (solved) {
             return false;
         }
 
-        attempts++;
         if (matches(answers)) {
             solved = true;
         }
@@ -145,12 +109,6 @@ public class Puzzle {
         return answer.trim().replace('_', ' ').toLowerCase(Locale.ROOT);
     }*/
 
-
-
-    public boolean isLockedOut() { return attempts >= MAX_ATTEMPTS && !solved; }
-    public int getAttempts() { return attempts; }
-    public int getAttemptsLeft() { return Math.max(0, MAX_ATTEMPTS - attempts); }
-    public void resetAttempts() { attempts = 0; } // for when the player is kicked out and comes back
     public boolean isSolved() { return solved; }
 
     public String getId() { return id; }
