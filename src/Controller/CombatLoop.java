@@ -62,7 +62,7 @@ public class CombatLoop {
             view.printMessage("Your HP: " + player.getCurrentHp() + "/" + player.getMaxHp());
 
             // MFR3 - Display available combat actions
-            view.printMessage("Choose an action: ATTACK, USE ITEM, ACT, RUN or CHECK STATUS");
+            view.printMessage("Choose an action: ATTACK, USE ITEM, RUN or CHECK STATUS");
 
             String combatCommand = view.promptForCommand().trim().toUpperCase(Locale.ROOT);
 
@@ -456,24 +456,21 @@ public class CombatLoop {
 
 
     // MFR3 - Handles special effects from monster attacks
+
     private static void applyMonsterAttackEffect(
             MonsterAttack attack, Monster monster, Player player) {
 
-        // Get the effect ID assigned to this monster attack
         String effectID = attack.getEffectID();
 
-        // Check whether the attack has a special effect
         if (effectID == null || effectID.trim().isEmpty()) {
             return;
         }
 
-        // TODO MFR3 - Look up the effect ID in AtkEffects.txt
-        // and apply its behavior to the player or monster.
+        AttackEffect effect = new AttackEffect(effectID);
 
-        view.printMessage(
-                "[TODO MFR3] Apply monster attack effect: " + effectID.trim()
-        );
+
     }
+
 
 
 
