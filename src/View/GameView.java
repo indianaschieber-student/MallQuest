@@ -185,7 +185,7 @@ public class GameView {
     }
 
     //INVENTORY command
-    public void printInvnetory(List<String> inventory){
+    public void printInventory(List<String> inventory){
 
     }
 
@@ -286,6 +286,15 @@ public class GameView {
 
     //FIGHT
 
+    public void printCombatLoss(String monsterName){
+        printMessage("You were defeated by " + monsterName + "!");
+        printMessage(wrapText("You awaken in a daze, lying down on a cot in the back room of the CVS Pharmacy." +
+                "A friendly pharmacist walks through the back door to greet you. 'You look you got in a nasty scrape! " +
+                "I took you back here to the break room and gave you some ibuprofen and water, but you might want to get" +
+                "that looked at back by someone who isn't paid by the hour.'"));
+        printMessage("Your HP has been restored to full.");
+    }
+
     //SAVE
 
     //QUIT
@@ -346,6 +355,13 @@ public class GameView {
         printMessage("We Hope you've enjoyed your shopping experience at " +
                           "\nKuvira Mall! Please Give Us 5 Stars on Doodle Reviews!" +
                         "\n=======================GAME OVER=======================");
+    }
+
+    //Displays Level-Up info to player
+    public void printLevelUp(int level, int currentHp, int maxHp, int baseAttack) {
+        printMessage("LEVEL UP! You are now Level " + level + "!");
+        printMessage("Your HP is " + currentHp + "/" + maxHp
+                + " and your base attack is now " + baseAttack + ".");
     }
 
     public String promptForPlayerName(){

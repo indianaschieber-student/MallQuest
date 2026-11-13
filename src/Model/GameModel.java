@@ -147,4 +147,9 @@ public class GameModel {
         return null;
     }
 
+    public void movePlayerToPharmacy(){
+        movePlayerToRoom("C-Vous-Say Pharmacy");
+        player1.setHp(player1.getMaxHp());
+    }
+
 }

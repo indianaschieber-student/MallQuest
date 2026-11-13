@@ -181,11 +181,18 @@ public class GameController {
         Player player = model.getPlayer();
 
         //Check to see if the command the player entered is the name of an adjacent room, or its room id
-        if (model.movePlayerToRoom(roomAbbreviations(command))) {
-            printCurrentRoom();
+        String destination = roomAbbreviations(command).trim();
+        //Blocks the player from entering The Exit unless they have solved 10 puzzles
+        if (destination.equalsIgnoreCase("The Exit")
+                && player.getPuzzlesSolved() < 10) {
+            view.printMessage("You can't leave the mall until you collect 10 Escape Room Stamps!");
             return;
         }
 
+        if (model.movePlayerToRoom(destination)) {
+            printCurrentRoom();
+            return;
+        }
         //Displays player's Name, HP, Level, XP to next level, currently equipped items, base attack
         //As per the SRS: Items collected, Quests completed (I decided to do puzzles solved because there are no quests),
         // and number of rooms visited. I figured I'd also add number of monsters defeated, if we have time to implement.

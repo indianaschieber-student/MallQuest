@@ -124,7 +124,7 @@ public class Player {
         List<Item> consumables = new ArrayList<>();
         //Check player inventory for consumables
         for (Item item : this.playerInventory) {
-            if ((item.getName()).startsWith("CI")) {
+            if ((item.getId()).startsWith("CI")) {
                 consumables.add(item);
             }
         }
@@ -142,30 +142,35 @@ public class Player {
     public void increasePuzzlesSolved(){this.puzzlesSolved ++;}
     public void increaseMonstersDefeated(){this.monstersDefeated ++;}
 
-    //The method returns true if the player levels up, false if not. This may be redundant, in which case
-    // I can change it to a void return type
-    public boolean gainXp(int xp){
-        this.totalXp += xp;
-        this.currentXp += xp;
-        if (this.currentXp >= this.xpToNextLevel){
-            this.levelUp();
-            return true;
+    //The method returns true if the player levels up, false if not.
+    //Modified by Copilot to allow Multiple Level ups if the player obtains enough xp to level up twice
+    public boolean gainXp(int xp) {
+        if (xp <= 0) {
+            return false;
         }
-        else return false;
+
+        totalXp += xp;
+        currentXp += xp;
+
+        boolean leveledUp = false;
+        while (currentXp >= xpToNextLevel) {
+            levelUp();
+            leveledUp = true;
+        }
+        return leveledUp;
     }
 
     //I could be wrong, but I couldn't find anything in the SRS that states how much XP is required for level up.
     //First level up costs 100 Xp, every subsequent level cost 20 mor Xp
-    public String levelUp(){
+    public void levelUp(){
         this.playerLevel += 1;
         this.baseAttack += 5;
         this.maxHp += 10;
+        this.currentHp = this.maxHp;
         this.currentXp -= this.xpToNextLevel;
         //Every time the player levels up, it will cost the player 20 more XP to level up next time
         this.xpToNextLevel += 20;
-        String levelUpMsg = "LEVEL UP! You are now Level " + this.playerLevel + "! Your Max HP has increased to "
-                + this.maxHp + " and your base Attack has increased to " + this.baseAttack + "!";
-        return levelUpMsg;
+        return;
     }
 
     //method to attempt to move. Returns true for a valid move, false for an invalid move
