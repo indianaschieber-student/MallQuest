@@ -1,0 +1,49 @@
+# id | Effect Desc | Turn Mod | Success Mod | Dmg Mod | Def Mod | Esc Mod | Player Mod | Monster Success
+ATKFX000 | No Effect | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX001 | Player loses next turn. | 1 | 0 | 0 | 0 | 0 | 0
+ATKFX002 | Player attack success +70%, but damage -3 pts. | 1 | 0.70 | -3 | 0 | 0 | 0
+ATKFX003 | Player attack success -40% for 1 turn. | 1 | -0.40 | 0 | 0 | 0 | 0
+ATKFX005 | Player attack success -20% for 2 turns. | 2 | -0.20 | 0 | 0 | 0 | 0
+ATKFX007 | Player damage -3 pts for 1 turn. | 1 | 0 | 0 | 0 | 0 | 3
+ATKFX009 | Player can leave. | 0 | 0 | 0 | 0 | 1 | 0
+ATKFX011 | Player defense -3 pts. | 0 | 0 | 0 | -3 | 0 | 0
+ATKFX012 | Player attack success -30%. | 0 | -0.30 | 0 | 0 | 0 | 0
+ATKFX013 | Player attack success -10% for 1 turn. | 1 | -0.10 | 0 | 0 | 0 | 0
+ATKFX014 | Player attack success -20%, damage -5 pts. | 0 | -0.20 | -5 | 0 | 0 | 0
+ATKFX015 | Player attack success -20% | 0 | -0.20 | 0 | 0 | 0 | 0
+ATKFX016 | Player cannot escape for 1 turn. | 0 | 0 | 0 | 0 | 2 | 0
+ATKFX017 | Adds another encounter. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX019 | Player damage -4 pts | 0 | 0 | 0 | 0 | 0 | 4
+ATKFX020 | May skip next turn after attack (chance unspecified). | 1 | 0 | 0 | 0 | 0 | 0
+ATKFX021 | Monster flees; may relocate player to a different room. | 0 | 0 | 0 | 0 | 1 | 0
+ATKFX022 | Refusing demand triggers Shoulder Check (ATK014). | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX023 | Player must accept help or escape. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX024 | Stuns player. | 1 | 0 | 0 | 0 | 0 | 0
+ATKFX025 | Refusal raises monster attack success by 30%. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX026 | Player may panic and flee (chance unspecified). | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX027 | Player damage -2 pts (duration unspecified). | 0 | 0 | -2 | 0 | 0 | 0
+ATKFX028 | Player defense -2 pts for 2 turns. | 2 | 0 | 0 | -2 | 0 | 0
+ATKFX029 | Monster next attack deals +2 damage. | 1 | 0 | 2 | 0 | 0 | 0
+ATKFX030 | Player attack damage -4 pts for 1 turn. | 1 | 0 | -4 | 0 | 0 | 0
+ATKFX031 | Monster disappears into stockroom; player may reposition. | 0 | 0 | 0 | 0 | 1 | 0
+ATKFX032 | Player escape chance -40% (duration unspecified). | 0 | 0 | 0 | 0 | -0.4 | 0
+ATKFX033 | Player next attack damage -3 pts. | 1 | 0 | -3 | 0 | 0 | 0
+ATKFX034 | May stun player (chance unspecified). | 1 | 0 | 0 | 0 | 0 | 0
+ATKFX035 | Player escape chance +20% (duration unspecified). | 0 | 0 | 0 | 0 | 0.2 | 0
+ATKFX036 | If player has tissue encounter ends; otherwise triggers Mega Sneeze (ATK053). | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX037 | Player restrained until breaking free (rules unspecified). | 0 | 0 | 0 | 0 | 2 | 0
+ATKFX038 | Monster heals itself 4 HP. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX039 | Player escape chance -15% (duration unspecified). | 0 | 0 | 0 | 0 | -0.15 | 0
+ATKFX040 | Player attack damage -2 pts (duration unspecified). | 0 | 0 | -2 | 0 | 0 | 0
+ATKFX042 | Player next attack automatically misses. | 1 | -1.0 | 0 | 0 | 0 | 0
+ATKFX043 | 30% chance to steal one inventory item. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX044 | Player escape chance +25% (duration unspecified). | 0 | 0 | 0 | 0 | 0.25 | 0
+ATKFX045 | Player defense -3 pts for 1 turn. | 1 | 0 | 0 | -3 | 0 | 0
+ATKFX046 | Player must escape or attack while grappled. | 0 | 0 | 0 | 0 | 2 | 0
+ATKFX047 | Player attack success -15% (duration unspecified). | 0 | -0.15 | 0 | 0 | 0 | 0
+ATKFX048 | Monster slows; player may escape or attack freely. | 0 | 0 | 0 | 0 | 1 | 0
+ATKFX049 | Player knocked backward. | 0 | 0 | 0 | 0 | 0 | 0
+ATKFX050 | Player cannot flee for remainder of combat. | 0 | 0 | 0 | 0 | 2 | 0
+ATKFX051 | Player attack damage -3 pts for 1 turn. | 1 | 0 | -3 | 0 | 0 | 0
+ATKFX053 | Monster defense increases for 1 turn; player attack damage -2 for 1 turn (defense amount unspecified). | 1 | 0 | -2 | 0 | 0 | 0
+
