@@ -92,14 +92,14 @@ public class GameView {
 
 
     //STATUS
-    public void printPlayerStatus(String name, String hp, int level, String xpToNextLevel, int baseAttack, int roomsVisited, int puzzlesCompleted){
+    public void printPlayerStatus(String name, String hp, int level, String xpToNextLevel, int baseAttack, int roomsVisited, int puzzlesCompleted, String equippedCosmeticName){
         printMessage("Player: " + formatBold(name) +
                 "\nLevel: " + level + ", XP to Next Level: " + xpToNextLevel +
                 "\nHP: " + hp +
                 "\nBase Attack: " + baseAttack +
                 "\nRooms Visited: " + roomsVisited +
-                "\nPuzzles Completed: " + puzzlesCompleted );
-        //monsters defeated
+                "\nPuzzles Completed: " + puzzlesCompleted +
+                "\nEquipped Cosmetic: " + (equippedCosmeticName != null ? equippedCosmeticName : "None equipped"));
         printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
