@@ -594,4 +594,22 @@ public class GameController {
     public void loadGame () {
 
     }
+
+    public void handleItemUsageInCombat(Player player, Room currentRoom, GameView view, String itemName) {
+        Item item = player.findItemInInventory(itemName);
+        if (item != null) {
+            if (item instanceof Consumable) {
+                Consumable consumable = (Consumable) item;
+                consumable.consume(player);
+                view.printMessage("You used " + consumable.getName() + " and restored health!");
+                if (consumable.isSingleUse()) {
+                    player.removeItem(item);
+                }
+            } else {
+                view.printMessage("You cannot use " + item.getName() + " like that during combat.");
+            }
+        } else {
+            view.printMessage("You don't have that item in your inventory.");
+        }
+    }
 }
