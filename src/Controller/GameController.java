@@ -201,8 +201,11 @@ public class GameController {
 
             String hp = player.getCurrentHp() + "/" + player.getMaxHp();
             String xp = player.getCurrentXp() + "/" + player.getXpToNextLevel();
+            String equippedCosmetic;
+            if (!(player.hasEquippedCosmetic())){equippedCosmetic = null;}
+            else {equippedCosmetic = player.getEquippedCosmetic().getName();}
             view.printPlayerStatus(player.getPlayerName(), hp, player.getPlayerLevel(), xp,
-                    player.getBaseAttack(), player.getRoomsVisited(), player.getPuzzlesSolved());
+                    player.getBaseAttack(), player.getRoomsVisited(), player.getPuzzlesSolved(), equippedCosmetic);
             return;
         }
 

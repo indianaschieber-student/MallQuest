@@ -93,6 +93,12 @@ public class Player {
     public void setEquippedCosmetic(CosmeticItem cosmetic) {
         this.equippedCosmetic = cosmetic;
     }
+    public boolean hasEquippedCosmetic(){
+        if (equippedCosmetic == null){
+            return false;
+        }
+        else return true;
+    }
 
     // Adds an item to the player's inventory
     public void addItem(Item item) {
