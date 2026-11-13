@@ -239,27 +239,27 @@ public class CombatLoop {
     // MFR3 / IFR6 - Handles using an item during combat
     public static boolean useCombatItem(Player player, Monster monster) {
 
-        // TODO INVENTORY #1:
-        // Player.java currently stores playerInventory as a private field,
-        // but does not provide a getter to access the items.
-        view.printMessage("[TODO INVENTORY #1] Cannot display inventory yet. " + "Player.java needs an inventory getter.");
+        String itemTarget = view.promptForItemName();
+        if (itemTarget != null && !itemTarget.trim().isEmpty()) {
+            Item item = player.findItemInInventory(itemTarget.trim());
+            if (item != null) {
+                if (item instanceof Consumable) {
+                    Consumable consumable = (Consumable) item;
+                    consumable.consume(player);
+                    view.printMessage("You used " + consumable.getName() + "!");
+                    if (consumable.isSingleUse()) {
+                        player.removeItem(item);
+                    }
+                    return true;
+                } else {
+                    view.printMessage("You can't use that item in combat.");
+                }
+            } else {
+                view.printMessage("You don't have that item.");
+            }
+        }
 
-        // TODO INVENTORY #2 - Item selection
-        view.printMessage("[TODO] Display numbered inventory and select an item.");
-
-        // TODO CONSUMABLE #1 - Healing
-        view.printMessage("[TODO] Healing items will restore player HP " + "without exceeding maximum HP.");
-
-        // TODO CONSUMABLE #2 - Combat damage
-        view.printMessage("[TODO] Combat damage items will reduce monster HP.");
-
-        // TODO CONSUMABLE #3 - Debuff removal
-        view.printMessage("[TODO] Debuff-removing items will clear applicable effects.");
-
-        // TODO INVENTORY #3 - Item removal
-        view.printMessage("[TODO] Remove the consumed item from inventory.");
-
-        // No item was used, so the player's turn is not consumed.
+        // No valid item was used, so the player's turn is not consumed.
         return false;
     }
 
@@ -474,10 +474,4 @@ public class CombatLoop {
                 "[TODO MFR3] Apply monster attack effect: " + effectID.trim()
         );
     }
-
-
-
-
-
-
 }
