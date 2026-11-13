@@ -20,6 +20,7 @@ public class Player {
     private int puzzlesSolved;
     private int monstersDefeated;
     private int roomsVisited;
+    private CosmeticItem equippedCosmetic = null;
 
     //Constructor for the player. Base XP is set to 0 and Level is 1.
     // base HP is 100 and base attack is 10 at lvl 1
@@ -82,6 +83,15 @@ public class Player {
     // Standard alias getter to support getInventory()
     public List<Item> getInventory() {
         return this.playerInventory;
+    }
+
+    // Getter and setter for equipped cosmetics
+    public CosmeticItem getEquippedCosmetic() {
+        return this.equippedCosmetic;
+    }
+
+    public void setEquippedCosmetic(CosmeticItem cosmetic) {
+        this.equippedCosmetic = cosmetic;
     }
 
     // Adds an item to the player's inventory
