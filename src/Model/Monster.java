@@ -130,6 +130,16 @@ public class Monster {
         hp = maxHp;
     }
 
+    public void restoreState(int hp, int level, String status, boolean escapeBlocked) {
+        if (hp < 0 || hp > maxHp || level < 1 || status == null) {
+            throw new IllegalArgumentException("Save data contains invalid monster state.");
+        }
+        this.hp = hp;
+        this.lvl = level;
+        this.status = status;
+        this.escapeBlocked = escapeBlocked;
+    }
+
     // MFR4 - Change monster status
     public void setStatus(String newStatus) {
         status = newStatus;

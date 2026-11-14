@@ -37,7 +37,7 @@ public class Puzzle {
         String[] prompts = p[3].split("\\*", -1);
         String[] correctAnswers = p[4].split(";", -1);
         String[] choicesByStep;
-            choicesByStep = p[8].split("\\\\", -1); // groups separated by \
+        choicesByStep = p[8].split("\\\\", -1); // groups separated by \
         List<PuzzleStep> puzzleSteps = new ArrayList<>();
 
         //Copilot helped me fix this method. Originally I had tried to use the .get method to retrieve the
@@ -110,6 +110,7 @@ public class Puzzle {
     }*/
 
     public boolean isSolved() { return solved; }
+    public void restoreSolved(boolean solved) { this.solved = solved; }
 
     public String getId() { return id; }
     public String getRoomId() { return roomId; }

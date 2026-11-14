@@ -3,13 +3,15 @@ package Controller;
 import Model.*;
 import View.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class GameController {
     private boolean isPlaying = false;
-    private GameModel model = new GameModel();
-    private GameView view = new GameView();
-    private Player player = model.getPlayer();
+    private GameModel model;
+    private GameView view;
+    private final SaveManager saveManager = new SaveManager();
+    private int selectedSaveSlot;
 
     // MFR4 - Randomly selects a monster attack during combat
     private Random combatRandom = new Random();
@@ -35,9 +37,36 @@ public class GameController {
     }
 
     public void startGame() {
+        while (true) {
+            List<String> slotNames = new ArrayList<>();
+            for (int slot = 1; slot <= SaveManager.SLOT_COUNT; slot++) {
+                try {
+                    slotNames.add(saveManager.getSlotName(slot));
+                } catch (IOException | IllegalArgumentException exception) {
+                    view.printMessage("Could not read save slot " + slot + ": " + exception.getMessage());
+                    slotNames.add("[Invalid Save]");
+                }
+            }
+
+            selectedSaveSlot = view.promptForSaveSlot(slotNames);
+            if (!saveManager.hasSave(selectedSaveSlot)) {
+                startNewGame();
+                return;
+            }
+            if (loadGame()) {
+                return;
+            }
+        }
+    }
+
+    public void startNewGame() {
         //First, the view prompts the player for their name.
         // The name is then stored as a player attribute
         model.setPlayerName(view.promptForPlayerName());
+        beginGame();
+    }
+
+    private void beginGame() {
         //A welcome message that adds some context about the game and tells the player how to see the list of commands
         view.printWelcome(model.getPlayerName());
         //Display the description for the starting room
@@ -54,12 +83,16 @@ public class GameController {
         }
     }
 
-    public void startNewGame() {
-
-    }
-
-    public void loadGame() {
-
+    public boolean loadGame() {
+        try {
+            //Calls resore method from SaveData,
+            saveManager.load(selectedSaveSlot).restore(model);
+        } catch (IOException | IllegalArgumentException exception) {
+            view.printMessage("Could not load save slot " + selectedSaveSlot + ": " + exception.getMessage());
+            return false;
+        }
+        beginGame();
+        return true;
     }
 
     //I used GitHub Copilot to generate this switch block here; it allows the player to enter a room's name
@@ -162,18 +195,22 @@ public class GameController {
             case "9":
                 return "USE";
             case "10":
-                return "INSPECT";
+                return "EQUIP";
             case "11":
-                return "SOLVE";
+                return "UNEQUIP";
             case "12":
-                return "HINT";
+                return "INSPECT";
             case "13":
-                return "FIGHT";
+                return "SOLVE";
             case "14":
-                return "SAVE";
+                return "HINT";
             case "15":
-                return "QUIT";
+                return "FIGHT";
             case "16":
+                return "SAVE";
+            case "17":
+                return "QUIT";
+            case "18":
                 return "HELP";
             default:
                 return command;
@@ -559,7 +596,13 @@ public class GameController {
         }
 
         if (command.equalsIgnoreCase("SAVE") || command.equalsIgnoreCase("SAVE GAME")) {
-
+            try {
+                saveManager.save(selectedSaveSlot, SaveData.capture(model));
+                view.printMessage("Game saved to save file " + selectedSaveSlot + ".");
+            } catch (IOException exception) {
+                view.printMessage("Could not save your game: " + exception.getMessage());
+            }
+            return;
         }
 
         if (command.equalsIgnoreCase("QUIT") || command.equalsIgnoreCase("QUIT GAME")) {

@@ -47,6 +47,9 @@ public class Room {
     public void setRoomPuzzle(Puzzle puzzle) {
         this.roomPuzzle = puzzle;
     }
+    public void setVisited(boolean visited) {
+        this.isVisited = visited;
+    }
 
     public boolean hasMonster() {
         return roomMonster != null;
@@ -60,6 +63,9 @@ public class Room {
         if (roomMonster == null) {
             roomMonster = monster;
         }
+    }
+    public void setRoomMonster(Monster monster) {
+        this.roomMonster = monster;
     }
     public Monster getRoomMonster(){
         return this.roomMonster;

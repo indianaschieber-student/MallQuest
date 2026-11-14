@@ -63,6 +63,7 @@ public class Player {
     public int getCurrentXp(){
         return this.currentXp;
     }
+    public int getTotalXp(){ return this.totalXp; }
     public int getXpToNextLevel(){
         return this.xpToNextLevel;
     }
@@ -220,5 +221,31 @@ public class Player {
     // Setter for HP (used by consumable healing items)
     public void setHp(int hp) {
         this.currentHp = Math.min(hp, this.maxHp);
+    }
+
+    public void restoreState(String name, Room currentRoom, Room previousRoom, int maxHp, int currentHp,
+                             int totalXp, int currentXp, int xpToNextLevel, int playerLevel, int baseAttack,
+                             int puzzlesSolved, int monstersDefeated, int roomsVisited, List<Item> inventory,
+                             CosmeticItem equippedCosmetic) {
+        if (maxHp <= 0 || currentHp < 0 || currentHp > maxHp || totalXp < 0 || currentXp < 0
+                || xpToNextLevel <= 0 || playerLevel < 1 || baseAttack < 0 || puzzlesSolved < 0
+                || monstersDefeated < 0 || roomsVisited < 0 || currentRoom == null || inventory == null) {
+            throw new IllegalArgumentException("Save data contains invalid player state.");
+        }
+        this.name = name;
+        this.currentRoom = currentRoom;
+        this.previousRoom = previousRoom;
+        this.maxHp = maxHp;
+        this.currentHp = currentHp;
+        this.totalXp = totalXp;
+        this.currentXp = currentXp;
+        this.xpToNextLevel = xpToNextLevel;
+        this.playerLevel = playerLevel;
+        this.baseAttack = baseAttack;
+        this.puzzlesSolved = puzzlesSolved;
+        this.monstersDefeated = monstersDefeated;
+        this.roomsVisited = roomsVisited;
+        this.playerInventory = new ArrayList<>(inventory);
+        this.equippedCosmetic = equippedCosmetic;
     }
 }
