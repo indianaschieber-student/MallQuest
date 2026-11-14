@@ -130,15 +130,14 @@ public class Monster {
         hp = maxHp;
     }
 
-    // MFR3 - Heal monster by a specific amount
-    public void heal(int amount) {
-        if (amount > 0) {
-            hp += amount;
-
-            if (hp > maxHp) {
-                hp = maxHp;
-            }
+    public void restoreState(int hp, int level, String status, boolean escapeBlocked) {
+        if (hp < 0 || hp > maxHp || level < 1 || status == null) {
+            throw new IllegalArgumentException("Save data contains invalid monster state.");
         }
+        this.hp = hp;
+        this.lvl = level;
+        this.status = status;
+        this.escapeBlocked = escapeBlocked;
     }
 
     // MFR4 - Change monster status
