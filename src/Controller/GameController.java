@@ -199,6 +199,20 @@ public class GameController {
 
         if (model.movePlayerToRoom(destination)) {
             printCurrentRoom();
+
+            // MFR3 - Automatically start the mandatory Dodgeball Bully encounter
+            if ("F2SH".equals(model.getCurrentRoom().getRoomID())) {
+
+                Monster monster = model.getCurrentRoom().getRoomMonster();
+
+                if (monster != null
+                        && "MST023".equals(monster.getId())
+                        && !monster.isDefeated()) {
+
+                    CombatLoop.combatLoop(model, view);
+                }
+            }
+
             return;
         }
         //Displays player's Name, HP, Level, XP to next level, currently equipped items, base attack

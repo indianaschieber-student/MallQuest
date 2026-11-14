@@ -130,6 +130,17 @@ public class Monster {
         hp = maxHp;
     }
 
+    // MFR3 - Heal monster by a specific amount
+    public void heal(int amount) {
+        if (amount > 0) {
+            hp += amount;
+
+            if (hp > maxHp) {
+                hp = maxHp;
+            }
+        }
+    }
+
     // MFR4 - Change monster status
     public void setStatus(String newStatus) {
         status = newStatus;

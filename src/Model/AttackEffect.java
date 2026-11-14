@@ -268,6 +268,12 @@ public class AttackEffect {
 
     // Decrease temporary effect durations after a used player turn
     public void endPlayerTurn() {
+        // TODO MFR3 - Review effects with unspecified durations.
+        // Some monster effects do not define how many turns they last.
+        // Do not assign arbitrary durations until the team confirms them.
+        // Effects with defined durations should expire after the
+        // appropriate number of completed player turns.
+
         if (accuracyTurns > 0 && --accuracyTurns == 0) {
             accuracyModifier = 0;
         }
