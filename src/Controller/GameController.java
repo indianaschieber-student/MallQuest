@@ -582,7 +582,14 @@ public class GameController {
                 view.printPuzzleSolved();
             } else {
                 PuzzleLoop loop = new PuzzleLoop();
-                loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model, 4, model.getPlayer(), model.getGameItems());
+                if (puzzle.getId().equals("PZ16")){
+                    loop.startAlternatePuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model, 4,
+                            model.getPlayer(), model.getGameItems(), player.getInventory());
+                }
+                else{
+                    loop.startPuzzleLoop(currentRoom.getRoomPuzzle(), currentRoom, view, model, 4,
+                            model.getPlayer(), model.getGameItems());
+                }
             }
             return;
         }
