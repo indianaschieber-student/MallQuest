@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class CombatLoop {
     private static boolean isPlaying = false;
+    private static boolean gameWon = false;
 
     // References to the existing game model and view
     private static GameModel model;
@@ -479,6 +480,14 @@ public class CombatLoop {
         // Update monsters defeated count
         player.increaseMonstersDefeated();
 
+        // MFR3 - Check if the player defeated the final boss
+        if ("EX01".equals(model.getCurrentRoom().getRoomID())
+                && monster.getName().equalsIgnoreCase("Protective Father")) {
+
+            view.printGameFinish();
+            gameWon = true;
+        }
+
     }
 
 
@@ -801,5 +810,10 @@ public class CombatLoop {
                     "The monster's next attack will deal 2 extra damage!"
             );
         }
+    }
+
+    // Allows GameController to check whether the player won
+    public static boolean isGameWon() {
+        return gameWon;
     }
 }

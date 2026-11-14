@@ -250,6 +250,24 @@ public class GameController {
                 }
             }
 
+            // MFR3 - Start the final boss encounter at The Exit
+            if ("EX01".equals(model.getCurrentRoom().getRoomID())) {
+
+                Monster monster = model.getCurrentRoom().getRoomMonster();
+
+                if (monster != null
+                        && monster.getName().equalsIgnoreCase("Protective Father")
+                        && !monster.isDefeated()) {
+
+                    CombatLoop.combatLoop(model, view);
+
+                    // Stop the main game loop if the player wins
+                    if (CombatLoop.isGameWon()) {
+                        isPlaying = false;
+                    }
+                }
+            }
+
             return;
         }
         //Displays player's Name, HP, Level, XP to next level, currently equipped items, base attack
@@ -605,6 +623,11 @@ public class GameController {
         //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
         if (command.equalsIgnoreCase("FIGHT")) {
             CombatLoop.combatLoop(model, view);
+
+            if (CombatLoop.isGameWon()) {
+                isPlaying = false;
+            }
+
             return;
 
         }

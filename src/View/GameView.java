@@ -339,7 +339,7 @@ public class GameView {
                         "\n(15)FIGHT or FIGHT MONSTER: Begin combat with the monster in the player's current room, if there is a monster present." +
                         "\n(16)SAVE or SAVE GAME: Saves the user's current session." +
                         "\n(17)QUIT or QUIT GAME: Ends the user's current session." +
-                        "\n(18)HELP: Displays a list of valid game commands."
+                        "\n(18)HELP: Displays a list of valid game commands.");
                 printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
@@ -347,9 +347,19 @@ public class GameView {
     public void printGameOver() {
         printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         printMessage("We Hope you've enjoyed your shopping experience at " +
-                "\nKuvira Mall! Please Give Us 5 Stars on Doodle Reviews!" +
-                "\n=======================GAME OVER=======================");
+                    "\nKuvira Mall! Please Give Us 5 Stars on Doodle Reviews!" +
+                     "\n=======================GAME OVER=======================");
     }
+
+
+    // Displays the winning message after defeating the Protective Father
+    public void printGameFinish() {
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("You defeated the Protective Father!");
+        printMessage("Congratulations! You have escaped the mall!");
+        printMessage("=======================YOU WIN!=======================");
+    }
+
 
     //Displays Level-Up info to player
     public void printLevelUp(int level, int currentHp, int maxHp, int baseAttack) {
