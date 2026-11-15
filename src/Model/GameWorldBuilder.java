@@ -1,3 +1,5 @@
+// The team all worked on this class
+
 package Model;
 
 import java.io.IOException;

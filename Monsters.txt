@@ -1,3 +1,5 @@
+# Kanou worked on this text file
+
 MST001|Recently Dumped Teen|A teenager who got dumped two days ago and has made it everyone else's problem. More interested in complaining about their ex than actually fighting.|F2AM,F2SOB|1|10|ATK001,ATK002,ATK003
 MST002|Old Lady|A sweet elderly woman with no concept of personal space. Means no harm, but her constant attention creates unwanted delays.|F1MB,F2DP,F1CX,F2OG|1|10|ATK004,ATK005,ATK006
 MST003|Part-time Employee|An exhausted employee who just wants to go home. Not aggressive, but will defend themselves if the player gets in their way.|F1CX,F1MFC,F2KMT,F2SOB,F1TU|1|10|ATK007,ATK008,ATK009

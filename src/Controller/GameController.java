@@ -1,3 +1,5 @@
+// The whole team worked on this class
+
 package Controller;
 
 import Model.*;

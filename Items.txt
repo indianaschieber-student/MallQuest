@@ -1,3 +1,5 @@
+# Tristian and Indiana worked on this text file
+
 # Mall Quest - Items.txt
 # Built from the SRS "Table of Artifacts". 50 items total.
 # One item per line, fields separated by | (pipe). Lines starting with # are comments; skip them (and blank lines) when loading.

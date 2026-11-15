@@ -1,3 +1,5 @@
+# Kanou worked on this text file
+
 # id | Effect Desc | Turn Mod | Success Mod | Dmg Mod | Def Mod | Esc Mod | Player Mod | Monster Success
 ATKFX000 | No Effect | 0 | 0 | 0 | 0 | 0 | 0
 ATKFX001 | Player loses next turn. | 1 | 0 | 0 | 0 | 0 | 0

@@ -1,3 +1,5 @@
+// Tristian worked on this class
+
 package Model;
 
 public class QuestItem extends Item {

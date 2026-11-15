@@ -1,3 +1,4 @@
+// Kanou worked on this class
 
 package Model;
 
