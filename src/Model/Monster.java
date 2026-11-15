@@ -160,6 +160,12 @@ public class Monster {
         return new ArrayList<>(attacks);
     }
 
+    public void heal(int amount) {
+        if (amount > 0) {
+            hp = Math.min(hp + amount, maxHp);
+        }
+    }
+
 
     /*
 
