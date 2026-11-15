@@ -500,10 +500,18 @@ public class CombatLoop {
 
         // MFR3 - Check if the player defeated the final boss
         if ("EX01".equals(model.getCurrentRoom().getRoomID())
-                && monster.getName().equalsIgnoreCase("Protective Father")) {
+                && monster.getName().equalsIgnoreCase("The Protective Father")) {
 
             view.printGameFinish();
             gameWon = true;
+
+            view.printMessage("\n-------------------------------------------------------");
+            view.printMessage("You stride past The Protective Father, hand over your stamps,");
+            view.printMessage("and step out of the sliding glass doors into the fresh air!");
+            view.printMessage("You successfully completed your Mall Quest!");
+            view.printMessage("-------------------------------------------------------");
+            view.printGameOver();
+            System.exit(0);
         }
 
     }
