@@ -1,3 +1,5 @@
+// Kanou worked on this class
+
 package Model;
 
 import java.util.ArrayList;
