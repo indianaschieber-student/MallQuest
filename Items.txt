@@ -19,7 +19,7 @@ LI010|Lore|Waiver Form|Contains fine print reading: "Management is not responsib
 LI011|Lore|Florist's Log|Diary complaining about the cost of using blood as fertilizer. Contains a torn feeding schedule with a specific sequence of nutrients and water temperatures- acts as the puzzle cipher to pacify the giant Venus flytrap.
 LI012|Lore|Arcade Owner's Manual|Contains the password for the legendary arcade machine that reportedly drives players mad: “Up, Down, Left, Right, B”. Scrolling through the pages to the back of the Arcade Manual reveals the original ownership records date back to April 4, 1984.
 LI013|Lore|Mini movie night poster|Last Months Movie Night event poster. Special themed movies were shown on specific days: Monday – Romance, Wednesday – Comedy, Thursday – Horror, Friday - Family
-LI014|Lore|Photo of Jewelry Store’s main display|A photo of the crowned jewels at Tiffany And Jo. Within it you can see a Red Ruby, Pink Diamond, and a Dark Jade label.
+LI014|Lore|Photo of Jewelry Store's main display|A photo of the crowned jewels at Tiffany And Jo. Within it you can see a Red Ruby, Pink Diamond, and a Dark Jade label.
 LI015|Lore|Jigsaw Piece guide|In the guide to this jigsaw puzzle you see an outline of where each piece belongs. Highlighted are: Slot 1 – KB97, Slot 2 QR67, Slot 3 – J12, Slot 4 – BR97
 LI016|Lore|Fabric guide: How Coarse is this?|A quick reference guide on several fabrics and their coarseness, in order from most to least coarse. Burlap, Denim, Cotton Percale, Velvet, and Mulberry Silk are the 5 listed.
 LI017|Lore|Greasy Tournament Placemat|Top Right Corner, Bottom Left Corner, Top Left Corner, Bottom Right Corner
