@@ -1,3 +1,5 @@
+# Indiana worked on this text file
+
 # Mall Quest - Puzzles.txt
 # Built from the SRS "Table of Puzzles". 17 puzzles total.
 # One puzzle per line, fields separated by | (pipe). Lines starting with # are comments; skip them (and blank lines) when loading.
