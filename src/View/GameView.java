@@ -352,13 +352,38 @@ public class GameView {
     }
 
 
+
     // Displays the winning message after defeating the Protective Father
     public void printGameFinish() {
         printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        printMessage("You defeated the Protective Father!");
-        printMessage("Congratulations! You have escaped the mall!");
-        printMessage("=======================YOU WIN!=======================");
+        printMessage("                   MALL QUEST");
+        printMessage("                  THE FINAL EXIT");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        printMessage("");
+        printMessage("The Protective Father falls to his knees.");
+        printMessage("The shadows surrounding him slowly fade away.");
+        printMessage("");
+        printMessage("\"You've done well, kid...\" he mutters.");
+        printMessage("");
+        printMessage("With the final obstacle defeated, the mall doors");
+        printMessage("slowly swing open.");
+        printMessage("");
+        printMessage("After countless puzzles, strange encounters,");
+        printMessage("and battles, you've finally made it!");
+        printMessage("");
+        printMessage("All 10 Escape Room Stamps collected!");
+        printMessage("The grand prize is finally within your reach!");
+        printMessage("");
+        printMessage("Congratulations, brave shopper!");
+        printMessage("You have successfully escaped the mall!");
+        printMessage("");
+        printMessage("Thank you for shopping at Kirva Mall!");
+        printMessage("We hope your experience was unforgettable.");
+        printMessage("");
+        printMessage("======================= YOU WIN! =======================");
+        printMessage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
+
 
 
     //Displays Level-Up info to player

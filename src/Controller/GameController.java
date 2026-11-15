@@ -627,7 +627,6 @@ public class GameController {
         }
 
         //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
-        //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
         if (command.equalsIgnoreCase("FIGHT")) {
             CombatLoop.combatLoop(model, view);
 

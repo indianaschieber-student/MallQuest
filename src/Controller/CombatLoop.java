@@ -100,6 +100,8 @@ public class CombatLoop {
 
             // MFR3 - Display available combat actions
             // MFR3 - Display numbered combat menu
+
+            // MFR3 - Display the required combat menu
             view.printMessage("--- COMBAT ---");
             view.printMessage("[1] Attack");
             view.printMessage("[2] Use Item");
@@ -132,7 +134,7 @@ public class CombatLoop {
                         damage = 0;
                     }
 
-                    // TODO MFR3 - Add equipped weapon bonus
+                    // MFR3 - Add equipped weapon bonus
                     // once weapon equipment is connected.
 
                     // Apply damage to the monster
@@ -204,8 +206,13 @@ public class CombatLoop {
             // MFR3 - Player attempts to escape combat
             else if (combatCommand.equals("3") || combatCommand.equals("RUN")) {
 
-                // Check whether the monster or an active effect blocks escape
-                if (monster.canEscape() && !isEscapeBlockedByEffect()) {
+
+                // MFR3 - Base chance of successfully escaping combat
+                double baseEscapeChance = 0.70;
+
+                // Check whether escape is allowed and whether it succeeds
+                if (monster.canEscape() && !isEscapeBlockedByEffect() && playerEscapeSucceeds(baseEscapeChance)) {
+
 
                     // Move player to the adjacent hallway
                     String hallway = model.ejectPlayer();
@@ -298,6 +305,12 @@ public class CombatLoop {
     // MFR4 - Monster attacks the player during combat
     public static void monsterAttackTurn (Monster monster, Player player){
 
+
+        // MFR3 - Prevent monsters from attacking after fleeing
+        if (monsterFled) {
+            return;
+        }
+
         // Get all attacks assigned to this monster
         ArrayList<MonsterAttack> attacks = monster.getAttacks();
 
@@ -326,6 +339,11 @@ public class CombatLoop {
         player.takeDamage(damage);
         // Apply any additional effect from the monster's attack
         applyMonsterAttackEffect(selectedAttack, monster, player);
+
+        // Stop processing the attack if the monster fled
+        if (monsterFled) {
+            return;
+        }
 
         // Display how much damage the monster dealt
         view.printMessage(monster.getName() + " dealt " + damage + " damage to you!");
@@ -491,12 +509,20 @@ public class CombatLoop {
     }
 
 
+
     // MFR3 - Handles player defeat during combat
     private static void handlePlayerDefeat(Player player) {
 
+        // Only handle defeat if the player's HP reaches zero
         if (player.getCurrentHp() > 0) {
             return;
         }
+
+        // Save the monster's name before moving the player
+        Monster monster = model.getCurrentRoom().getRoomMonster();
+        String monsterName = (monster != null)
+                ? monster.getName()
+                : "a monster";
 
         // Remove a random consumable item
         String lostItem = player.removeRandomConsumable();
@@ -504,14 +530,15 @@ public class CombatLoop {
         // Move player to Pharmacy and restore full HP
         model.movePlayerToPharmacy();
 
-        // Display player defeat message
-        view.printPlayerCombatLoss();
+        // Display the player defeat message
+        view.printCombatLoss(monsterName);
 
         // Display lost item if one was removed
         if (lostItem != null && !lostItem.isEmpty()) {
-            view.printItemLoss(lostItem);
+            view.printLostItem(lostItem);
         }
     }
+
 
 
     // MFR3 - Determines whether the player's attack hits
@@ -732,23 +759,25 @@ public class CombatLoop {
     }
 
 
+
     // MFR3 - Handles monsters fleeing from combat
     private static void handleMonsterFlee(AttackEffect effect, Monster monster) {
 
         if ("MONSTER_FLEES".equals(effect.getSpecialAction())) {
 
+            // Announce that the monster escaped
             view.printMessage(
                     monster.getName() + " ran away from the battle!"
             );
 
-            // Mark the monster as having fled
+            // End the current combat encounter
             monsterFled = true;
 
-            // Remove the fleeing monster's remaining HP
-            // so the player cannot fight it again
-            monster.takeDamage(monster.getHp());
+            // Keep the monster alive so it can be fought again later
+            // Do not reduce its HP or mark it as defeated
         }
     }
+
 
 
     // MFR3 - Monster attempts to steal a random consumable
