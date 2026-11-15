@@ -63,15 +63,15 @@ public class GameController {
         //First, the view prompts the player for their name.
         // The name is then stored as a player attribute
         model.setPlayerName(view.promptForPlayerName());
+        //A welcome message that adds some context about the game and tells the player how to see the list of commands
+        view.printWelcome(model.getPlayerName());
         beginGame();
     }
 
     private void beginGame() {
-        //A welcome message that adds some context about the game and tells the player how to see the list of commands
-        view.printWelcome(model.getPlayerName());
+
         //Display the description for the starting room
         printCurrentRoom();
-
         isPlaying = true;
         while (isPlaying == true) {
 
@@ -91,6 +91,8 @@ public class GameController {
             view.printMessage("Could not load save slot " + selectedSaveSlot + ": " + exception.getMessage());
             return false;
         }
+        //A welcome back message for returning players
+        view.printWelcomeBack(model.getPlayerName());
         beginGame();
         return true;
     }
@@ -306,10 +308,6 @@ public class GameController {
             return;
         }
 
-        //"SEARCH": Checks the room for hidden items or puzzle hints.
-        //This is what is written in the SRS for this command, but I honestly don't know what they mean by this.
-        //I don't think this command serves any purpose so we can probably just ignore it
-
         //Check the player's inventory
         if (command.equalsIgnoreCase("INVENTORY")) {
             List<Item> inventory = player.getInventory();
@@ -503,14 +501,9 @@ public class GameController {
             return;
         }
 
-        //This block of code may be a little tricky. The SRS is somewhat unclear, but I think we need a command to inspect
-        // monsters and puzzles because there are two FR's for this. However, the Functional Requirements don't seem
-        // to have parity on how they want to enter commands. The monster FRs say you can use a number instead of typing a command
+
+        //Show Monster or Puzzle description, or both
         if (command.startsWith("INSPECT")) {
-            //I think we could also have a generic INSPECT command that will just display the puzzle and monster information,
-            // it would seem redundant to ask the player if they want to inspect a puzzle or monster, but
-            //Block of code to inspect monster: view the monster's name, text description, and difficulty level and any
-            // other relevant information
             Puzzle puzzle = currentRoom.getRoomPuzzle();
             Monster monster = currentRoom.getRoomMonster();
             String subcommand = command.substring(7).trim();
@@ -573,9 +566,6 @@ public class GameController {
 
         }
 
-        //Solve puzzle command. We may have to back through the SRS and look, but I'm not sure if the player
-        // should ask for a hint while solving a puzzle, or before they solve the puzzle
-        // If so, there can be a separate method parsePuzzleCommand to handle that interaction
         if (command.equalsIgnoreCase("SOLVE") || command.equalsIgnoreCase("SOLVE PUZZLE")) {
             Puzzle puzzle = currentRoom.getRoomPuzzle();
             if (puzzle.isSolved()) {
@@ -594,7 +584,6 @@ public class GameController {
             return;
         }
 
-        //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
         //Fight monster starts the combat loop. From there, they have a combat interface that may require its own methods
         if (command.equalsIgnoreCase("FIGHT")) {
             CombatLoop.combatLoop(model, view);

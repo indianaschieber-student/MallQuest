@@ -48,14 +48,17 @@ public class GameView {
         System.out.println(msg);
     }
 
-    //A method for printing room descriptions. Splits the Description into sentences,
-    // and prints each sentence on its own line
+
     public void printWelcome(String playerName) {
         printMessage("Hello, " + playerName + "!\n" +
                 "Welcome to Mall Quest, the Text-Based Adventure Game where you play as an intrepid child lost in a shopping mall.\n" +
                 "You must solve puzzles in order to collect 10 Escape Room Stamps and leave through the Exit on the top floor of the mall.\n" +
                 "Enter the name of an adjacent room to walk to it, or enter 'Help' to see a list of player commands.\n" +
                 "We here at Kirva Shopping Mall wish you the best of luck on your Mall Quest!");
+    }
+
+    public void printWelcomeBack(String playerName){
+        printMessage("Welcome back, " + playerName + "!");
     }
 
     //These two methods are used to display a room name and description when the player moves rooms
@@ -178,31 +181,6 @@ public class GameView {
             printMessage("This is your first time visiting this room.");
         }
         printRoomDescription(roomDescription);
-    }
-
-    //INVENTORY command
-    public void printInventory(List<String> inventory) {
-
-    }
-
-    //TAKE/PICKUP [Item Name] command
-    public void printPickupItem(String itemName) {
-
-    }
-
-    //DROP [Item Name] command
-    public void printDropItem(String itemName) {
-
-    }
-
-    //READ/EXAMINE [Item Name] command
-    public void printItemDescription(String itemName, String itemDescription) {
-
-    }
-
-    //USE [Item Name] command
-    public void printUseItem(String itemName) {
-
     }
 
     //Helper method for Item commands; prompts the player for the name of an item if they try to use, examine, take,
