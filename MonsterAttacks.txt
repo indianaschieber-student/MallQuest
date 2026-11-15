@@ -1,3 +1,5 @@
+# Kanou worked on this text file
+
 # id|name|damage|description|effectID
 ATK001|Cry|0|Teen cries uncontrollably; player loses next turn.|ATKFX001
 ATK002|Complain|0|Player attack success +70%, but damage -3 pts.|ATKFX002
