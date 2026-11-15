@@ -1,3 +1,5 @@
+# Indiana worked on this text file
+
 #RoomIDs have been altered from the SRS, in order to align with the map design.
 #FG now represents the Ground Floor, and each room's ID now reflects which floor of the mall the room is on.
 #RoomID|RoomName|RoomDescription|Adjacent Room RoomIDs|ItemIDs|MonsterIDs|PuzzleID
