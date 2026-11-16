@@ -516,6 +516,13 @@ public class CombatLoop {
             System.exit(0);
         }
 
+        // Remove the defeated monster from the current room
+        Room room = model.getCurrentRoom();
+
+        if (room != null && room.getRoomMonster() == monster) {
+            room.removeMonster();
+        }
+
     }
 
 
@@ -639,9 +646,12 @@ public class CombatLoop {
             );
         }
 
+        /*
         view.printMessage(
                 "Monster attack effect activated: " + effectID
         );
+
+         */
     }
 
     // MFR3 - Checks whether the player must skip a turn
