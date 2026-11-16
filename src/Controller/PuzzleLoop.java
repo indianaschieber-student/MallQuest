@@ -209,7 +209,7 @@ public class PuzzleLoop {
                 else yield input;
             }
             case "4" -> {
-                if (answerChoices.size() > 4) { yield answerChoices.get(3); }
+                if (answerChoices.size() > 3) { yield answerChoices.get(3); }
                 else yield input;
             }
             case "5" -> {
